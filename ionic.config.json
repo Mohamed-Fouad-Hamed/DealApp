@@ -1,0 +1,7 @@
+{
+  "name": "dealApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
