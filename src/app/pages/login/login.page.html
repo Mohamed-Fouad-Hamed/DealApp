@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button   [routerLink]="['/']" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Log In</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form class="margin-content" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+   @if( this.error ){
+    <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
+  }
+  <ng-template #errorTemplate>
+    <ion-text>{{ error }}</ion-text>
+  </ng-template>
+
+    <ion-row class="margin-top-item">
+      
+      <ion-col>
+          <ion-input
+            label-placement="floating" 
+            placeholder="Enter an email or phone number"
+            label="Email Or Phone"
+            counter="true"
+            maxlength="50"
+            formControlName="login"
+            required
+            color="secondary"
+          ></ion-input>
+      </ion-col>  
+
+    </ion-row>
+
+    @if (loginKey!.touched && loginKey!.invalid) {
+
+      @if (loginKey!.errors?.['required']) {
+        <ng-container [ngTemplateOutlet]="loginTemplateRequired"></ng-container>
+      }
+
+      @if (loginKey!.errors?.['forbiddenName']!.value !== '') {
+        <ng-container [ngTemplateOutlet]="loginTemplatePattern"></ng-container>
+       }
+      
+    }
+
+    <ng-template #loginTemplateRequired>
+      <ion-text color="danger">Login is required</ion-text>
+    </ng-template>
+
+    <ng-template #loginTemplatePattern>
+      <ion-text color="danger">Please enter valid login as email or phone number</ion-text>
+    </ng-template>
+    
+  <ion-row class="margin-top-item">
+    <ion-col>
+      <ion-input
+        label-placement="floating" 
+        placeholder="Enter a password"
+        label=" Password "
+        counter="true"
+        maxlength="20"
+        required
+        [type]="hide ? 'password' : 'text'"
+        formControlName="password"
+        minlength="6"
+        color="secondary"
+      >
+      @if (secretWord!.value !== '') {
+        <ion-icon slot="end" [name]="hide ? 'eye' : 'eye-off'" (click)="hide = !hide"></ion-icon>
+      }
+      </ion-input>
+       
+    </ion-col>
+
+  </ion-row>
+  
+  @if (secretWord!.touched && secretWord!.invalid) {
+    @if (secretWord!.errors?.['required']) {
+      <ng-container [ngTemplateOutlet]="passwordTemplateRequired"></ng-container>
+    }
+  }
+
+  <ng-template #passwordTemplateRequired>
+    <ion-text color="danger"> Please enter a vaild password </ion-text>
+  </ng-template>
+
+
+  <ion-row class="margin-top-item">
+    <ion-col>
+      <div class="ion-text-start">
+        <ion-checkbox labelPlacement="end"  formControlName="rememberMe" >Remember Me</ion-checkbox>
+      </div>
+    </ion-col>
+  </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="secondary" expand="block">Sign In  @if(isLoading) {<ion-spinner></ion-spinner>}</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-end">
+           <a [routerLink]="['/forgot']" class="small-text">Forgot Password?</a>
+        </div>
+      </ion-col>
+    </ion-row> 
+  </form>
+</ion-content>

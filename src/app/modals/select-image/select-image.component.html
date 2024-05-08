@@ -1,0 +1,41 @@
+<ion-content [fullscreen]="true">
+  <ion-card color="light" class="modal">
+
+    <ion-card-header>
+      <ion-card-title>Select Image</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content class="card-content">
+      <ion-img class="img-selected" *ngIf="photo" [src]="photo"></ion-img>
+      <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
+        @if(photo===''){
+        <ion-fab-button   size="small" (click)="selectImageFromCamera()">
+          <ion-icon  name="camera"></ion-icon>
+        </ion-fab-button>
+       
+        <ion-fab-button   size="small" (click)="selectImageFromGallery()">
+          <ion-icon  name="create-outline"></ion-icon>
+        </ion-fab-button>
+        }
+        @if(photo!==''){
+        <ion-fab-button  size="small" (click)="resetImage()">
+          <ion-icon  name="trash-outline"></ion-icon>
+        </ion-fab-button>
+       }
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+ 
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+

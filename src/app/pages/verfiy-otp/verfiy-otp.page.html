@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button   [routerLink]="['/']" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Verfiying OTP</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form id="otpFormId" class="margin-content" #otpForm="ngForm" (ngSubmit)="verfiyOtp()">
+
+   @if( this.error ){
+    <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
+  }
+  <ng-template #errorTemplate>
+    <ion-text>{{ error }}</ion-text>
+    <ion-text>{{ perviousRouter }}</ion-text>
+  </ng-template>
+
+    <ion-row class="margin-top-item">
+      
+      <ion-col>
+          <ion-input
+            label-placement="floating" 
+            placeholder="Enter an OTP number"
+            label="OTP number"
+            counter="true"
+            maxlength="6"
+            minlength="6"
+            required
+            color="secondary"
+          ></ion-input>
+      </ion-col>  
+
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" [disabled]="!otpForm.valid" color="secondary" expand="block">Verify OTP  @if(isLoading) {<ion-spinner></ion-spinner>}</ion-button>
+      </ion-col>
+    </ion-row>
+   
+  </form>
+</ion-content>

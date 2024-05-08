@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Start Page
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" >
+    <ion-grid >
+      <ion-row>
+        <ion-col align-self-center>
+          <ion-label>{{authURL}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col align-self-center>
+          <ion-button [routerLink]="['/register']" expand="block" color="primary">Register</ion-button>
+                <!--<span class="divider line one-line">or</span>-->
+                <ion-item-divider>
+                  <div  style="width: 100%; text-align: center; background-color: transparent;">OR</div>
+                </ion-item-divider>
+          <span class="already">Already a user?</span>
+          <ion-button [routerLink]="['/login']" expand="block" color="danger">Sign In</ion-button>
+
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>

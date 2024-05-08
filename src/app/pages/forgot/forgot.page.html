@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button  [routerLink]="['/']" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reset Your Password</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+  <form id="forgotFormId" class="center-content" #forgotForm="ngForm" (ngSubmit)="onSubmit()" >
+
+    @if( this.error ){
+      <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
+    }
+    <ng-template #errorTemplate>
+      <ion-text>{{ error }}</ion-text>
+    </ng-template>
+
+    <ion-row class="margin-top-item">
+      
+      <ion-col>
+          <ion-input
+            label-placement="floating" 
+            placeholder="Mobil number or email address"
+            label="Login name"
+            counter="true"
+            maxlength="50"
+            [(ngModel)]="iUniqueLogin.id"
+            #id="ngModel"
+            name="id"
+            required
+            color="secondary"
+            appRegexPattern="^([_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))|\d+$"
+            [ngModelOptions]="{ updateOn: 'blur' }"
+            IsExistsValidate
+          >
+          @if (id!.pending){
+            <ion-spinner slot="end"></ion-spinner>
+          }
+        </ion-input>
+      </ion-col>  
+
+    </ion-row>
+
+    @if (id!.invalid && (id!.touched || id!.dirty)) {
+
+      @if (id!.errors?.['required']) {
+        <ng-container [ngTemplateOutlet]="loginTemplateRequired"></ng-container>
+      }
+
+      @if (id!.errors?.['forbiddenName']?.value !== '' && !id!.errors?.['notExists']) {
+        <ng-container [ngTemplateOutlet]="loginTemplatePattern"></ng-container>
+       }
+
+       @if(id!.errors?.['notExists']){
+        <ng-container [ngTemplateOutlet]="loginTemplateExists"></ng-container>
+      }
+      
+    }
+
+    <ng-template #loginTemplateRequired>
+      <ion-text color="danger"><small>Login name is required</small></ion-text>
+    </ng-template>
+
+    <ng-template #loginTemplatePattern>
+      <ion-text color="danger"><small>Invalid mobil number or email address</small></ion-text>
+    </ng-template>
+
+    <ng-template #loginTemplateExists>
+      <ion-text color="danger"><small>Login name not exists</small></ion-text>
+    </ng-template>
+
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="!forgotForm.valid" type="submit" color="secondary" expand="block">Create New Password  @if(isLoading) {<ion-spinner></ion-spinner>}</ion-button>
+      </ion-col>
+    </ion-row>
+    <small>
+      Please provide an email address or phone number that you used when you signed
+      up for your Evernote account.
+    </small>
+  </form>
+</ion-content>

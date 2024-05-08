@@ -1,0 +1,30 @@
+ion-fab-button {
+    opacity: 0.33;
+}
+ion-fab-button:hover {
+    opacity: 1;
+}
+
+.img-selected{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    object-fit:cover;
+
+}
+
+.modal {
+    height: 99%;
+    width: 100%;
+    margin: auto;
+}
+
+.card-content{
+    height: 91%;
+    width: 100%;
+    margin: auto;
+}
+
+ion-img::part(image) {
+    border-radius: 5px;
+  }
