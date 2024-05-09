@@ -66,14 +66,14 @@ export class AuthenticationService {
 
   loginIsExists(login:string){
     const iLogin:IUniqueLogin = {id:login};
-    return this.http.post<MessageResponse>(this.authURL + 'loginexists', iLogin , httpOptions).pipe(
+    return this.http.post<MessageResponse>(this.authURL + 'login-exists', iLogin , httpOptions).pipe(
       delay(100)
       ); 
    }
 
   verfiyOTP(iVerfiyOtp:IVerifyOTP):Observable<MessageResponse>{
      
-    return this.http.post<MessageResponse>(this.authURL + 'verifyregister', iVerfiyOtp , httpOptions).pipe(
+    return this.http.post<MessageResponse>(this.authURL + 'verify-register', iVerfiyOtp , httpOptions).pipe(
            delay(100)
       );
 
@@ -81,7 +81,7 @@ export class AuthenticationService {
 
    verfiyOTPResetPassword(iVerfiyOtp:IVerifyOTP):Observable<MessageResponse>{
      
-    return this.http.post<MessageResponse>(this.authURL + 'verifyresetpassword', iVerfiyOtp , httpOptions).pipe(
+    return this.http.post<MessageResponse>(this.authURL + 'verify-reset-password', iVerfiyOtp , httpOptions).pipe(
            delay(100)
       );
 
@@ -98,7 +98,7 @@ export class AuthenticationService {
 
     updatePassword(iNewPassword:INewPassword):Observable<MessageResponse>{
      
-      return this.http.post<MessageResponse>(this.authURL + 'updatepassword', iNewPassword , httpOptions).pipe(
+      return this.http.post<MessageResponse>(this.authURL + 'update-password', iNewPassword , httpOptions).pipe(
             delay(100)
         );
 

@@ -17,13 +17,12 @@ export class UserValidators implements AsyncValidator {
   searchUser(text:string) {
     // debounce
     const URL = this.apiService.apiHost;
-    console.log(`${this.apiService.apiHost}/displayname?id=${text}`)
 
     return timer(1000)
       .pipe(
         switchMap(() => {
           // Check if username is available
-          return this.http.get<any>(`${URL}/displayname?id=${text}`)
+          return this.http.get<any>(`${URL}/display-name?id=${text}`)
         })
       );
   }

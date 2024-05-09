@@ -41,12 +41,13 @@
 }
 
 .content-center {
-    display: flex;
+   /* display: flex;
     display: -webkit-flex;
     -webkit-align-items: center;
     align-items: center;
     -webkit-justify-content: center;
-    justify-content: center;
-    border: 2px solid blueviolet;
-    height:100%;
+    justify-content: center;*/
+   // border: 2px solid blueviolet;
+    margin: 25px 25px;
+    height:calc(100% - 50px);
 }
