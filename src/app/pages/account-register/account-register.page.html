@@ -17,6 +17,59 @@
         <ion-text>{{ error }}</ion-text>
       </ng-template>
 
+      <ion-row>
+        <ion-col>
+          <ion-select label="Select Account Type" 
+                      label-placement="floating" 
+                      fill="outline"
+                      required
+                      [(ngModel)]="accountSignUp.account_type"
+                      #account_type="ngModel"
+                      color="secondary"
+                      name="account_type"
+                      [value]="1"
+                      >
+            <ion-select-option [value]="1">User</ion-select-option>
+            <ion-select-option [value]="2">Market</ion-select-option>
+            <ion-select-option [value]="3">Restaurant</ion-select-option>
+            <ion-select-option [value]="4">Medicine</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+
+      <ion-row >
+        
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="Enter your Account Name"
+              label="Account name"
+              counter="true"
+              maxlength="50"
+              [(ngModel)]="accountSignUp.account_name"
+              #account_name="ngModel"
+              name="account_name"
+              required
+              color="secondary"
+            >
+          </ion-input>
+          @if ( account_name!.invalid && ( account_name!.dirty || account_name!.touched)) {
+
+            @if (account_name!.errors?.['required']) {
+              <ng-container [ngTemplateOutlet]="account_nameTemplateRequired"></ng-container>
+            }
+            
+          }
+    
+          <ng-template #account_nameTemplateRequired>
+            <ion-text class="error-text" color="danger"><small>Account name is required</small></ion-text>
+          </ng-template>
+     
+        </ion-col>  
+
+      </ion-row>
+
+
       <ion-row >
         
         <ion-col>
@@ -26,7 +79,7 @@
               label="Login name"
               counter="true"
               maxlength="50"
-              [(ngModel)]="signUp.login"
+              [(ngModel)]="accountSignUp.login"
               #login="ngModel"
               name="login"
               required
@@ -38,38 +91,41 @@
             @if (login!.pending){
               <ion-spinner slot="end"></ion-spinner>
             }
+
           </ion-input>
+          @if (login!.invalid && (login!.touched || login!.dirty)) {
+
+            @if (login!.errors?.['required']) {
+              <ng-container [ngTemplateOutlet]="loginTemplateRequired"></ng-container>
+            }
+    
+            @if (login!.errors?.['forbiddenName']?.value !== '' && !login!.errors?.['notUnique']) {
+              <ng-container [ngTemplateOutlet]="loginTemplatePattern"></ng-container>
+            }
+    
+            @if(login!.errors?.['notUnique']){
+              <ng-container [ngTemplateOutlet]="loginTemplateExists"></ng-container>
+            }
+            
+          }
+    
+          <ng-template #loginTemplateRequired>
+            <ion-text class="error-text" color="danger"><small>Login name is required</small></ion-text>
+          </ng-template>
+    
+          <ng-template #loginTemplatePattern>
+            <ion-text class="error-text" color="danger"><small>Invalid mobil number or email address</small></ion-text>
+          </ng-template>
+    
+          <ng-template #loginTemplateExists>
+            <ion-text class="error-text" color="danger"><small>Login name already exists</small></ion-text>
+          </ng-template>
+
         </ion-col>  
 
       </ion-row>
 
-      @if (login!.invalid && (login!.touched || login!.dirty)) {
 
-        @if (login!.errors?.['required']) {
-          <ng-container [ngTemplateOutlet]="loginTemplateRequired"></ng-container>
-        }
-
-        @if (login!.errors?.['forbiddenName']?.value !== '' && !login!.errors?.['notUnique']) {
-          <ng-container [ngTemplateOutlet]="loginTemplatePattern"></ng-container>
-        }
-
-        @if(login!.errors?.['notUnique']){
-          <ng-container [ngTemplateOutlet]="loginTemplateExists"></ng-container>
-        }
-        
-      }
-
-      <ng-template #loginTemplateRequired>
-        <ion-text color="danger"><small>Login name is required</small></ion-text>
-      </ng-template>
-
-      <ng-template #loginTemplatePattern>
-        <ion-text color="danger"><small>Invalid mobil number or email address</small></ion-text>
-      </ng-template>
-
-      <ng-template #loginTemplateExists>
-        <ion-text color="danger"><small>Login name already exists</small></ion-text>
-      </ng-template>
     
       <ion-row >
         
@@ -80,27 +136,29 @@
               label="First name"
               counter="true"
               maxlength="50"
-              [(ngModel)]="signUp.firstName"
+              [(ngModel)]="accountSignUp.firstName"
               #firstName="ngModel"
               name="firstName"
               required
               color="secondary"
             ></ion-input>
+
+            @if ( firstName!.invalid && ( firstName!.dirty || firstName!.touched)) {
+
+              @if (firstName!.errors?.['required']) {
+                <ng-container [ngTemplateOutlet]="firstNameTemplateRequired"></ng-container>
+              }
+              
+            }
+      
+            <ng-template #firstNameTemplateRequired>
+              <ion-text class="error-text" color="danger"><small>First name is required</small></ion-text>
+            </ng-template>
+
         </ion-col>  
 
       </ion-row>
 
-      @if ( firstName!.invalid && ( firstName!.dirty || firstName!.touched)) {
-
-        @if (firstName!.errors?.['required']) {
-          <ng-container [ngTemplateOutlet]="firstNameTemplateRequired"></ng-container>
-        }
-        
-      }
-
-      <ng-template #firstNameTemplateRequired>
-        <ion-text color="danger"><small>First name is required</small></ion-text>
-      </ng-template>
 
       <ion-row >
             
@@ -111,27 +169,29 @@
                   label="Last name"
                   counter="true"
                   maxlength="50"
-                  [(ngModel)]="signUp.lastName"
+                  [(ngModel)]="accountSignUp.lastName"
                   #lastName="ngModel"
                   name="lastName"
                   required
                   color="secondary"
                 ></ion-input>
+
+                          
+                @if (lastName!.invalid && (lastName!.touched || lastName!.dirty)) {
+
+                  @if (lastName!.errors?.['required']) {
+                    <ng-container [ngTemplateOutlet]="lastNameTemplateRequired"></ng-container>
+                  }
+                  
+                }
+                
+                <ng-template #lastNameTemplateRequired>
+                  <ion-text class="error-text" color="danger"><small>Last Name is required</small></ion-text>
+                </ng-template>
             </ion-col>  
 
       </ion-row>
 
-      @if (lastName!.invalid && (lastName!.touched || lastName!.dirty)) {
-
-        @if (lastName!.errors?.['required']) {
-          <ng-container [ngTemplateOutlet]="lastNameTemplateRequired"></ng-container>
-        }
-        
-      }
-      
-      <ng-template #lastNameTemplateRequired>
-        <ion-text color="danger"><small>Last Name is required</small></ion-text>
-      </ng-template>
 
 
       <ion-row >
@@ -143,27 +203,30 @@
               label="Email"
               counter="true"
               maxlength="50"
-              [(ngModel)]="signUp.email"
+              [(ngModel)]="accountSignUp.email"
               #email="ngModel"
               name="email"
               email
               color="secondary"
             ></ion-input>
+
+            
+            @if (email!.invalid && (email!.touched || email!.dirty)) {
+
+              @if (email!.errors?.['email']) {
+                <ng-container [ngTemplateOutlet]="emailTemplatePattern"></ng-container>
+              }
+
+            }
+
+            <ng-template #emailTemplatePattern>
+              <ion-text class="error-text" color="danger"><small>Please enter valid email</small></ion-text>
+            </ng-template>
+            
         </ion-col>  
 
       </ion-row>
 
-      @if (email!.invalid && (email!.touched || email!.dirty)) {
-
-        @if (email!.errors?.['email']) {
-          <ng-container [ngTemplateOutlet]="emailTemplatePattern"></ng-container>
-        }
-
-      }
-
-      <ng-template #emailTemplatePattern>
-        <ion-text color="danger"><small>Please enter valid email</small></ion-text>
-      </ng-template>
 
       <ion-row>
         <ion-col>
@@ -181,20 +244,24 @@
             }
 
           </ion-select>
+          @if (s_cut!.invalid && (s_cut!.touched || s_cut!.dirty)) {
+
+            @if (s_cut!.errors?.['required']) {
+              <ng-container [ngTemplateOutlet]="s_cutTemplateRequired"></ng-container>
+            }
+    
+          }
+
+          <ng-template #s_cutTemplateRequired>
+            <ion-text class="error-text" color="danger"><small>Please select your language</small></ion-text>
+          </ng-template>
+
         </ion-col>
       </ion-row>
 
-      @if (s_cut!.invalid && (s_cut!.touched || s_cut!.dirty)) {
 
-        @if (s_cut!.errors?.['required']) {
-          <ng-container [ngTemplateOutlet]="s_cutTemplateRequired"></ng-container>
-        }
 
-      }
-
-      <ng-template #s_cutTemplateRequired>
-        <ion-text color="danger"><small>Please select your language</small></ion-text>
-      </ng-template>
+     
 
       <ion-row >
         <ion-col>
@@ -206,7 +273,7 @@
             maxlength="20"
             required
             [type]="hide ? 'password' : 'text'"
-            [(ngModel)]="signUp.password"
+            [(ngModel)]="accountSignUp.password"
             #password="ngModel"
             name="password"
             minlength="6"
@@ -216,20 +283,22 @@
             <ion-icon slot="end" [name]="hide ? 'eye' : 'eye-off'" (click)="hide = !hide"></ion-icon>
           }
           </ion-input>
+
+                
+            @if (password!.invalid && (password!.touched || password!.dirty)) {
+              @if (password!.errors?.['required']) {
+                <ng-container [ngTemplateOutlet]="passwordTemplateRequired"></ng-container>
+              }
+            }
+          
+            <ng-template #passwordTemplateRequired>
+              <ion-text class="error-text" color="danger"><small>Password is required</small> </ion-text>
+            </ng-template>
           
         </ion-col>
     
       </ion-row>
-      
-      @if (password!.invalid && (password!.touched || password!.dirty)) {
-        @if (password!.errors?.['required']) {
-          <ng-container [ngTemplateOutlet]="passwordTemplateRequired"></ng-container>
-        }
-      }
-    
-      <ng-template #passwordTemplateRequired>
-        <ion-text color="danger"><small>Password is required</small> </ion-text>
-      </ng-template>
+
 
 
       <ion-row>

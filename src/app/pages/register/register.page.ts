@@ -56,7 +56,7 @@ export class RegisterPage implements OnInit {
       
       try{
      
-        await this.authService.register(
+        await this.authService.userRegister(
               this.registerFrm.value
           ).subscribe({ next: (res) => {
            

@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { MessageResponse } from '../services/interfaces/MessageResponse';
-import { ICredential,ILogin,INewPassword,ISignup,ITokenLogin,IUniqueLogin,IVerifyOTP } from '../services/interfaces/Auth-Interfaces';
+import { IAccountSignup, ICredential,ILogin,INewPassword,ISignup,ITokenLogin,IUniqueLogin,IVerifyOTP } from '../services/interfaces/Auth-Interfaces';
 import { APIService } from './API/api.service';
 import { BehaviorSubject } from 'rxjs';
 import { IDBUser } from '../interfaces/DB_Models';
@@ -44,12 +44,19 @@ export class AuthenticationService {
     return this.authURL;
    }
 
-   register(signUp:ISignup):Observable<MessageResponse>{
+   userRegister(signUp:ISignup):Observable<MessageResponse>{
      
-    return this.http.post<MessageResponse>(this.authURL + 'register', signUp , httpOptions).pipe(
+    return this.http.post<MessageResponse>(this.authURL + 'user-register', signUp , httpOptions).pipe(
            delay(100)
       );
  }
+
+ accountRegister(accountSignUp:IAccountSignup):Observable<MessageResponse>{
+     
+  return this.http.post<MessageResponse>(this.authURL + 'account-register', accountSignUp , httpOptions).pipe(
+         delay(100)
+    );
+}
 
    login(credentail:ICredential):Observable<MessageResponse>{
      

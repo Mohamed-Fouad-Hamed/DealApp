@@ -1,18 +1,22 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { IonRouterLink } from '@ionic/angular/standalone';
 import { LANGUAGES, Language } from 'src/app/services/interfaces/Languages';
-import { ISignup } from 'src/app/services/interfaces/Auth-Interfaces';
+import { IAccountSignup } from 'src/app/services/interfaces/Auth-Interfaces';
+import { RegexPatternDirective } from 'src/app/validations/directives/regexPatternDirective';
+import { IsUniqueValidatorDirective } from 'src/app/validations/directives/AsyncIsUniqueDirective';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-account-register',
   templateUrl: './account-register.page.html',
   styleUrls: ['./account-register.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule ,ReactiveFormsModule,IonRouterLink,RouterLink,RegexPatternDirective ,IsUniqueValidatorDirective]
 })
 export class AccountRegisterPage implements OnInit {
 
@@ -30,7 +34,16 @@ export class AccountRegisterPage implements OnInit {
 
   appLanguages:Language[] = [];
 
-  signUp:ISignup = {firstName:'',lastName:'',email:'',login:'',password:'',s_cut:''};
+  accountSignUp:IAccountSignup = { 
+                account_type: 0,
+                account_name:'',
+                firstName:'',
+                lastName:'',
+                email:'',
+                login:'',
+                password:'',
+                s_cut:''
+  };
 
   constructor() { }
 
@@ -46,17 +59,28 @@ export class AccountRegisterPage implements OnInit {
         return;
       }
   
+      
+      console.log( this.registerFrm.value)
+
       this.isLoading = true;
       
       try{
      
-        await this.authService.register(
+        await this.authService.accountRegister(
               this.registerFrm.value
-          ).subscribe({ next: (res) => {
+          ).pipe( finalize(() => {
+                  setInterval(
+                    ()=>{
+                      this.isLoading=false;
+                    }
+                    ,2000
+                  );
+          }) )
+          .subscribe({ next: (res) => {
            
             if(res.status === 200){
                 const userToken = res.entity.token ;
-                this.router.navigate([`/verfiy-otp/${this.signUp.login}`]);
+                this.router.navigate([`/verfiy-otp/${this.accountSignUp.login}`]);
              }
             
            }
@@ -66,8 +90,6 @@ export class AccountRegisterPage implements OnInit {
       }catch( e:any){
         this.error = e.message;
       
-      }finally{ 
-        setInterval(()=>{this.isLoading=false;},2000);
       }
   
      

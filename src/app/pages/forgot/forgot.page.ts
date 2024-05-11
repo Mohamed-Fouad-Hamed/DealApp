@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import {  IUniqueLogin } from 'src/app/services/interfaces/Auth-Interfaces';
 import { IsExistsValidatorDirective } from 'src/app/validations/directives/AsyncIsExistsDirective';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-forgot',
@@ -48,10 +49,12 @@ export class ForgotPage implements OnInit {
    
       await this.authService.forgetPassword(
             this.forgotFrm.value
+        ).pipe(
+          finalize(()=> setInterval(()=>{this.isLoading=false;},2000) )
         ).subscribe({ next: (res) => {
          
           if(res.status === 200){
-              this.router.navigate([`/verfiy-otp/${this.iUniqueLogin.id}`]);
+              this.router.navigate([`/verfiy-reset-password-otp/${this.iUniqueLogin.id}`]);
            }
           
          }
@@ -59,10 +62,7 @@ export class ForgotPage implements OnInit {
         );
 
     }catch( e:any){
-      this.error = e.message;
-    
-    }finally{ 
-      setInterval(()=>{this.isLoading=false;},2000);
+      this.error = e.message; 
     }
 
    

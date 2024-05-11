@@ -7,7 +7,7 @@ import { ActivatedRoute,Router,RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { DatabaseService } from 'src/app/services/database.service';
 import { IVerifyOTP } from 'src/app/services/interfaces/Auth-Interfaces';
-import { UrlService } from 'src/app/services/Navigation/UrlService';
+import { finalize } from 'rxjs';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class VerfiyOtpPage implements OnInit {
 
   private databaseService = inject(DatabaseService);
 
-  private urlService = inject(UrlService);
+ //  private urlService = inject(UrlService);
   
   public iVerfiyOtp : IVerifyOTP = {login: '',otp: ''} ;
 
@@ -43,84 +43,69 @@ export class VerfiyOtpPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
+   
     this.route.paramMap.subscribe((params)=>{
 
       this.login = params.get('id');
 
     });
 
+    /*
     this.perviousRouter = this.urlService.getPreviousUrl();
-
+    */
   }
 
   async verfiyOtp(){
 
     this.isLoading = true;
+
     this.iVerfiyOtp.login = this.login!;
+
     try{
-
-      if(this.perviousRouter === '/'){
-
         await this.authService.verfiyOTP(
-          this.iVerfiyOtp
-         ).subscribe({ next: (res) => {
-            
-             if(res.status === 200){
+                        this.iVerfiyOtp
+                      ).pipe(
+                        finalize(()=>setInterval(()=>{this.isLoading=false;},2000))
+                      ).subscribe({ next: (res) => {
+                          
+                          if (res.status === 200){
 
-                 const userToken = res.entity.token ;
-               
-                 const users = this.databaseService.getUsers();
-               
-                   if(users().length > 0){
+                              const userToken = res.entity.token ;
+                            
+                              const users = this.databaseService.getUsers();
+                               /*
+                               
+                                if(users().length > 0){
 
-                     this.databaseService.updateUserById("1",userToken);
+                                  this.databaseService.updateUserById("1",userToken);
 
-                     this.error="update"
+                                  this.error="update"
 
-                   }else{
+                                }else{
 
-                     const curLogin = res.entity.login ;
+                                  const curLogin = res.entity.login ;
 
-                     const userName = res.entity.firstName + ' ' + res.entity.lastName;
-                     
-                     this.databaseService.addUser(curLogin , userName , userToken);
-                     
-                     this.error="insert"
+                                  const userName = res.entity.firstName + ' ' + res.entity.lastName;
+                                  
+                                  this.databaseService.addUser(curLogin , userName , userToken);
+                                  
+                                  this.error="insert"
 
-                   }
-                 this.router.navigate(['/home/notifications']);
-         
-                }
-                else 
-                   this.error ='otp code isn\'t verify';
-                
-                }
-                ,error:(err)=>{ this.error = err.message }} 
-              );
-      }
-      else {
-
-        await this.authService.verfiyOTPResetPassword(
-          this.iVerfiyOtp
-              ).subscribe({ next: (res) => {
-                      if(res.status === 200){
-                        this.router.navigate([`/newpassword/${this.login}`]);
-                      }
-                      else 
-                        this.error ='otp code isn\'t verify';
-                }
-                ,error:(err)=>{ this.error = err.message }} 
-              );
-
-        }
-        
-    }catch( e:any){
-      this.error = e.message;
-      console.log(e)
-    }finally{ 
-      setInterval(()=>{this.isLoading=false;},2000);
-    }
+                                }
+                                */
+                                    this.router.navigate(['/home/notifications']);
+                      
+                              }
+                              else 
+                                    this.error ='otp code isn\'t verify';
+                              
+                              }
+                              ,error:(err)=>{ this.error = err.message }} 
+                            );  
+                    }catch( e:any){
+                      this.error = e.message;
+                      console.log(e)
+                    }
 
   }
 

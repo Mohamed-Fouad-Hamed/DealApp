@@ -1,3 +1,13 @@
+export interface IAccountSignup{
+    account_type:number;
+    account_name:string;
+    firstName:string;
+    lastName:string;
+    email:string;
+    login:string;
+    password:string;
+    s_cut:string;
+}
 
 export interface ISignup{
     firstName:string;

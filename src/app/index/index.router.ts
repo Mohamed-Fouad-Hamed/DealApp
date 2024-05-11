@@ -31,6 +31,10 @@ export const routes: Routes = [
           loadComponent: () => import('../pages/verfiy-otp/verfiy-otp.page').then( m => m.VerfiyOtpPage)
         },
         {
+          path: 'verfiy-reset-password-otp/:id',
+          loadComponent: () => import('../pages/verfiy-reset-password-otp/verfiy-reset-password-otp.page').then( m => m.VerfiyResetPasswordOtpPage)
+        },
+        {
           path: 'newpassword/:id',
           loadComponent: () => import('../pages/newpassword/newpassword.page').then( m => m.NewpasswordPage)
         }
