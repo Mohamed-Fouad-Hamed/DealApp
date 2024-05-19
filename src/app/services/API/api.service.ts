@@ -1,12 +1,12 @@
 import { Injectable, inject } from "@angular/core";
-import { Platform } from "@ionic/angular/standalone";
+import { PlatformService } from "../PlatformService/PlatformService";
 
 @Injectable({
   providedIn: 'root'
 })
 export class APIService {
 
-  platform: Platform = inject(Platform);
+  private platformService = inject(PlatformService);
 
   private  host:string = ''; 
 
@@ -14,29 +14,42 @@ export class APIService {
 
   }
   
- initApiService(){
-
-  this.platform.ready().then((plt) => { 
-    
-    const isMobilAndroid = this.platform.is('mobile') && this.platform.is('android');
+async initApiService(){
+    /*
+      this.platform.ready().then((plt) => { 
+        
+        const isMobilAndroid = this.platform.is('mobile') && this.platform.is('android');
+          
+        if (isMobilAndroid) {
       
-    if (isMobilAndroid) {
-  
-       this.host = '10.0.2.2:8080' ;
-  
-    } else {
-  
-       this.host='localhost:8080';
-  
-    }
-  
-  });
+          this.host = '10.0.2.2:8080' ;
+      
+        } else {
+      
+          this.host='localhost:8080';
+      
+        }
+      
+      });
+    */
+   const platforms = [];
+   platforms.push("mobile");
+   platforms.push("android");
+   const isMobilAndroid = await this.platformService.isPlatform(platforms);
+   if (isMobilAndroid) {
+      
+    this.host = '10.0.2.2:8080' ;
 
- 
+  } else {
+
+    this.host='localhost:8080';
+
+  }
+
  }
 
  get AUTH_API():string{
-  const url =  'http://'+ this.host +'/';
+  const url =  `http://${this.host}/`;
   return url ;
 }
 

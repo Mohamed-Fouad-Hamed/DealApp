@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { delay } from 'rxjs/operators';
+import { delay, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { MessageResponse } from '../services/interfaces/MessageResponse';
-import { IAccountSignup, ICredential,ILogin,INewPassword,ISignup,ITokenLogin,IUniqueLogin,IVerifyOTP } from '../services/interfaces/Auth-Interfaces';
+import { IAccountResponse, IAccountSignup , ICredential , INewPassword , ISignup , ITokenLogin , IUniqueLogin , IUserResponse, IVerifyOTP } from '../services/interfaces/Auth-Interfaces';
 import { APIService } from './API/api.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, timer } from 'rxjs';
 import { IDBUser } from '../interfaces/DB_Models';
 
 const httpOptions = {
@@ -44,12 +44,62 @@ export class AuthenticationService {
     return this.authURL;
    }
 
-   userRegister(signUp:ISignup):Observable<MessageResponse>{
+   getUser(login:string) {
+    // debounce
+    const URL = this.API.apiHost;
+
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<IUserResponse>(`${URL}/user-login?id=${login}`)
+        })
+      );
+  }
+
+
+
+  getAccount(id:string) {
+    // debounce
+    const URL = this.API.apiHost;
+
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<IAccountResponse>(`${URL}/account-id?id=${id}`)
+        })
+      );
+  }
+
+userRegister(signUp:ISignup):Observable<MessageResponse>{
      
     return this.http.post<MessageResponse>(this.authURL + 'user-register', signUp , httpOptions).pipe(
            delay(100)
       );
  }
+
+ userUploadAvatar(formData:FormData):Observable<MessageResponse>{
+  return this.http.post<MessageResponse>(this.authURL + 'upload-user-avatar', formData ).pipe(
+         delay(100)
+    );
+}
+
+userUploadImage(formData:FormData):Observable<MessageResponse>{
+  return this.http.post<MessageResponse>(this.authURL + 'upload-user-image', formData ).pipe(
+         delay(100)
+    );
+}
+
+accountUploadLogo(formData:FormData):Observable<MessageResponse>{
+  return this.http.post<MessageResponse>(this.authURL + 'upload-account-logo', formData ).pipe(
+         delay(100)
+    );
+}
+
+accountUploadImage(formData:FormData):Observable<MessageResponse>{
+  return this.http.post<MessageResponse>(this.authURL + 'upload-account-image', formData ).pipe(
+         delay(100)
+    );
+}
 
  accountRegister(accountSignUp:IAccountSignup):Observable<MessageResponse>{
      

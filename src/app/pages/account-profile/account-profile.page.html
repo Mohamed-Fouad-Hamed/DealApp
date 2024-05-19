@@ -1,0 +1,26 @@
+<ion-content [fullscreen]="true">
+  <div class="image-container">
+    <div class="sector-top">
+      @if(imageUrl !== ''){
+        <img class="img-user-background" [src]="imageUrl"/>
+      }
+    </div>
+    <div class="sector-bottom"></div>
+    <img class="img-user-avatar" [src]="logoUrl"/>
+    <ion-fab  class="avatar-fab">
+      <ion-fab-button class="camera-button"  size="small" (click)="openModalLogo()" >
+        <ion-icon  name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab  class="image-fab">
+      <ion-fab-button class="camera-button"  size="small" (click)="openModalImage()" >
+        <ion-icon  name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+  <ion-grid>
+      <ion-row>
+        <ion-col offset="1" >{{currentAccount?.account_name}}  {{currentAccount?.account_type}}</ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>

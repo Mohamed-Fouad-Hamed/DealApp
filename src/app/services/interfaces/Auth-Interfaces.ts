@@ -46,5 +46,29 @@ export interface INewPassword{
     password:string;
 }
 
+export interface IUserResponse{
+      id:number  ;
+      firstName:string;
+      lastName:string;
+      email:string;
+      login:string;
+      s_cut:string;
+      token:string;
+      user_avatar:string | undefined;
+      user_image:string | undefined;
+      isOtpRequired:boolean;
+      account_id:number;
+      account_name:string;
+      account_logo:string;
+      account_image:string;
+}
+
+export interface IAccountResponse{
+     id:number;
+     account_type : string;
+     account_name : string;
+     account_logo : string;
+     account_image : string;
+}
 
 

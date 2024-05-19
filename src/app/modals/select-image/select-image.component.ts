@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {  Photo } from '@capacitor/camera';
-import { ModalController } from '@ionic/angular';
+import { IonicModule , ModalController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/Photos/PhotoService';
 import { finalize } from 'rxjs';
+import { CommonModule } from '@angular/common';
 //import {LoadingController} from '@ionic/angular';
 
 @Component({
   selector: 'app-select-image',
   templateUrl: './select-image.component.html',
   styleUrls: ['./select-image.component.scss'],
+  standalone:true,
+  imports: [IonicModule, CommonModule]
 })
 export class SelectImageComponent  implements OnInit {
 
@@ -38,15 +41,12 @@ export class SelectImageComponent  implements OnInit {
     this.imageData = undefined;
   }
 
-  private async setPhoto(photo:Photo | undefined){
-    
+  private async setPhoto(photo:Photo | undefined){ 
     if(!photo)
         return;
- 
     this.imageBlob  = await this.photoService.getBlob(photo);    
     const imageAsBase64 =  await this.photoService.ImageAsBase64(photo);
     this.photo = `${imageAsBase64.base64}`;
-
   }
 
   /*

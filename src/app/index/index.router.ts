@@ -12,6 +12,14 @@ export const routes: Routes = [
         }*/
         {
           path: '',
+          loadComponent: () => import('../pages/account-profile/account-profile.page').then( m => m.AccountProfilePage)
+        },
+        {
+          path: 'user-profile',
+          loadComponent: () => import('../pages/user-profile/user-profile.page').then( m => m.UserProfilePage)
+        },
+        {
+          path: 'account-register',
           loadComponent: () => import('../pages/account-register/account-register.page').then( m => m.AccountRegisterPage)
         },
         {

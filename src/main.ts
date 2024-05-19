@@ -7,8 +7,16 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
+
+//Multi Language
+import {TranslateModule , TranslateLoader} from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http:HttpClient){
+  return new TranslateHttpLoader(http,'./assets/i18n/','.json');
+}
 
 defineCustomElements(window);
 
@@ -21,6 +29,13 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes),
-    importProvidersFrom(IonicModule.forRoot({}))
+    importProvidersFrom(IonicModule.forRoot({})),
+    importProvidersFrom(TranslateModule.forRoot({
+      loader:{
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader ,
+        deps: [HttpClient]
+      }
+    }))
   ],
 });

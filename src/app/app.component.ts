@@ -2,10 +2,20 @@ import { Component ,inject } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
-import { cog, send ,notifications,arrowBack,arrowForward,eye , eyeOff } from 'ionicons/icons';
+import { 
+   cog,
+   send,
+   notifications,
+   arrowBack,
+   arrowForward,
+   eye, eyeOff,camera,
+   trashOutline,
+   createOutline
+  } from 'ionicons/icons';
 import { DatabaseService } from './services/database.service';
 import { PreviousRouteService } from './services/Navigation/PreviousRouteService';
 import { APIService } from './services/API/api.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -21,10 +31,11 @@ export class AppComponent {
   private databaseService = inject(DatabaseService);
   private previousRouteService = inject(PreviousRouteService);
   private apiService = inject(APIService);
+  private translateService = inject(TranslateService);
 
   constructor() {
 
-    addIcons({ cog , send , notifications , arrowBack , arrowForward ,eye , eyeOff });
+    addIcons({ cog , send , notifications , arrowBack , arrowForward ,eye , eyeOff ,camera ,trashOutline,createOutline });
 
     this.initApiService();
     
@@ -34,6 +45,10 @@ export class AppComponent {
 
   }
 
+  async initMultiLanguage(){
+    this.translateService.setDefaultLang('ar');
+    this.translateService.addLangs(['ar','en']);
+  }
 
   async initDatabase(){
     this.databaseService.initialzPlugin();
