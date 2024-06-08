@@ -1,14 +1,19 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button  [routerLink]="['/']" ></ion-back-button>
+    </ion-buttons>
     <ion-title>account-register</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  
   <div class="content-center">
     
     <form id="registerFormId"  #registerForm="ngForm" (ngSubmit)="onSubmit()" >
 
+      <!--
       @if( this.error ){
         <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
       }
@@ -16,10 +21,10 @@
       <ng-template #errorTemplate>
         <ion-text>{{ error }}</ion-text>
       </ng-template>
-
+      -->
       <ion-row>
         <ion-col>
-          <ion-select label="Select Account Type" 
+          <ion-select label="{{'register.accounttype' | translate}}" 
                       label-placement="floating" 
                       fill="outline"
                       required
@@ -29,10 +34,10 @@
                       name="account_type"
                       [value]="1"
                       >
-            <ion-select-option [value]="1">User</ion-select-option>
-            <ion-select-option [value]="2">Market</ion-select-option>
-            <ion-select-option [value]="3">Restaurant</ion-select-option>
-            <ion-select-option [value]="4">Medicine</ion-select-option>
+            <ion-select-option [value]="1" translate>user</ion-select-option>
+            <ion-select-option [value]="2" translate>market</ion-select-option>
+            <ion-select-option [value]="3" translate>restaurant</ion-select-option>
+            <ion-select-option [value]="4" translate>medicine</ion-select-option>
           </ion-select>
         </ion-col>
       </ion-row>
@@ -42,8 +47,8 @@
         <ion-col>
             <ion-input
               label-placement="floating" 
-              placeholder="Enter your Account Name"
-              label="Account name"
+              placeholder="{{'register.enteraccountname' | translate}}"
+              label="{{'register.accountname' | translate}}"
               counter="true"
               maxlength="50"
               [(ngModel)]="accountSignUp.account_name"
@@ -62,7 +67,7 @@
           }
     
           <ng-template #account_nameTemplateRequired>
-            <ion-text class="error-text" color="danger"><small>Account name is required</small></ion-text>
+            <ion-text class="error-text" color="danger"><small>{{'register.accountnamereq' | translate}}</small></ion-text>
           </ng-template>
      
         </ion-col>  
@@ -75,8 +80,8 @@
         <ion-col>
             <ion-input
               label-placement="floating" 
-              placeholder="Mobil number or email address"
-              label="Login name"
+              placeholder="{{'register.placeholderlogin' | translate}}"
+              label="{{'register.login' | translate}}"
               counter="true"
               maxlength="50"
               [(ngModel)]="accountSignUp.login"
@@ -110,15 +115,15 @@
           }
     
           <ng-template #loginTemplateRequired>
-            <ion-text class="error-text" color="danger"><small>Login name is required</small></ion-text>
+            <ion-text class="error-text" color="danger"><small>{{'register.loginreq' | translate}}</small></ion-text>
           </ng-template>
     
           <ng-template #loginTemplatePattern>
-            <ion-text class="error-text" color="danger"><small>Invalid mobil number or email address</small></ion-text>
+            <ion-text class="error-text" color="danger"><small>{{'register.loginreqpattern' | translate}}</small></ion-text>
           </ng-template>
     
           <ng-template #loginTemplateExists>
-            <ion-text class="error-text" color="danger"><small>Login name already exists</small></ion-text>
+            <ion-text class="error-text" color="danger"><small>{{'register.loginduplicate' | translate}}</small></ion-text>
           </ng-template>
 
         </ion-col>  
@@ -132,8 +137,8 @@
         <ion-col>
             <ion-input
               label-placement="floating" 
-              placeholder="Enter your first name"
-              label="First name"
+              placeholder="{{'register.enterfirstname' | translate}}"
+              label="{{'register.firstname' | translate}}"
               counter="true"
               maxlength="50"
               [(ngModel)]="accountSignUp.firstName"
@@ -152,7 +157,7 @@
             }
       
             <ng-template #firstNameTemplateRequired>
-              <ion-text class="error-text" color="danger"><small>First name is required</small></ion-text>
+              <ion-text class="error-text" color="danger"><small>{{'register.firstnamereq' | translate}}</small></ion-text>
             </ng-template>
 
         </ion-col>  
@@ -165,8 +170,8 @@
             <ion-col>
                 <ion-input
                   label-placement="floating" 
-                  placeholder="Enter a last name"
-                  label="Last name"
+                  placeholder="{{'register.enterlastname' | translate}}"
+                  label="{{'register.lastname' | translate}}"
                   counter="true"
                   maxlength="50"
                   [(ngModel)]="accountSignUp.lastName"
@@ -186,7 +191,7 @@
                 }
                 
                 <ng-template #lastNameTemplateRequired>
-                  <ion-text class="error-text" color="danger"><small>Last Name is required</small></ion-text>
+                  <ion-text class="error-text" color="danger"><small>{{'register.lastnamereq' | translate}}</small></ion-text>
                 </ng-template>
             </ion-col>  
 
@@ -199,8 +204,8 @@
         <ion-col>
             <ion-input
               label-placement="floating" 
-              placeholder="Enter an email"
-              label="Email"
+              placeholder="{{'register.enteremail' | translate}}"
+              label="{{'register.email' | translate}}"
               counter="true"
               maxlength="50"
               [(ngModel)]="accountSignUp.email"
@@ -220,7 +225,7 @@
             }
 
             <ng-template #emailTemplatePattern>
-              <ion-text class="error-text" color="danger"><small>Please enter valid email</small></ion-text>
+              <ion-text class="error-text" color="danger"><small>{{'register.emailpattern' | translate}}</small></ion-text>
             </ng-template>
             
         </ion-col>  
@@ -232,7 +237,7 @@
         <ion-col>
           <ion-select  aria-label="language" 
                       interface="popover" 
-                      placeholder="Select Language" 
+                      placeholder="{{'register.selectlanguage' | translate}}" 
                       [(ngModel)]="s_cut"
                       #s_cut="ngModel"
                       name="s_cut"
@@ -253,7 +258,7 @@
           }
 
           <ng-template #s_cutTemplateRequired>
-            <ion-text class="error-text" color="danger"><small>Please select your language</small></ion-text>
+            <ion-text class="error-text" color="danger"><small translate="register.languagereq"></small></ion-text>
           </ng-template>
 
         </ion-col>
@@ -267,8 +272,8 @@
         <ion-col>
           <ion-input
             label-placement="floating" 
-            placeholder="Enter a password"
-            label=" Password "
+            placeholder="{{'register.enterpassword' | translate}}"
+            label="{{'register.password' | translate}}"
             counter="true"
             maxlength="20"
             required
@@ -292,7 +297,7 @@
             }
           
             <ng-template #passwordTemplateRequired>
-              <ion-text class="error-text" color="danger"><small>Password is required</small> </ion-text>
+              <ion-text class="error-text" color="danger"><small translate>register.passwordreq</small> </ion-text>
             </ng-template>
           
         </ion-col>
@@ -303,7 +308,14 @@
 
       <ion-row>
         <ion-col>
-          <ion-button [disabled]="!registerForm.valid" type="submit" color="secondary" expand="block">Sign Up  @if(isLoading) {<ion-spinner></ion-spinner>}</ion-button>
+          <ion-button [disabled]="!registerForm.valid" 
+                      type="submit" 
+                      color="secondary" 
+                      expand="block" 
+                      translate="register.registeraccount" 
+                      class="submit-button">
+             @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+            </ion-button>
         </ion-col>
       </ion-row>
 

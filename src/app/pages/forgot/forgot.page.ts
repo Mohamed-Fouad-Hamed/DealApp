@@ -8,13 +8,15 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import {  IUniqueLogin } from 'src/app/services/interfaces/Auth-Interfaces';
 import { IsExistsValidatorDirective } from 'src/app/validations/directives/AsyncIsExistsDirective';
 import { finalize } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { APIService } from 'src/app/services/API/api.service';
 
 @Component({
   selector: 'app-forgot',
   templateUrl: './forgot.page.html',
   styleUrls: ['./forgot.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule  ,IonRouterLink , RouterLink , IsExistsValidatorDirective]
+  imports: [IonicModule, CommonModule, FormsModule  ,IonRouterLink , RouterLink , IsExistsValidatorDirective ,TranslateModule]
 })
 export class ForgotPage implements OnInit {
 
@@ -35,6 +37,7 @@ export class ForgotPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  
   }
 
   async  onSubmit() {

@@ -1,0 +1,206 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button  [routerLink]="['/']" ></ion-back-button>
+    </ion-buttons>
+    <ion-title>product</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form id="productFormId" class="center-content" #productForm="ngForm" (ngSubmit)="onSubmit()" >
+<!--
+    @if( this.error ){
+      <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
+    }
+  
+    <ng-template #errorTemplate>
+      <ion-text>{{ error }}</ion-text>
+    </ng-template>
+  -->
+      <ion-row >
+        <ion-col >
+          <div class="image-container">
+            <img class="product-image" [src]="imageUrl"/>
+            <ion-fab  class="image-fab">
+              <ion-fab-button class="camera-button"  size="small" (click)="openModalImage()" >
+                <ion-icon  name="camera"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row >
+        </ion-col>
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'product.placeholername' | translate}}"
+              label="{{'product.name' | translate}}"
+              counter="true"
+              maxlength="50"
+              [(ngModel)]="product.name"
+              #name="ngModel"
+              name="name"
+              required
+              color="secondary"
+              [ngModelOptions]="{ updateOn: 'blur' }"
+              IsUniqueValidate
+            >
+            @if (name!.pending){
+              <ion-spinner slot="end"></ion-spinner>
+            }
+
+          </ion-input>
+
+          @if (name!.invalid && (name!.touched || name!.dirty)) {
+
+            @if (name!.errors?.['required']) {
+              <ng-container [ngTemplateOutlet]="nameTemplateRequired"></ng-container>
+            }
+    
+            @if(name!.errors?.['notUnique']){
+              <ng-container [ngTemplateOutlet]="nameTemplateExists"></ng-container>
+            }
+            
+          }
+    
+          <ng-template #nameTemplateRequired>
+            <ion-text class="error-text" color="danger"><small>{{'product.namereq' | translate}}</small></ion-text>
+          </ng-template>
+
+          <ng-template #nameTemplateExists>
+            <ion-text class="error-text" color="danger"><small>{{'product.nameduplicate' | translate}}</small></ion-text>
+          </ng-template>
+
+        </ion-col>  
+
+      </ion-row>
+    
+      <ion-row >
+        
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'product.descr' | translate}}"
+              label="{{'product.descr' | translate}}"
+              counter="true"
+              maxlength="50"
+              [(ngModel)]="product.descr"
+              #descr="ngModel"
+              name="descr"
+              required
+              color="secondary"
+            ></ion-input>
+        </ion-col>  
+
+      </ion-row>
+
+
+      <ion-row >
+            
+            <ion-col>
+              <div class="ion-text-start">
+                <ion-checkbox labelPlacement="end"  
+                  [(ngModel)]="product.has_first"
+                  #has_first="ngModel"
+                  name="has_first" 
+                 >{{'product.firstunit' | translate}}</ion-checkbox>
+              </div>
+            </ion-col>  
+
+      </ion-row>
+
+      <ion-row >
+        
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              label="{{'product.firstunitname' | translate}}"
+              counter="true"
+              maxlength="30"
+              [(ngModel)]="product.first_unit"
+              #first_unit="ngModel"
+              name="first_unit"
+              color="secondary"
+            ></ion-input>
+        </ion-col>  
+
+      </ion-row>
+
+      <ion-row >
+        
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              label="{{'product.firstprice' | translate}}"
+              [(ngModel)]="product.first_price"
+              #first_price="ngModel"
+              name="first_price"
+              color="secondary"
+            ></ion-input>
+        </ion-col>  
+
+      </ion-row>
+      
+      <ion-row >
+            
+        <ion-col>
+          <div class="ion-text-start">
+            <ion-checkbox labelPlacement="end"  
+              [(ngModel)]="product.has_second"
+              #has_second="ngModel"
+              name="has_second" 
+             >{{'product.secondunit' | translate}}</ion-checkbox>
+          </div>
+        </ion-col>  
+
+  </ion-row>
+
+  <ion-row >
+    
+    <ion-col>
+        <ion-input
+          label-placement="floating" 
+          label="{{'product.secondunitname' | translate}}"
+          counter="true"
+          maxlength="30"
+          [(ngModel)]="product.second_unit"
+          #second_unit="ngModel"
+          name="second_unit"
+          color="secondary"
+        ></ion-input>
+    </ion-col>  
+
+  </ion-row>
+
+  <ion-row >
+    
+    <ion-col>
+        <ion-input
+          label-placement="floating" 
+          label="{{'product.secondprice' | translate}}"
+          [(ngModel)]="product.second_price"
+          #second_price="ngModel"
+          name="second_price"
+          color="secondary"
+        ></ion-input>
+    </ion-col>  
+
+  </ion-row>
+
+
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="!productForm.valid"
+                    type="submit" 
+                    color="secondary" 
+                    expand="block"
+                    translate="product.registerproduct"
+                    class="submit-button">
+             @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

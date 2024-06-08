@@ -43,6 +43,8 @@ export class AppComponent {
 
     this.initUrlService();
 
+    this.initMultiLanguage();
+
   }
 
   async initMultiLanguage(){

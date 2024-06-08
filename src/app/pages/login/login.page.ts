@@ -1,6 +1,6 @@
-import { Component, OnInit , inject } from '@angular/core';
+import { Component, OnInit , ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule , ReactiveFormsModule, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule, FormGroup, Validators, FormControl, NgForm } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
@@ -8,15 +8,19 @@ import { ICredential } from 'src/app/services/interfaces/Auth-Interfaces';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { forbiddenNameValidator } from 'src/app/validations/regexValidation';
+import { TranslateModule } from '@ngx-translate/core';
+import { RegexPatternDirective } from 'src/app/validations/directives/regexPatternDirective';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule,RouterLink,IonRouterLink]
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule , TranslateModule ,RouterLink,IonRouterLink , RegexPatternDirective]
 })
 export class LoginPage implements OnInit {
+
+  @ViewChild('loginForm') public loginFrm!: NgForm;
 
   private authService = inject(AuthenticationService);
 
@@ -32,8 +36,6 @@ export class LoginPage implements OnInit {
 
   hide = true;
 
-  form! : FormGroup ;
-
   submitted = false;
 
 
@@ -43,29 +45,15 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
 
-      this.form =  new FormGroup({
-        login: new FormControl( this.credential.login ,[Validators.required,Validators.maxLength(50),forbiddenNameValidator(/^([_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))|\d+$/)]),
-        password: new FormControl( this.credential.password,[Validators.required , Validators.maxLength(20),Validators.minLength(6)]),
-        rememberMe: new FormControl(this.credential.rememberMe)
-      });
 
-      this.form.valueChanges.subscribe(()=> {
-        console.log(this.form.get('login')?.errors)
-        })
   }
 
-get loginKey(){
-  return this.form.get('login');
-}
 
-get secretWord(){
-  return this.form.get('password');
-}
 
 async  onSubmit() {
     this.submitted = true;
 
-    if (this.form.invalid) {
+    if (this.loginFrm.invalid) {
       return;
     }
 
@@ -74,7 +62,7 @@ async  onSubmit() {
     try{
    
       await this.authService.login(
-            this.form.value
+            this.loginFrm.value
         ).subscribe({ next: (res) => {
 
           console.log(res)
@@ -116,12 +104,12 @@ async  onSubmit() {
       setInterval(()=>{this.isLoading=false;},2000);
     }
 
-    console.log(JSON.stringify(this.form.value, null, 2));
+  
   }
 
   onReset(): void {
     this.submitted = false;
-    this.form.reset();
+    this.loginFrm.reset();
   }
 
  

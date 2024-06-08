@@ -26,10 +26,52 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 
+.error-text{
+    position: absolute;
+    top: 63px;
+    margin: 0 auto;
+    font-size:small;
+}
+
+.submit-button{
+    position: relative;
+}
+
+.spinner-button  {
+    position: absolute;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.spinner-button:dir(rtl){
+    right: 10px;
+}
+
+.spinner-button:dir(ltr){
+    left: 10px;
+}
+
+
 .margin-content{
-    margin-left: 2rem;
-    margin-right: 2rem;
-    margin-top: 15rem;
+    margin: auto 50px;
+}
+
+@media screen and (max-width : 500px ){
+    .margin-content{
+        margin: auto 40px;
+    }
+}
+
+@media screen and (max-width : 450px ){
+    .margin-content{
+        margin: auto 30px;
+    }
+}
+
+@media screen and (max-width : 100px ){
+    .margin-content{
+        margin: auto 20px;
+    }
 }
 
 .center-content{

@@ -6,106 +6,114 @@
     <ion-title>Log In</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <form class="margin-content" [formGroup]="form" (ngSubmit)="onSubmit()">
+<ion-content [fullscreen]="true" >
+  <div class="login-content">
+    
+    <form class="login-form" id="loginFormId"  #loginForm="ngForm" (ngSubmit)="onSubmit()">
 
-   @if( this.error ){
-    <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
-  }
-  <ng-template #errorTemplate>
-    <ion-text>{{ error }}</ion-text>
-  </ng-template>
+        <ion-row >
+          
+          <ion-col>
+              <ion-input
+                label-placement="floating" 
+                placeholder="{{'register.placeholderlogin' | translate}}"
+                label="{{'register.login' | translate}}"
+                counter="true"
+                maxlength="50"
+                [(ngModel)]="credential.login"
+                #login="ngModel"
+                name="login"
+                required
+                color="secondary"
+                appRegexPattern="^([_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))|\d+$"
+              ></ion-input>
+              
+            @if (login!.touched && login!.invalid) {
 
-    <ion-row class="margin-top-item">
-      
-      <ion-col>
+              @if (login!.errors?.['required']) {
+                <ng-container [ngTemplateOutlet]="loginTemplateRequired"></ng-container>
+              }
+
+              @if (login!.errors?.['forbiddenName']!.value !== '') {
+                <ng-container [ngTemplateOutlet]="loginTemplatePattern"></ng-container>
+              }
+              
+            }
+
+            <ng-template #loginTemplateRequired>
+              <ion-text class="error-text" color="danger">{{'register.loginreq' | translate}}</ion-text>
+            </ng-template>
+
+            <ng-template #loginTemplatePattern>
+              <ion-text class="error-text" color="danger">{{'register.loginreqpattern' | translate}}</ion-text>
+            </ng-template>
+          </ion-col>  
+
+        </ion-row>
+
+        
+      <ion-row >
+        <ion-col>
           <ion-input
             label-placement="floating" 
-            placeholder="Enter an email or phone number"
-            label="Email Or Phone"
+            placeholder="{{'register.enterpassword' | translate}}"
+            label="{{'register.password' | translate}}"
             counter="true"
-            maxlength="50"
-            formControlName="login"
+            maxlength="20"
             required
+            [type]="hide ? 'password' : 'text'"
+            [(ngModel)]="credential.password"
+            #password="ngModel"
+            name="password"
+            minlength="6"
             color="secondary"
-          ></ion-input>
-      </ion-col>  
+          >
+          @if (password!.value !== '') {
+            <ion-icon slot="end" [name]="hide ? 'eye' : 'eye-off'" (click)="hide = !hide"></ion-icon>
+          }
+          </ion-input>
 
-    </ion-row>
-
-    @if (loginKey!.touched && loginKey!.invalid) {
-
-      @if (loginKey!.errors?.['required']) {
-        <ng-container [ngTemplateOutlet]="loginTemplateRequired"></ng-container>
-      }
-
-      @if (loginKey!.errors?.['forbiddenName']!.value !== '') {
-        <ng-container [ngTemplateOutlet]="loginTemplatePattern"></ng-container>
-       }
-      
-    }
-
-    <ng-template #loginTemplateRequired>
-      <ion-text color="danger">Login is required</ion-text>
-    </ng-template>
-
-    <ng-template #loginTemplatePattern>
-      <ion-text color="danger">Please enter valid login as email or phone number</ion-text>
-    </ng-template>
+          @if (password!.touched && password!.invalid) {
+            @if (password!.errors?.['required']) {
+              <ng-container [ngTemplateOutlet]="passwordTemplateRequired"></ng-container>
+            }
+          }
     
-  <ion-row class="margin-top-item">
-    <ion-col>
-      <ion-input
-        label-placement="floating" 
-        placeholder="Enter a password"
-        label=" Password "
-        counter="true"
-        maxlength="20"
-        required
-        [type]="hide ? 'password' : 'text'"
-        formControlName="password"
-        minlength="6"
-        color="secondary"
-      >
-      @if (secretWord!.value !== '') {
-        <ion-icon slot="end" [name]="hide ? 'eye' : 'eye-off'" (click)="hide = !hide"></ion-icon>
-      }
-      </ion-input>
-       
-    </ion-col>
+          <ng-template #passwordTemplateRequired>
+            <ion-text class="error-text" color="danger">{{'register.passwordreq' | translate}}</ion-text>
+          </ng-template>
+          
+        </ion-col>
 
-  </ion-row>
-  
-  @if (secretWord!.touched && secretWord!.invalid) {
-    @if (secretWord!.errors?.['required']) {
-      <ng-container [ngTemplateOutlet]="passwordTemplateRequired"></ng-container>
-    }
-  }
-
-  <ng-template #passwordTemplateRequired>
-    <ion-text color="danger"> Please enter a vaild password </ion-text>
-  </ng-template>
+      </ion-row>
+      
+   
 
 
-  <ion-row class="margin-top-item">
-    <ion-col>
-      <div class="ion-text-start">
-        <ion-checkbox labelPlacement="end"  formControlName="rememberMe" >Remember Me</ion-checkbox>
-      </div>
-    </ion-col>
-  </ion-row>
+      <ion-row >
+        <ion-col>
+          <div class="ion-text-start">
+            <ion-checkbox labelPlacement="end"  
+             [(ngModel)]="credential.rememberMe"
+            #rememberMe="ngModel"
+            name="rememberMe" 
+             >{{'login.rememberme' | translate}}</ion-checkbox>
+          </div>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="secondary" expand="block">Sign In  @if(isLoading) {<ion-spinner></ion-spinner>}</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <div class="ion-text-end">
-           <a [routerLink]="['/forgot']" class="small-text">Forgot Password?</a>
-        </div>
-      </ion-col>
-    </ion-row> 
-  </form>
+        <ion-row>
+          <ion-col>
+            <ion-button [disabled]="!loginForm.valid" type="submit" color="secondary" expand="block" class="submit-button">{{'login.submit' | translate}}  @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="ion-text-end">
+              <a [routerLink]="['/forgot']" class="small-text">{{'login.forgetpassword' | translate}}</a>
+            </div>
+          </ion-col>
+        </ion-row> 
+    </form>
+</div>
 </ion-content>

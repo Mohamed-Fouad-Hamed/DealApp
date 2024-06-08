@@ -17,9 +17,10 @@ import { IUserResponse } from 'src/app/services/interfaces/Auth-Interfaces';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
+
 export class UserProfilePage implements OnInit {
 
-  private login : string = '01110010908';
+  private login : string = '';
 
   private route = inject(ActivatedRoute);
 
@@ -52,8 +53,7 @@ export class UserProfilePage implements OnInit {
     this.route.paramMap.subscribe((params)=>{
       this.login = params.get('id') || '';
     });
-    
-    this.login='01110010908'
+ 
 
     this.authService.getUser(this.login).pipe(finalize(() => {
       console.log("  finally ... ")
@@ -79,7 +79,6 @@ export class UserProfilePage implements OnInit {
       this.avatarUrl = '';
         const formData:FormData = new FormData();
         const fileName = `avatar-user.${data.type.split('\/')[1]}`;
-        this.login='01110010908'
         formData.append('avatar',data,fileName);
         formData.append('id',this.login);
         this.authService.userUploadAvatar(formData).pipe(finalize(()=>{
@@ -111,7 +110,6 @@ export class UserProfilePage implements OnInit {
       this.imageUrl = '';
       const formData:FormData = new FormData();
         const fileName = `image-user.${data.type.split('\/')[1]}`;
-        this.login='01110010908'
         formData.append('image',data,fileName);
         formData.append('id',this.login);
         this.authService.userUploadImage(formData).pipe(finalize(()=>{

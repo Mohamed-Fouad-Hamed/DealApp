@@ -18,7 +18,7 @@ import { SelectImageComponent } from 'src/app/modals/select-image/select-image.c
 })
 export class AccountProfilePage implements OnInit {
 
-  private id : string = '1';
+  private id : string = '';
 
   private route = inject(ActivatedRoute);
 
@@ -27,7 +27,7 @@ export class AccountProfilePage implements OnInit {
   public imageUrl:string ='';
 
   public currentAccount?:IAccountResponse = {
-    id:0 ,
+    id : 0 ,
     account_type:'',
     account_name:'',
     account_logo :'',
@@ -42,13 +42,10 @@ export class AccountProfilePage implements OnInit {
 
   ngOnInit() {
 
-
     this.route.paramMap.subscribe((params)=>{
       this.id = params.get('id') || '' ;
     });
     
-    this.id = '1'
-
     this.authService.getAccount(this.id).pipe(finalize(() => {
       console.log("  finally ... ")
     })).subscribe(
@@ -75,7 +72,6 @@ export class AccountProfilePage implements OnInit {
       this.logoUrl = '';
         const formData:FormData = new FormData();
         const fileName = `logo-account.${data.type.split('\/')[1]}`;
-        this.id='1'
         formData.append('image',data,fileName);
         formData.append('id', this.id);
         this.authService.accountUploadLogo(formData).pipe(finalize(()=>{
@@ -107,7 +103,6 @@ export class AccountProfilePage implements OnInit {
       this.imageUrl = '';
       const formData:FormData = new FormData();
         const fileName = `image-account.${data.type.split('\/')[1]}`;
-        this.id='1'
         formData.append('image',data,fileName);
         formData.append('id',this.id);
         this.authService.accountUploadImage(formData).pipe(finalize(()=>{

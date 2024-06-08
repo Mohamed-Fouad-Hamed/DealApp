@@ -1,5 +1,5 @@
 import { Injectable , WritableSignal, signal } from '@angular/core';
-import { IDBUser } from '../interfaces/DB_Models';
+import { IDBUser } from '../../interfaces/DB_Models';
 import {CapacitorSQLite,SQLiteConnection,SQLiteDBConnection} from '@capacitor-community/sqlite';
 
 const DB_USERS = 'dbusers';

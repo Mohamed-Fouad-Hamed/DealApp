@@ -8,6 +8,7 @@ import { IonRouterLink } from '@ionic/angular/standalone';
 import { DatabaseService } from 'src/app/services/database.service';
 import { IVerifyOTP } from 'src/app/services/interfaces/Auth-Interfaces';
 import { finalize } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { finalize } from 'rxjs';
   templateUrl: './verfiy-otp.page.html',
   styleUrls: ['./verfiy-otp.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule ,IonRouterLink, RouterLink]
+  imports: [IonicModule, CommonModule, FormsModule ,IonRouterLink, RouterLink , TranslateModule]
 })
 export class VerfiyOtpPage implements OnInit {
 

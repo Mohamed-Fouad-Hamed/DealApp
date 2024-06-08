@@ -7,13 +7,14 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-verfiy-reset-password-otp',
   templateUrl: './verfiy-reset-password-otp.page.html',
   styleUrls: ['./verfiy-reset-password-otp.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule ,IonRouterLink, RouterLink]
+  imports: [IonicModule, CommonModule, FormsModule ,IonRouterLink, RouterLink,TranslateModule]
 })
 export class VerfiyResetPasswordOtpPage implements OnInit {
 

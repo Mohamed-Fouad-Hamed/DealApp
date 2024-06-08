@@ -10,6 +10,7 @@ export interface IAccountSignup{
 }
 
 export interface ISignup{
+    accountId:string;
     firstName:string;
     lastName:string;
     email:string;

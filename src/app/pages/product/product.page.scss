@@ -1,0 +1,35 @@
+.product-image{
+	position: absolute;
+    box-sizing: border-box;
+	border: 5px white solid;
+	border-radius: 10%;
+	overflow: hidden;
+	box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+	transform: translatey(0px);
+    object-fit: cover;
+    z-index: 2;
+}
+
+.image-container{
+    position:relative;
+    height:40vh;
+    width:100vw;
+ }
+
+
+.image-fab{
+    position: absolute;
+    left: calc( 10% + 105px );
+    bottom: 31%; 
+}
+
+
+.camera-button{
+    --background:#1a73b3;
+}
+
+.img-user-background{
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}

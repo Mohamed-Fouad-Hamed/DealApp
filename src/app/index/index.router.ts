@@ -6,16 +6,16 @@ export const routes: Routes = [
     path: '',
     component: IndexPage,
     children:[
-       /* {
+       {
             path: '',
             loadComponent: () => import('../pages/welcome/welcome.page').then((m) => m.WelcomePage)
-        }*/
+        },
         {
-          path: '',
+          path: 'account-profile/:id',
           loadComponent: () => import('../pages/account-profile/account-profile.page').then( m => m.AccountProfilePage)
         },
         {
-          path: 'user-profile',
+          path: 'user-profile/:id',
           loadComponent: () => import('../pages/user-profile/user-profile.page').then( m => m.UserProfilePage)
         },
         {
@@ -27,7 +27,7 @@ export const routes: Routes = [
             loadComponent: () => import('../pages/login/login.page').then((m) => m.LoginPage)
         },
         {
-            path: 'register',
+            path: 'register/:id',
             loadComponent: () => import('../pages/register/register.page').then((m) => m.RegisterPage)
         },
         {

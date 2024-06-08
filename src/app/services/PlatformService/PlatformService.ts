@@ -11,17 +11,12 @@ export class PlatformService {
   async isPlatform(platforms:any[]) {
     
     let bool:boolean = false;
-
-    this.platform.ready().then((plt) => {
         for(let _p of platforms){
             bool = this.platform.is(_p); 
             if(!bool)
                 break;
          }
-
-    });
-
-     return bool;
+         return bool;
   }
 
 

@@ -11,14 +11,6 @@
   <ion-header>
     <ion-toolbar>
       <ion-title>{{titleHomePage}}</ion-title> 
-      <ion-select  slot="start"  aria-label="language" 
-          interface="popover" (ionChange)="onLanguageChange($event)" value="ar">
-
-          @for (lang of appLanguages;track lang.name){
-          <ion-select-option [value]="lang?.key">  {{lang.transKey | translate}} </ion-select-option>
-          }
-
-      </ion-select>
       <ion-buttons slot="end">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>

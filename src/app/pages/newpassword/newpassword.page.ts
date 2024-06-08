@@ -7,13 +7,14 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ActivatedRoute, Router ,RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { MatchPasswordDirective } from '../../validations/directives/MatchPasswordDirective';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-newpassword',
   templateUrl: './newpassword.page.html',
   styleUrls: ['./newpassword.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule ,IonRouterLink, RouterLink , MatchPasswordDirective]
+  imports: [IonicModule, CommonModule, FormsModule ,IonRouterLink, RouterLink , MatchPasswordDirective,TranslateModule]
 })
 export class NewpasswordPage implements OnInit {
 
@@ -53,6 +54,7 @@ export class NewpasswordPage implements OnInit {
   async createNewPassword(){
 
     this.isLoading = true;
+    
     this.iNewPassword =  { login:this.login! , password: this.passwordForm.password } ;
     
     try{

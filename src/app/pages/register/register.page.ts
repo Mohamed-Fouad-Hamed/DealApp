@@ -2,25 +2,30 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl,ReactiveFormsModule, FormGroup, FormsModule, Validators, AbstractControl, ValidationErrors, NgForm } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LANGUAGES, Language } from 'src/app/services/interfaces/Languages';
 import { ISignup } from 'src/app/services/interfaces/Auth-Interfaces';
 import { RegexPatternDirective } from 'src/app/validations/directives/regexPatternDirective';
 import { IsUniqueValidatorDirective } from 'src/app/validations/directives/AsyncIsUniqueDirective';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,ReactiveFormsModule,IonRouterLink,RouterLink,RegexPatternDirective ,IsUniqueValidatorDirective]
+  imports: [IonicModule, CommonModule, FormsModule,ReactiveFormsModule,IonRouterLink,RouterLink,RegexPatternDirective ,IsUniqueValidatorDirective,TranslateModule]
 })
 
 export class RegisterPage implements OnInit {
 
   @ViewChild('registerForm') public registerFrm!: NgForm;
+
+  private id : string = '';
+
+  private route = inject(ActivatedRoute);
  
   private authService = inject(AuthenticationService);
 
@@ -34,14 +39,20 @@ export class RegisterPage implements OnInit {
 
   appLanguages:Language[] = [];
 
-  signUp:ISignup = {firstName:'',lastName:'',email:'',login:'',password:'',s_cut:''};
+  signUp:ISignup = { accountId:'', firstName:'',lastName:'',email:'',login:'',password:'',s_cut:''};
 
 
 
   constructor() { }
 
   ngOnInit() {
+    
+    this.route.paramMap.subscribe((params)=>{
+      this.id = params.get('id') || '' ;
+    });
+    
     this.appLanguages = LANGUAGES;
+
   }
 
 
@@ -55,7 +66,11 @@ export class RegisterPage implements OnInit {
       this.isLoading = true;
       
       try{
-     
+
+        this.registerFrm.setValue({accountId:this.id});
+
+        console.log(this.registerFrm.value)
+        
         await this.authService.userRegister(
               this.registerFrm.value
           ).subscribe({ next: (res) => {

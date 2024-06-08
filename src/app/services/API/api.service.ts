@@ -32,10 +32,14 @@ async initApiService(){
       
       });
     */
+
    const platforms = [];
+
    platforms.push("mobile");
    platforms.push("android");
+
    const isMobilAndroid = await this.platformService.isPlatform(platforms);
+   
    if (isMobilAndroid) {
       
     this.host = '10.0.2.2:8080' ;

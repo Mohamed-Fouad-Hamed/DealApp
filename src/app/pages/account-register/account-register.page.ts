@@ -10,13 +10,14 @@ import { IAccountSignup } from 'src/app/services/interfaces/Auth-Interfaces';
 import { RegexPatternDirective } from 'src/app/validations/directives/regexPatternDirective';
 import { IsUniqueValidatorDirective } from 'src/app/validations/directives/AsyncIsUniqueDirective';
 import { finalize } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account-register',
   templateUrl: './account-register.page.html',
   styleUrls: ['./account-register.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule ,ReactiveFormsModule,IonRouterLink,RouterLink,RegexPatternDirective ,IsUniqueValidatorDirective]
+  imports: [IonicModule, CommonModule, FormsModule ,ReactiveFormsModule,IonRouterLink,TranslateModule,RouterLink,RegexPatternDirective ,IsUniqueValidatorDirective]
 })
 export class AccountRegisterPage implements OnInit {
 
@@ -58,9 +59,6 @@ export class AccountRegisterPage implements OnInit {
       if (this.registerFrm.invalid) {
         return;
       }
-  
-      
-      console.log( this.registerFrm.value)
 
       this.isLoading = true;
       

@@ -2,11 +2,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { delay, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
-import { MessageResponse } from '../services/interfaces/MessageResponse';
-import { IAccountResponse, IAccountSignup , ICredential , INewPassword , ISignup , ITokenLogin , IUniqueLogin , IUserResponse, IVerifyOTP } from '../services/interfaces/Auth-Interfaces';
-import { APIService } from './API/api.service';
+import { MessageResponse } from '../interfaces/MessageResponse';
+import { IAccountResponse, IAccountSignup , ICredential , INewPassword , ISignup , ITokenLogin , IUniqueLogin , IUserResponse, IVerifyOTP } from '../interfaces/Auth-Interfaces';
+import { APIService } from '../API/api.service';
 import { BehaviorSubject, timer } from 'rxjs';
-import { IDBUser } from '../interfaces/DB_Models';
+import { IDBUser } from '../../interfaces/DB_Models';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -71,7 +71,6 @@ export class AuthenticationService {
   }
 
 userRegister(signUp:ISignup):Observable<MessageResponse>{
-     
     return this.http.post<MessageResponse>(this.authURL + 'user-register', signUp , httpOptions).pipe(
            delay(100)
       );
