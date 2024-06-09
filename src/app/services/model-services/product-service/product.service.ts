@@ -43,7 +43,7 @@ export class ProductService {
         );
     }
 
-  getProducts(){
+   getProducts(){
 
       const URL = this.API.apiHost;
 
@@ -105,37 +105,47 @@ export class ProductService {
         );
     }
 
-  getProductsByCategory(id:string){
+    getProductsByCategory(id:string){
 
+        const URL = this.API.apiHost;
+
+        return timer(100)
+          .pipe(
+            switchMap(() => {
+              return this.http.get<MessageResponse>(`${URL}/get-products-by-category?id=${id}`)
+            })
+          );
+      }
+
+    uploadProduct(product:IProductRequest):Observable<MessageResponse>{
+      
       const URL = this.API.apiHost;
-
-      return timer(100)
-        .pipe(
-          switchMap(() => {
-            return this.http.get<MessageResponse>(`${URL}/get-products-by-category?id=${id}`)
-          })
-        );
-    }
-
-  uploadProduct(product:IProductRequest):Observable<MessageResponse>{
-    
-    const URL = this.API.apiHost;
-    
-    return this.http.post<MessageResponse>(`${URL}/create-product`, product , httpOptions ).pipe(
-          delay(100)
-      );
-
-  }
-
-  uploadProductImage(formData:FormData):Observable<MessageResponse>{
-    
-    const URL = this.API.apiHost;
-    
-    return this.http.post<MessageResponse>(`${URL}/upload-product-image`, formData ).pipe(
+      
+      return this.http.post<MessageResponse>(`${URL}/create-product`, product , httpOptions ).pipe(
             delay(100)
         );
 
     }
+
+    uploadProductImage(formData:FormData):Observable<MessageResponse>{
+      
+      const URL = this.API.apiHost;
+      
+      return this.http.post<MessageResponse>(`${URL}/upload-product-image`, formData ).pipe(
+              delay(100)
+          );
+
+      }
+
+      uploadProductImageToListImages(formData:FormData):Observable<MessageResponse>{
+      
+            const URL = this.API.apiHost;
+            
+            return this.http.post<MessageResponse>(`${URL}/product-upload-to-list-images`, formData ).pipe(
+                    delay(100)
+                );
+  
+        }
 
   
 
