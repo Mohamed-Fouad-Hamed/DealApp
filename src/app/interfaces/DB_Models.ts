@@ -1,4 +1,4 @@
-export interface IStateRows{
+export interface IRowStates{
    pendingCount:number;
    acceptCount:number;
    rejectCount:number;
