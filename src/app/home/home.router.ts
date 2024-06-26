@@ -19,6 +19,14 @@ export const routes: Routes = [
             loadComponent: () => import('../pages/settings/settings.page').then((m) => m.SettingsPage)
         },
         {
+          path: 'category',
+          loadComponent: () => import('../pages/category/category.page').then((m) => m.CategoryPage)
+        },
+        {
+          path: 'product',
+          loadComponent: () => import('../pages/product/product.page').then((m) => m.ProductPage)
+        },
+        {
           path: '',
           redirectTo: '/home/notifications',
           pathMatch: 'full',

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 import { Router, RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { LANGUAGES, Language } from 'src/app/services/interfaces/Languages';

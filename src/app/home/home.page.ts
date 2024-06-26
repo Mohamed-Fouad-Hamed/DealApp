@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import {  IonRouterLink } from '@ionic/angular/standalone';
 import { AuthenticationService } from '../services/Auth-services/authentication.service';
 import { IDBUser } from '../interfaces/DB_Models';
+import { IUserResponse } from '../services/interfaces/Auth-Interfaces';
 
 
 
@@ -21,16 +22,36 @@ export class HomePage implements OnInit {
 
   private authService = inject(AuthenticationService);
   
-   user : IDBUser = { id : 0,login :'',name:'',token:'' } ;
+   user : IUserResponse = 
+   { 
+    id : 0,
+    firstName:'',
+    lastName:'',
+    email:'',
+    login:'',
+    s_cut:'',
+    token:'',
+    user_avatar:'',
+    user_image:'',
+    isOtpRequired:false,
+    account_id:0,
+    account_name:'',
+    account_logo:'',
+    account_image:'' 
+  } ;
 
    titleHomePage:string = 'Notification'
 
   constructor() { }
 
-  ngOnInit() {
-    this.authService.getAuthUser.subscribe((user)=>{
-      this.user = user
+  async ngOnInit() {
+  
+    this.authService.getUserAuth().subscribe((oUser)=>{
+      this.user = oUser;
+
     });
+    
+
   }
 
  

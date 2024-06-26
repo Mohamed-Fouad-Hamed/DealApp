@@ -17,21 +17,10 @@
       <ion-text>{{ error }}</ion-text>
     </ng-template>
   -->
-      <ion-row >
-        <ion-col >
-          <div class="image-container">
-            <img class="product-image" [src]="imageUrl"/>
-            <ion-fab  class="image-fab">
-              <ion-fab-button class="camera-button"  size="small" (click)="openModalImage()" >
-                <ion-icon  name="camera"></ion-icon>
-              </ion-fab-button>
-            </ion-fab>
-          </div>
-        </ion-col>
-      </ion-row>
+
 
       <ion-row >
-        </ion-col>
+        
         <ion-col>
             <ion-input
               label-placement="floating" 
@@ -45,7 +34,7 @@
               required
               color="secondary"
               [ngModelOptions]="{ updateOn: 'blur' }"
-              IsUniqueValidate
+              AsyncProductNameIsUniqueDirective
             >
             @if (name!.pending){
               <ion-spinner slot="end"></ion-spinner>
@@ -189,6 +178,15 @@
 
   </ion-row>
 
+  <ion-row>
+        
+    <ion-col>
+      <ion-label expand="full" (click)="openPopOver($event)">{{categoryName!.name}}</ion-label>
+    </ion-col>
+
+  </ion-row>
+
+
 
     <ion-row>
       <ion-col>
@@ -203,4 +201,12 @@
       </ion-col>
     </ion-row>
   </form>
+
+  <ion-toast
+    [isOpen]="isToastOpen"
+    message="{{'product.toastsave' | translate}}"
+    [duration]="3000"
+    (didDismiss)="setOpenToast(false)"
+  ></ion-toast>
+
 </ion-content>

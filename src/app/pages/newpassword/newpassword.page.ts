@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { INewPassword } from 'src/app/services/interfaces/Auth-Interfaces';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 import { ActivatedRoute, Router ,RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { MatchPasswordDirective } from '../../validations/directives/MatchPasswordDirective';

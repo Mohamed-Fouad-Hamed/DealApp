@@ -1,0 +1,12 @@
+<ion-toolbar>
+  <ion-searchbar animated="true" mode="md"  [debounce]="500" (ionInput)="searchbarInput($event)" ></ion-searchbar>
+</ion-toolbar>
+
+<ion-list>
+  <ion-item class="ion-border" *ngFor="let item of filteredItems; trackBy: trackItems" (click)="selectItem(item)" tappable>
+      <ion-avatar slot="start">
+          <img [src]="apiServer + item?.icon" />
+      </ion-avatar>
+      <ion-text > {{ item?.name }}</ion-text>
+  </ion-item>
+</ion-list>

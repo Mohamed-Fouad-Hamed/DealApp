@@ -19,31 +19,31 @@ export class ProductService {
 
   private API = inject(APIService);
   
-  productExists(id:string){
-      
-      const URL = this.API.apiHost;
+    productExists(id:string){
+        
+        const URL = this.API.apiHost;
 
-      return timer(100)
-        .pipe(
-          switchMap(() => {
-            return this.http.get<any>(`${URL}/product-name?id=${id}`)
-          })
-        );
-    }
+        return timer(100)
+          .pipe(
+            switchMap(() => {
+              return this.http.get<any>(`${URL}/product-name?id=${id}`)
+            })
+          );
+      }
 
-  getProduct(id:string){
+    getProduct(id:string){
 
-      const URL = this.API.apiHost;
+        const URL = this.API.apiHost;
 
-      return timer(100)
-        .pipe(
-          switchMap(() => {
-            return this.http.get<MessageResponse>(`${URL}/get-product?id=${id}`)
-          })
-        );
-    }
+        return timer(100)
+          .pipe(
+            switchMap(() => {
+              return this.http.get<MessageResponse>(`${URL}/get-product?id=${id}`)
+            })
+          );
+      }
 
-   getProducts(){
+    getProducts(){
 
       const URL = this.API.apiHost;
 
@@ -115,7 +115,7 @@ export class ProductService {
               return this.http.get<MessageResponse>(`${URL}/get-products-by-category?id=${id}`)
             })
           );
-      }
+    }
 
     uploadProduct(product:IProductRequest):Observable<MessageResponse>{
       
@@ -131,13 +131,13 @@ export class ProductService {
       
       const URL = this.API.apiHost;
       
-      return this.http.post<MessageResponse>(`${URL}/upload-product-image`, formData ).pipe(
+      return this.http.post<MessageResponse>(`${URL}/product-upload-image`, formData ).pipe(
               delay(100)
           );
 
-      }
+    }
 
-      uploadProductImageToListImages(formData:FormData):Observable<MessageResponse>{
+    uploadProductImageToListImages(formData:FormData):Observable<MessageResponse>{
       
             const URL = this.API.apiHost;
             
@@ -145,13 +145,26 @@ export class ProductService {
                     delay(100)
                 );
   
-        }
+    }
 
+    setProductAccepted(formData:FormData){
   
-
-   
-
-
-
+      const URL = this.API.apiHost;
+        
+      return this.http.post<MessageResponse>(`${URL}/set-product-accepted`, formData ).pipe(
+              delay(100)
+          );
+    
+    }
+    
+    setProductRejected(formData:FormData){
+      
+      const URL = this.API.apiHost;
+        
+      return this.http.post<MessageResponse>(`${URL}/set-product-rejected`, formData ).pipe(
+              delay(100)
+          );
+    
+    }
 
 }

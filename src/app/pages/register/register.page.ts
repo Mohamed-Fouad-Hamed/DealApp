@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl,ReactiveFormsModule, FormGroup, FormsModule, Validators, AbstractControl, ValidationErrors, NgForm } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule,  NgForm } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 import { LANGUAGES, Language } from 'src/app/services/interfaces/Languages';
 import { ISignup } from 'src/app/services/interfaces/Auth-Interfaces';
 import { RegexPatternDirective } from 'src/app/validations/directives/regexPatternDirective';
@@ -76,7 +76,7 @@ export class RegisterPage implements OnInit {
           ).subscribe({ next: (res) => {
            
             if(res.status === 200){
-                const userToken = res.entity.token ;
+      
                 this.router.navigate([`/verfiy-otp/${this.signUp.login}`]);
              }
             

@@ -1,12 +1,12 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule , ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { APIService } from 'src/app/services/API/api.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 import { IAccountResponse } from 'src/app/services/interfaces/Auth-Interfaces';
-import { finalize } from 'rxjs';
+import { Subscription, finalize } from 'rxjs';
 import { SelectImageComponent } from 'src/app/modals/select-image/select-image.component';
 
 @Component({
@@ -16,7 +16,7 @@ import { SelectImageComponent } from 'src/app/modals/select-image/select-image.c
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class AccountProfilePage implements OnInit {
+export class AccountProfilePage implements OnInit , OnDestroy{
 
   private id : string = '';
 
@@ -34,11 +34,22 @@ export class AccountProfilePage implements OnInit {
     account_image:''
   }
 
-  constructor( 
+  private subscription? : Subscription;
+  private logoSubscription? : Subscription;
+  private imageSubscription? : Subscription;
+
+  constructor(
     private apiService:APIService,
     private authService:AuthenticationService,
-    private modalCtrl: ModalController
-  ) { }
+    private modalCtrl: ModalController) { }
+
+
+  ngOnDestroy(): void {
+    this.subscription!.unsubscribe();
+    this.logoSubscription!.unsubscribe();
+    this.imageSubscription!.unsubscribe();
+  }
+
 
   ngOnInit() {
 
@@ -46,10 +57,10 @@ export class AccountProfilePage implements OnInit {
       this.id = params.get('id') || '' ;
     });
     
-    this.authService.getAccount(this.id).pipe(finalize(() => {
+   this.subscription = this.authService.getAccount(this.id).pipe(finalize(() => {
       console.log("  finally ... ")
     })).subscribe(
-      (res)=> {
+      (res:any)=> {
         this.currentAccount = res;
         this.logoUrl = `${this.apiService.apiHost}${this.currentAccount?.account_logo}` 
         this.imageUrl = `${this.apiService.apiHost}${this.currentAccount?.account_image}` ;
@@ -74,10 +85,10 @@ export class AccountProfilePage implements OnInit {
         const fileName = `logo-account.${data.type.split('\/')[1]}`;
         formData.append('image',data,fileName);
         formData.append('id', this.id);
-        this.authService.accountUploadLogo(formData).pipe(finalize(()=>{
+       this.logoSubscription = this.authService.accountUploadLogo(formData).pipe(finalize(()=>{
           console.log(' finally ... ')
         })).subscribe({
-          next:(res)=>{
+          next:(res:any)=>{
           this.currentAccount = res.entity;
           this.logoUrl = `${this.apiService.apiHost}${this.currentAccount?.account_logo}` 
         },error:(error:any)=>{
@@ -105,10 +116,10 @@ export class AccountProfilePage implements OnInit {
         const fileName = `image-account.${data.type.split('\/')[1]}`;
         formData.append('image',data,fileName);
         formData.append('id',this.id);
-        this.authService.accountUploadImage(formData).pipe(finalize(()=>{
+        this.imageSubscription = this.authService.accountUploadImage(formData).pipe(finalize(()=>{
           console.log(' finally ... ')
         })).subscribe({
-          next:(res)=>{
+          next:(res:any)=>{
           this.currentAccount = res.entity;
           this.imageUrl = `${this.apiService.apiHost}${this.currentAccount?.account_image}` 
         },error:(error:any)=>{

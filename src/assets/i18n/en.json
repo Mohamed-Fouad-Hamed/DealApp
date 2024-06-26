@@ -74,11 +74,19 @@
 	"product.image":"Product image",
 	"product.category":" Category",
 	"product.registerproduct":" Create Product ",
+	"product.toastsave":"The product has been registered successfully... awaiting as documentation",
 
 	"_comment":" Category screen ",
-	"category.placeholername":" Enter category name",
+	"category.name":" Category name",
+	"category.placeholdername":" Enter category name",
+	"category.namereq":" Category name is required",
+	"category.nameduplicate":"Category name is exists",
 	"category.descr":" Category description ",
+	"category.descrreq":"Description is required",
+	"category.placeholderdescr":" Enter Category description ",
 	"category.image":"Category image",
-	"category.account_type":" Account Type"
+	"category.account_type":" Account Type",
+	"category.buttonsubmit":"  Registration category ",
+	"category.toastsave":"The category has been registered successfully... awaiting as documentation"
 
 }

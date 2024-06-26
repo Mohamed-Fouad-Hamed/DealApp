@@ -16,7 +16,7 @@ export class PlatformService {
             if(!bool)
                 break;
          }
-         return bool;
+        return bool;
   }
 
 

@@ -1,18 +1,18 @@
 {
 	"app.title":" صفقه ",
 
-	"_comment":" ترجمه اللغات ",
+
 	"lang.english":"إنجليزى",
 	"lang.arabic":"عربى",
 
-	"_comment": "  بدء العمل ",
+
 	"start.welcome":" مرحباً بك ",
 	"start.login":" تسجيل الدخول ",
 	"start.accountregister":" إنشاء حساب جديد ",
 	"start.or":" أو ",
 	"start.hasaccount":"بالفعل يوجد حساب ؟",
 
-	"_comment":"  شاشة تسجيل الحساب و تسجيل الدخول و نسيت كلمة المرور و كلمة المرور لمرة واحدة",
+
 	"register.registeraccount":"تسجيل الحساب",
 	"register.accounttype":"نوع الحساب",
 	"user":"مستخدم",
@@ -59,7 +59,6 @@
 	"newpassword.notmatch":"كلمتين المرور غير متطابقتين",
 	"newpassword.createnewpassword":"إنشاء كلمة مرور جديدة",
 
-	"_comment":" واجهة الصنف ",
 	"product.name":" إسم الصنف",
 	"product.placeholername":"إكتب إسم الصنف ",
 	"product.namereq":"إسم الصنف مطلوب ",
@@ -74,12 +73,19 @@
 	"product.image":"صورة الصنف",
 	"product.category":" الفئة",
 	"product.registerproduct":" تسجيل الصنف ",
+	"product.toastsave":"تم تسجيل الصنف بنجاح ... فى إنتظار التوثيق",
 
-	"_comment":" واجهة الفئات ",
+	
 	"category.name":"إسم الفئة",
 	"category.placeholdername":" أكتب إسم الفئة",
+	"category.namereq":" إسم الفئة مطلوب",
+	"category.nameduplicate":" هذا الإسم مستخدم من قبل",
 	"category.descr":"وصف الفئة",
+	"category.placeholderdescr":"أكتب وصف الفئة ",
+	"category.descrreq":" الوصف مطلوب ",
 	"category.image":"صورة الفئة",
-	"category.account_type":"نوع الحساب"
+	"category.account_type":"نوع الحساب",
+	"category.buttonsubmit":" تسجيل فئة ",
+	"category.toastsave":"  تم تسجيل الفئة بنجاح ... فى إنتظار التوثيق "
 
 }

@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 import { ITokenLogin } from 'src/app/services/interfaces/Auth-Interfaces';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { DatabaseService } from 'src/app/services/database.service';
+import { DatabaseService } from 'src/app/services/Database-services/database.service';
 import { StartPage } from '../start/start.page';
 
 
@@ -55,6 +55,8 @@ export class WelcomePage implements OnInit {
   }
 
   ngOnInit() {
+
+    
    
     this.databaseService.fetchFirstUser().then((user)=>{
       
@@ -69,10 +71,8 @@ export class WelcomePage implements OnInit {
            if(res.status == 200){
   
              this.databaseService.updateUserById(''+user.id ,res.entity.token);
-
-             const userObservable = { id : user.id ,login:user.login,name:user.name, token: res.entity.token};
              
-             this.authService.setAuthUser(userObservable);
+             this.authService.setAuthUser(res.entity);
               
               this.router.navigate(['/home/notifications']);
             }

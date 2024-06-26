@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form id="productFormId" class="center-content" #productForm="ngForm" (ngSubmit)="onSubmit()" >
+  <form id="categoryFormId" class="center-content" #categoryFrm="ngForm" (ngSubmit)="onSubmit()" >
 <!--
     @if( this.error ){
       <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
@@ -23,50 +23,42 @@
         <ion-col>
             <ion-input
               label-placement="floating" 
-              placeholder="{{'register.placeholderlogin' | translate}}"
-              label="{{'register.login' | translate}}"
+              placeholder="{{'category.placeholdername' | translate}}"
+              label="{{'category.name' | translate}}"
               counter="true"
               maxlength="50"
-              [(ngModel)]="signUp.login"
-              #login="ngModel"
-              name="login"
+              [(ngModel)]="categoryRequest.name"
+              #name="ngModel"
+              name="name"
               required
               color="secondary"
-              appRegexPattern="^([_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))|\d+$"
               [ngModelOptions]="{ updateOn: 'blur' }"
-              IsUniqueValidate
+              CategoryNameIsUnique
             >
-            @if (login!.pending){
+            @if (name!.pending){
               <ion-spinner slot="end"></ion-spinner>
             }
 
           </ion-input>
-          @if (login!.invalid && (login!.touched || login!.dirty)) {
+          @if (name!.invalid && (name!.touched || name!.dirty)) {
 
-            @if (login!.errors?.['required']) {
-              <ng-container [ngTemplateOutlet]="loginTemplateRequired"></ng-container>
+            @if (name!.errors?.['required']) {
+              <ng-container [ngTemplateOutlet]="nameTemplateRequired"></ng-container>
             }
     
-            @if (login!.errors?.['forbiddenName']?.value !== '' && !login!.errors?.['notUnique']) {
-              <ng-container [ngTemplateOutlet]="loginTemplatePattern"></ng-container>
-            }
     
-            @if(login!.errors?.['notUnique']){
-              <ng-container [ngTemplateOutlet]="loginTemplateExists"></ng-container>
+            @if(name!.errors?.['notUnique']){
+              <ng-container [ngTemplateOutlet]="nameTemplateExists"></ng-container>
             }
             
           }
     
-          <ng-template #loginTemplateRequired>
-            <ion-text class="error-text" color="danger"><small>{{'register.loginreq' | translate}}</small></ion-text>
+          <ng-template #nameTemplateRequired>
+            <ion-text class="error-text" color="danger"><small>{{'category.namereq' | translate}}</small></ion-text>
           </ng-template>
     
-          <ng-template #loginTemplatePattern>
-            <ion-text class="error-text" color="danger"><small>{{'register.loginreqpattern' | translate}}</small></ion-text>
-          </ng-template>
-    
-          <ng-template #loginTemplateExists>
-            <ion-text class="error-text" color="danger"><small>{{'register.loginduplicate' | translate}}</small></ion-text>
+          <ng-template #nameTemplateExists>
+            <ion-text class="error-text" color="danger"><small>{{'category.nameduplicate' | translate}}</small></ion-text>
           </ng-template>
 
         </ion-col>  
@@ -80,185 +72,70 @@
         <ion-col>
             <ion-input
               label-placement="floating" 
-              placeholder="{{'register.enterfirstname' | translate}}"
-              label="{{'register.firstname' | translate}}"
+              placeholder="{{'category.placeholderdescr' | translate}}"
+              label="{{'category.descr' | translate}}"
               counter="true"
-              maxlength="50"
-              [(ngModel)]="signUp.firstName"
-              #firstName="ngModel"
-              name="firstName"
+              maxlength="100"
+              [(ngModel)]="categoryRequest.descr"
+              #descr="ngModel"
+              name="descr"
               required
               color="secondary"
             ></ion-input>
 
-            @if ( firstName!.invalid && ( firstName!.dirty || firstName!.touched)) {
+            @if ( descr!.invalid && ( descr!.dirty || descr!.touched)) {
 
-              @if (firstName!.errors?.['required']) {
-                <ng-container [ngTemplateOutlet]="firstNameTemplateRequired"></ng-container>
+              @if (descr!.errors?.['required']) {
+                <ng-container [ngTemplateOutlet]="descrTemplateRequired"></ng-container>
               }
               
             }
       
-            <ng-template #firstNameTemplateRequired>
-              <ion-text class="error-text" color="danger"><small>{{'register.firstnamereq' | translate}}</small></ion-text>
+            <ng-template #descrTemplateRequired>
+              <ion-text class="error-text" color="danger"><small>{{'category.descrreq' | translate}}</small></ion-text>
             </ng-template>
 
         </ion-col>  
 
       </ion-row>
-
-
-      <ion-row >
-            
-            <ion-col>
-                <ion-input
-                  label-placement="floating" 
-                  placeholder="{{'register.enterlastname' | translate}}"
-                  label="{{'register.lastname' | translate}}"
-                  counter="true"
-                  maxlength="50"
-                  [(ngModel)]="signUp.lastName"
-                  #lastName="ngModel"
-                  name="lastName"
-                  required
-                  color="secondary"
-                ></ion-input>
-
-                          
-                @if (lastName!.invalid && (lastName!.touched || lastName!.dirty)) {
-
-                  @if (lastName!.errors?.['required']) {
-                    <ng-container [ngTemplateOutlet]="lastNameTemplateRequired"></ng-container>
-                  }
-                  
-                }
-                
-                <ng-template #lastNameTemplateRequired>
-                  <ion-text class="error-text" color="danger"><small>{{'register.lastnamereq' | translate}}</small></ion-text>
-                </ng-template>
-            </ion-col>  
-
-      </ion-row>
-
-
-
-      <ion-row >
-        
-        <ion-col>
-            <ion-input
-              label-placement="floating" 
-              placeholder="{{'register.enteremail' | translate}}"
-              label="{{'register.email' | translate}}"
-              counter="true"
-              maxlength="50"
-              [(ngModel)]="signUp.email"
-              #email="ngModel"
-              name="email"
-              email
-              color="secondary"
-            ></ion-input>
-
-            
-            @if (email!.invalid && (email!.touched || email!.dirty)) {
-
-              @if (email!.errors?.['email']) {
-                <ng-container [ngTemplateOutlet]="emailTemplatePattern"></ng-container>
-              }
-
-            }
-
-            <ng-template #emailTemplatePattern>
-              <ion-text class="error-text" color="danger"><small>{{'register.emailpattern' | translate}}</small></ion-text>
-            </ng-template>
-            
-        </ion-col>  
-
-      </ion-row>
-
-
       <ion-row>
         <ion-col>
-          <ion-select  aria-label="language" 
-                      interface="popover" 
-                      placeholder="{{'register.selectlanguage' | translate}}" 
-                      [(ngModel)]="s_cut"
-                      #s_cut="ngModel"
-                      name="s_cut"
+          <ion-select label="{{'category.account_type' | translate}}" 
+                      label-placement="floating" 
+                      fill="outline"
                       required
-                        >
-
-            @for (lang of appLanguages;track lang.name){
-              <ion-select-option [value]="lang?.key">  {{ lang.name }} </ion-select-option>
-            }
-
+                      [(ngModel)]="categoryRequest.account_type"
+                      #account_type="ngModel"
+                      color="secondary"
+                      name="account_type"
+                      [value]="1"
+                      >
+            <ion-select-option [value]="1" translate>user</ion-select-option>
+            <ion-select-option [value]="2" translate>market</ion-select-option>
+            <ion-select-option [value]="3" translate>restaurant</ion-select-option>
+            <ion-select-option [value]="4" translate>medicine</ion-select-option>
           </ion-select>
-          @if (s_cut!.invalid && (s_cut!.touched || s_cut!.dirty)) {
-
-            @if (s_cut!.errors?.['required']) {
-              <ng-container [ngTemplateOutlet]="s_cutTemplateRequired"></ng-container>
-            }
-    
-          }
-
-          <ng-template #s_cutTemplateRequired>
-            <ion-text class="error-text" color="danger"><small translate="register.languagereq"></small></ion-text>
-          </ng-template>
-
         </ion-col>
-      </ion-row>
-
-
-
-     
-
-      <ion-row >
-        <ion-col>
-          <ion-input
-            label-placement="floating" 
-            placeholder="{{'register.enterpassword' | translate}}"
-            label="{{'register.password' | translate}}"
-            counter="true"
-            maxlength="20"
-            required
-            [type]="hide ? 'password' : 'text'"
-            [(ngModel)]="signUp.password"
-            #password="ngModel"
-            name="password"
-            minlength="6"
-            color="secondary"
-          >
-          @if (password!.value !== '') {
-            <ion-icon slot="end" [name]="hide ? 'eye' : 'eye-off'" (click)="hide = !hide"></ion-icon>
-          }
-          </ion-input>
-
-                
-            @if (password!.invalid && (password!.touched || password!.dirty)) {
-              @if (password!.errors?.['required']) {
-                <ng-container [ngTemplateOutlet]="passwordTemplateRequired"></ng-container>
-              }
-            }
-          
-            <ng-template #passwordTemplateRequired>
-              <ion-text class="error-text" color="danger"><small translate>register.passwordreq</small> </ion-text>
-            </ng-template>
-          
-        </ion-col>
-    
       </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-button [disabled]="!registerForm.valid"
+        <ion-button [disabled]="!categoryFrm.valid"
                     type="submit" 
                     color="secondary" 
                     expand="block"
-                    translate="register.registeraccount"
+                    translate="category.buttonsubmit"
                     class="submit-button">
              @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
         </ion-button>
       </ion-col>
     </ion-row>
   </form>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    message="{{'category.toastsave' | translate}}"
+    [duration]="3000"
+    (didDismiss)="setOpenToast(false)"
+  ></ion-toast>
 </ion-content>
 

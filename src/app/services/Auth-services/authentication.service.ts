@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { delay, switchMap } from 'rxjs/operators';
+import { debounceTime, delay, first, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { MessageResponse } from '../interfaces/MessageResponse';
 import { IAccountResponse, IAccountSignup , ICredential , INewPassword , ISignup , ITokenLogin , IUniqueLogin , IUserResponse, IVerifyOTP } from '../interfaces/Auth-Interfaces';
 import { APIService } from '../API/api.service';
-import { BehaviorSubject, timer } from 'rxjs';
+import { BehaviorSubject, from, timer } from 'rxjs';
 import { IDBUser } from '../../interfaces/DB_Models';
+import { AuthStorageService } from './auth-storage.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,27 +22,75 @@ export class AuthenticationService {
  private http = inject(HttpClient);
 
  private API = inject(APIService);
+
+ private authStoreService = inject(AuthStorageService);
  
  private authURL:string ='';
 
- private userInfo = new BehaviorSubject<IDBUser>({ id : 0,login :'',name:'',token:'' });
+ private observableUser : IUserResponse = { 
+  id : 0,
+  firstName:'',
+  lastName:'',
+  email:'',
+  login:'',
+  s_cut:'',
+  token:'',
+  user_avatar:'',
+  user_image:'',
+  isOtpRequired:false,
+  account_id:0,
+  account_name:'',
+  account_logo:'',
+  account_image:'' 
+}
 
- private userObservable$:Observable<IDBUser> = this.userInfo.asObservable();
+ private userInfo = new BehaviorSubject<IUserResponse>(this.observableUser);
+
+ private userObservable$:Observable<IUserResponse> = this.userInfo.asObservable();
+
+ private _isAuthenticate: boolean = false;
 
   constructor() {
     this.authURL = this.API.AUTH_API;
    }
 
-   setAuthUser(user :IDBUser){
-    this.userInfo.next(user);
+   setAuthentication( auth:boolean ){
+    this._isAuthenticate = auth;
    }
 
-   get getAuthUser(): Observable<IDBUser>{
+   get getAuthenticate(){
+    return this._isAuthenticate;
+  }
+
+   logOut(){
+    this.setAuthentication(false);
+    this.userInfo.next(this.observableUser);
+    this.authStoreService.clear();
+   }
+
+   setAuthUser(user :IUserResponse){
+
+      this.authStoreService.saveUser(user).then(()=> {
+        this.authStoreService.getUser().then(
+          (oUser) => { this.userInfo.next(oUser);})
+        });
+
+   }
+
+   get getUserObservable(): Observable<IUserResponse>{
       return this.userObservable$;
    }
 
+   getUserAuth(){
+      return from(this.authStoreService.getUser()).pipe(shareReplay(1)) ;
+   }
+
+   getUserPromise(){
+    return this.authStoreService.getUser();
+   }
+
    get authUrl():string{
-    return this.authURL;
+       return this.authURL;
    }
 
    getUser(login:string) {

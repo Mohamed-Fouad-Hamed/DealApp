@@ -1,0 +1,20 @@
+<ion-content [fullscreen]="true">
+  <div class="category-container">
+   
+    <img class="img-category" [src]="imageUrl"/>
+
+    <ion-fab  class="image-fab">
+      <ion-fab-button class="camera-button"  size="small" (click)="openModalImage()" >
+        <ion-icon  name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+  <ion-grid >
+      <ion-row  class="ion-align-items-center">
+        <ion-col>{{currentCategory.name}}</ion-col>
+      </ion-row>
+      <ion-row  class="ion-align-items-center">
+        <ion-col>{{currentCategory.descr}} </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>

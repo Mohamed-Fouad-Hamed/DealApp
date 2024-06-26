@@ -11,23 +11,22 @@ export interface IDBUser{
     token:string;
 }
 
-export interface ICategoryPost{
+export interface ICategoryRequest{
     id:number;
     name:string;
     descr:string;
     account_type:string;
 }
 
-export interface ICategoryGet{
+export interface ICategoryResponse{
     id:number;
     name:string;
     descr:string;
     img:string;
-    account_type:string;
+    accountType:string;
 }
 
 export interface IProductRequest{
-    id:number;
     name:string;
     descr:string;
     has_first:boolean;
@@ -49,6 +48,5 @@ export interface IProductResponse{
     has_second:boolean;
     second_unit:string;
     second_price:number;
-    category_id:number;
     product_image:string;
 }

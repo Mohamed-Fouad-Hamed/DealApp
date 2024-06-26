@@ -1,15 +1,16 @@
-import { Component, OnInit , ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit , ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule , ReactiveFormsModule, FormGroup, Validators, FormControl, NgForm } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule, NgForm } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { ICredential } from 'src/app/services/interfaces/Auth-Interfaces';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { DatabaseService } from 'src/app/services/database.service';
-import { forbiddenNameValidator } from 'src/app/validations/regexValidation';
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
+//import { DatabaseService } from 'src/app/services/Database-services/database.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { RegexPatternDirective } from 'src/app/validations/directives/regexPatternDirective';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-login',
@@ -18,15 +19,17 @@ import { RegexPatternDirective } from 'src/app/validations/directives/regexPatte
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule , TranslateModule ,RouterLink,IonRouterLink , RegexPatternDirective]
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit , OnDestroy{
 
   @ViewChild('loginForm') public loginFrm!: NgForm;
+
+  private subscription!: Subscription;
 
   private authService = inject(AuthenticationService);
 
   private router = inject(Router);
 
-  private databaseService = inject(DatabaseService);
+ // private databaseService = inject(DatabaseService);
   
   public credential : ICredential = {login:'',password:'',rememberMe:false};
 
@@ -41,7 +44,9 @@ export class LoginPage implements OnInit {
 
 
   constructor() { 
-}
+   
+  }
+
 
   ngOnInit() {
 
@@ -61,16 +66,14 @@ async  onSubmit() {
     
     try{
    
-      await this.authService.login(
+      this.subscription = this.authService.login(
             this.loginFrm.value
         ).subscribe({ next: (res) => {
-
-          console.log(res)
          
           if(res.status == 201){
 
               const userToken = res.entity.token ;
-            
+            /*
               const users = this.databaseService.getUsers();
             
               if(users().length > 0){
@@ -88,8 +91,14 @@ async  onSubmit() {
                 this.databaseService.addUser(curLogin , userName , userToken);
                 
                 this.error="insert"
-
               }
+             */
+
+              this.authService.setAuthentication(true);
+              this.authService.setAuthUser(res.entity);
+
+              const {id} = res?.entity;
+
               this.router.navigate(['/home/notifications']);
           }
           
@@ -112,12 +121,10 @@ async  onSubmit() {
     this.loginFrm.reset();
   }
 
- 
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+ }
 
-  loginBlur(){
-   // console.log(this.inputLogin.nativeElement.value);
-
-  }
 
 }

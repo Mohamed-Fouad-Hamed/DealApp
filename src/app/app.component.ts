@@ -12,11 +12,11 @@ import {
    trashOutline,
    createOutline
   } from 'ionicons/icons';
-import { DatabaseService } from './services/database.service';
+import { DatabaseService } from './services/Database-services/database.service';
 import { PreviousRouteService } from './services/Navigation/PreviousRouteService';
 import { APIService } from './services/API/api.service';
 import { TranslateService } from '@ngx-translate/core';
-
+import { AuthStorageService } from './services/Auth-services/auth-storage.service';
 
 
 register();
@@ -32,6 +32,7 @@ export class AppComponent {
   private previousRouteService = inject(PreviousRouteService);
   private apiService = inject(APIService);
   private translateService = inject(TranslateService);
+  private authStorageService = inject(AuthStorageService);
 
   constructor() {
 
@@ -40,6 +41,8 @@ export class AppComponent {
     this.initApiService();
     
     this.initDatabase();
+
+    this.initAuthStorageService();
 
     this.initUrlService();
 
@@ -62,6 +65,10 @@ export class AppComponent {
 
   async initApiService(){
     this.apiService.initApiService();
+  }
+
+  async initAuthStorageService(){
+    await this.authStorageService.init();
   }
 }
 

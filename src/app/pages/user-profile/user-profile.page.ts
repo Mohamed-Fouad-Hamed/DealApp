@@ -1,11 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule , ModalController } from '@ionic/angular';
 import { SelectImageComponent } from 'src/app/modals/select-image/select-image.component';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs';
+import { Subscription, finalize } from 'rxjs';
 import { APIService } from 'src/app/services/API/api.service';
 import { IUserResponse } from 'src/app/services/interfaces/Auth-Interfaces';
 
@@ -18,7 +18,7 @@ import { IUserResponse } from 'src/app/services/interfaces/Auth-Interfaces';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 
-export class UserProfilePage implements OnInit {
+export class UserProfilePage implements OnInit, OnDestroy {
 
   private login : string = '';
 
@@ -43,10 +43,21 @@ export class UserProfilePage implements OnInit {
     account_image: ''
   };
 
+  private subscription? : Subscription;
+  private avatarSubscription? : Subscription;
+  private imageSubscription? : Subscription;
+
   constructor(
     private apiService:APIService,
     private authService:AuthenticationService,
     private modalCtrl: ModalController) { }
+
+
+  ngOnDestroy(): void {
+    this.subscription!.unsubscribe();
+    this.avatarSubscription!.unsubscribe();
+    this.imageSubscription!.unsubscribe();
+  }
 
  async  ngOnInit() {
 
@@ -55,7 +66,7 @@ export class UserProfilePage implements OnInit {
     });
  
 
-    this.authService.getUser(this.login).pipe(finalize(() => {
+  this.subscription = this.authService.getUser(this.login).pipe(finalize(() => {
       console.log("  finally ... ")
     })).subscribe(
       (res)=> {
@@ -81,7 +92,7 @@ export class UserProfilePage implements OnInit {
         const fileName = `avatar-user.${data.type.split('\/')[1]}`;
         formData.append('avatar',data,fileName);
         formData.append('id',this.login);
-        this.authService.userUploadAvatar(formData).pipe(finalize(()=>{
+      this.avatarSubscription =  this.authService.userUploadAvatar(formData).pipe(finalize(()=>{
           console.log(' finally ... ')
         })).subscribe({
           next:(res)=>{
@@ -112,7 +123,7 @@ export class UserProfilePage implements OnInit {
         const fileName = `image-user.${data.type.split('\/')[1]}`;
         formData.append('image',data,fileName);
         formData.append('id',this.login);
-        this.authService.userUploadImage(formData).pipe(finalize(()=>{
+      this.imageSubscription =  this.authService.userUploadImage(formData).pipe(finalize(()=>{
           console.log(' finally ... ')
         })).subscribe({
           next:(res)=>{

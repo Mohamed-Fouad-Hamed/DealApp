@@ -4,7 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 import {  IUniqueLogin } from 'src/app/services/interfaces/Auth-Interfaces';
 import { IsExistsValidatorDirective } from 'src/app/validations/directives/AsyncIsExistsDirective';
 import { finalize } from 'rxjs';

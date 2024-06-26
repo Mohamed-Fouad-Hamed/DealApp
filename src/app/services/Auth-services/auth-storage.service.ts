@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -6,74 +7,97 @@ import { Injectable } from '@angular/core';
 
 export class AuthStorageService {
 
+ private storage$: Storage | null = null;
+
+
   TOKEN_KEY:string = '';
   USER_KEY:string = '';
   USER_MENUS:string = '';
   COMPANY_KEY:string = '';
   LANGUAGE_KEY:string = '';
-
  
-   constructor() {
+ 
+   constructor(private storage:Storage) {
      this.TOKEN_KEY = 'auth-token';
      this.USER_KEY = 'auth-user';
      this.USER_MENUS = 'user-menus';
      this.COMPANY_KEY = 'company-key';
      this.LANGUAGE_KEY = 'language-key';
     }
+
+    async init(){
+      const storage = await this.storage.create();
+      this.storage$ = storage ;
+    }
+
+    async set(key:string,value:any){
+      const valueOfKey = await this.storage$?.set(key,value);
+    }
+
+    async get(key:string){
+      const valueOfKey = await this.storage$?.get(key);
+      return valueOfKey;
+    }
+
+    async remove(key:string){
+      let valueOfKey = await this.storage$?.remove(key);
+    }
+
+    async clear(){
+      let result = this.storage$?.clear();
+    }
+
+    async keys(){
+      let result = this.storage$?.keys();
+      return result;
+    }
  
-   signOut() {
-     window.sessionStorage.clear();
+   async signOut() {
+     await this.clear();
    }
  
-   public saveToken(token: string) {
-     window.sessionStorage.removeItem(this.TOKEN_KEY);
-     window.sessionStorage.setItem(this.TOKEN_KEY, token);
+   public async saveToken(token: string) {
+     await this.set(this.TOKEN_KEY, token);
    }
  
-   public getToken(): string | null {
-     return sessionStorage.getItem(this.TOKEN_KEY) ;
+   public async getToken() {
+     const token = await this.get(this.TOKEN_KEY);
+     return token;
    }
  
-   public saveUser(user:any) {
-     window.sessionStorage.removeItem(this.USER_KEY);
-     window.sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
+   public async  saveUser(user:any) {
+     const authUser = await  this.set(this.USER_KEY, JSON.stringify(user));
    }
  
-   public getUser() {
-     const user : string | null = sessionStorage.getItem(this.USER_KEY);
-     return JSON.parse( user || '');
+   public async getUser(){
+    const user = await this.get(this.USER_KEY);
+    return user ? JSON.parse(user) : null;
    }
  
-   public saveMenus(menus: any[]) {
-     window.sessionStorage.removeItem(this.USER_MENUS);
-     window.sessionStorage.setItem(this.USER_MENUS, JSON.stringify(menus));
+   public async saveMenus(menus: any[]) {
+    await this.set(this.USER_MENUS, JSON.stringify(menus));
    }
  
-   public getMenus() : any[] {
-     const menus : string | null = sessionStorage.getItem(this.USER_MENUS);
+   public async getMenus()  {
+     const menus = await this.get(this.USER_MENUS);
      return JSON.parse(menus || '');
    }
  
-   public saveCompany(company: any) {
-     window.sessionStorage.removeItem(this.COMPANY_KEY);
-     window.sessionStorage.setItem(this.COMPANY_KEY, JSON.stringify(company));
+   public async saveCompany(company: any) {
+    await this.set(this.COMPANY_KEY, JSON.stringify(company));
    }
  
-   public getCompany() : any {
-     const company : string | null = sessionStorage.getItem(this.COMPANY_KEY);
+   public async getCompany()  {
+     const company = await this.get(this.COMPANY_KEY);
      return JSON.parse(company || '' );
    }
  
-   public saveLanguage(lang: any) {
-     window.sessionStorage.removeItem(this.LANGUAGE_KEY);
-     window.sessionStorage.setItem(this.LANGUAGE_KEY, JSON.stringify(lang));
+   public async saveLanguage(lang: any) {
+     await this.set(this.LANGUAGE_KEY, JSON.stringify(lang));
    }
  
-   public getLanguage(): any {
-     const language : string | null = sessionStorage.getItem(this.LANGUAGE_KEY);
+   public async getLanguage(){
+     const language = await this.get(this.LANGUAGE_KEY);
      return JSON.parse(language || '');
    }
- 
-
- 
 }
