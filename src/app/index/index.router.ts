@@ -64,6 +64,10 @@ export const routes: Routes = [
         {
           path: 'product-profile/:id',
           loadComponent: () => import('../pages/product-profile/product-profile.page').then( m => m.ProductProfilePage)
+        },
+        {
+          path: 'account-product-list/:accountid',
+          loadComponent: () => import('../pages/account-product-list/account-product-list.page').then( m => m.AccountProductListPage)
         }
     ]
   }

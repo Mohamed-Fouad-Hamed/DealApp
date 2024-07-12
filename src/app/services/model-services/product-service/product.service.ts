@@ -6,13 +6,11 @@ import { delay, switchMap } from 'rxjs/operators';
 import { IProductRequest } from 'src/app/interfaces/DB_Models';
 import { MessageResponse } from '../../interfaces/MessageResponse';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductService {
 
   private http = inject(HttpClient);
@@ -29,7 +27,8 @@ export class ProductService {
               return this.http.get<any>(`${URL}/product-name?id=${id}`)
             })
           );
-      }
+    
+        }
 
     getProduct(id:string){
 
@@ -39,6 +38,18 @@ export class ProductService {
           .pipe(
             switchMap(() => {
               return this.http.get<MessageResponse>(`${URL}/get-product?id=${id}`)
+            })
+          );
+      }
+
+      getProductsByName(name:string){
+
+        const URL = this.API.apiHost;
+
+        return timer(100)
+          .pipe(
+            switchMap(() => {
+              return this.http.get<MessageResponse>(`${URL}/get-products-like-name?name=${name}`)
             })
           );
       }
@@ -121,7 +132,7 @@ export class ProductService {
       
       const URL = this.API.apiHost;
       
-      return this.http.post<MessageResponse>(`${URL}/create-product`, product , httpOptions ).pipe(
+      return this.http.post<MessageResponse>(`${URL}/create-product`, product , this.API.headerJsonType ).pipe(
             delay(100)
         );
 

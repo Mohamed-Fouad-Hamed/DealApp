@@ -1,9 +1,17 @@
 import { Injectable, inject } from "@angular/core";
 import { PlatformService } from "../PlatformService/PlatformService";
+import { HttpHeaders } from "@angular/common/http";
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class APIService {
 
   private platformService = inject(PlatformService);
@@ -59,6 +67,10 @@ async initApiService(){
 
 get apiHost() : string{
    return `http://${this.host}`;
+}
+
+get headerJsonType() {
+   return httpOptions;
 }
 
 

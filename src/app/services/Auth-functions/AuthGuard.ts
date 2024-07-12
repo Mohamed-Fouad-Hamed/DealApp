@@ -1,7 +1,5 @@
 import { inject } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import {  Observable, ObservableInput, from } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
 import { AuthenticationService } from '../Auth-services/authentication.service';
 
 

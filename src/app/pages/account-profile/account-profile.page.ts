@@ -34,6 +34,7 @@ export class AccountProfilePage implements OnInit , OnDestroy{
     account_image:''
   }
 
+  private subscriptionRoute?:Subscription;
   private subscription? : Subscription;
   private logoSubscription? : Subscription;
   private imageSubscription? : Subscription;
@@ -45,6 +46,7 @@ export class AccountProfilePage implements OnInit , OnDestroy{
 
 
   ngOnDestroy(): void {
+    this.subscriptionRoute!.unsubscribe();
     this.subscription!.unsubscribe();
     this.logoSubscription!.unsubscribe();
     this.imageSubscription!.unsubscribe();
@@ -53,7 +55,7 @@ export class AccountProfilePage implements OnInit , OnDestroy{
 
   ngOnInit() {
 
-    this.route.paramMap.subscribe((params)=>{
+     this.subscriptionRoute = this.route.paramMap.subscribe((params)=>{
       this.id = params.get('id') || '' ;
     });
     

@@ -3,11 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { IonicModule , ModalController ,PopoverController} from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { APIService } from 'src/app/services/API/api.service';
-import { SelectImageComponent } from 'src/app/modals/select-image/select-image.component';
 import { IProductRequest, IProductResponse } from 'src/app/interfaces/DB_Models';
 import { ProductService } from 'src/app/services/model-services/product-service/product.service';
-import { Subscription, finalize, map, switchMap } from 'rxjs';
+import { Subscription, finalize, map } from 'rxjs';
 import {  Router, RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { SingleItem } from 'src/app/types/types';
@@ -81,18 +79,19 @@ export class ProductPage implements OnInit , OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.subscription!.unsubscribe();
-    this.categorySubscription!.unsubscribe();
+   if(this.subscription) this.subscription!.unsubscribe();
+    if(this.categorySubscription) this.categorySubscription!.unsubscribe();
   }
 
   ngOnInit() {
     this.categorySubscription = this.categoryService.getCategories()
                                     .pipe(map((categories:any) => {
-                                      const _categories : SingleItem [] = categories.map((category:any)=>{ const _category : SingleItem =  { id:category.id,name:category.name,icon:category.img } ; 
-                                       return _category; 
-                                      });
-                                       
-                                       return _categories;
+                                          const _categories : SingleItem [] = 
+                                          categories.map((category:any) => { const _category : SingleItem =  { id:category.id,name:category.name,icon:category.img } ; 
+                                          return _category; 
+                                          });
+                                          
+                                          return _categories;
                                        }))
                                     .subscribe((categories)=>{  
                                                 this.mItems = categories ; 
@@ -106,7 +105,7 @@ export class ProductPage implements OnInit , OnDestroy {
     if (this.productFrm.invalid) {
       return;
     }
-    console.log( this.product );
+  
     this.isLoading = true;
     try{
    
@@ -123,9 +122,9 @@ export class ProductPage implements OnInit , OnDestroy {
         .subscribe({ next: (res) => {
          
           if(res.status === 200){
-            const{id} = res.entity;
-            this.setOpenToast(true)
-            setTimeout(()=> {this.router.navigate([`/product-profile/${id}`])},2000)
+                const{id} = res.entity;
+                this.setOpenToast(true)
+                setTimeout(()=> {this.router.navigate([`/product-profile/${id}`])},2000)
            }
           
          }

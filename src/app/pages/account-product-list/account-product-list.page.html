@@ -1,0 +1,96 @@
+
+<ion-header>
+  
+  <ion-toolbar>
+
+    <ion-buttons >
+      <ion-button [disabled]="accountProduct" id="select-items" >{{'app.newitem' | translate}}</ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">{{ 'accountproduct.accountproductmenu' | translate }}</ion-title>
+  
+    <ion-buttons slot="end">
+      <ion-back-button  [routerLink]="['/home/notifications']" ></ion-back-button>
+    </ion-buttons>
+ 
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
+  </ion-toolbar>
+
+  @if (accountProduct) {
+    <ion-toolbar>
+      <ion-text>{{ accountProduct!.product_name }}</ion-text>
+    </ion-toolbar>
+}
+</ion-header>
+
+<ion-content color="light">
+
+  <ng-template #accountProductFormTemplate let-accountId="currentAccountId" let-accountProduct="currentAccountProduct"  >
+ 
+    <account-product-form-component 
+             [Account]="accountId" 
+             [AccountProduct]="accountProduct"
+             (saveEventEmitter)="accountProductSaved($event)"
+             (cancelEventEmitter)="cancelAccountProductDailog()"
+              >
+    </account-product-form-component>
+
+  </ng-template>
+
+  @if (accountProduct) {
+      <ng-container 
+        *ngTemplateOutlet="accountProductFormTemplate;context:accountProductCtx">
+      </ng-container>
+  }
+
+  <ng-template #accountProductsList >
+
+    <ion-list [inset]="true">
+      <ion-item [button]="true" class="ion-border" *ngFor="let product of filteredProducts ; trackBy: trackItems" (click)="viewDetail(product)">
+        <ion-avatar slot="start">
+          <img [src]="apiServer! + product?.product_image" />
+        </ion-avatar>
+        <ion-text>{{ product.product_name }}</ion-text>
+        @if(product?.notUpdate){
+          <ion-text slot="end"  color="danger"><small>{{'accountproduct.productaddedtemporary' | translate}}</small></ion-text>
+        }
+      </ion-item>
+    </ion-list>
+
+  </ng-template>
+
+  @if (!accountProduct) {
+    <ng-container 
+      [ngTemplateOutlet]="accountProductsList">
+    </ng-container>
+}
+</ion-content>
+
+<ion-modal trigger="select-items" #modal (willDismiss)="onWillDismiss($event)">
+  <ng-template>
+    <app-multi-selection-search
+      class="ion-page"
+      title="{{ 'single_selection_searchbox.selectitem' | translate }}"
+      [items]="items"
+      (searchEmit)="searchValueEmit($event)"
+      (selectionChange)="itemSelected($event)"
+      (selectionCancel)="modal.dismiss()"
+    ></app-multi-selection-search>
+  </ng-template>
+
+ <!--
+  <ng-template>
+    <app-single-selection-search
+      class="ion-page"
+      title="Select item"
+      [items]="items"
+      (searchEmit)="searchValueEmit($event)"
+      (selectionChange)="itemSelected($event)"
+      (selectionCancel)="modal.dismiss()"
+    ></app-single-selection-search>
+  </ng-template>
+ --> 
+</ion-modal>

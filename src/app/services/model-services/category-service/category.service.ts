@@ -1,13 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { APIService } from '../../API/api.service';
 import { Observable, delay, switchMap, timer } from 'rxjs';
 import { MessageResponse } from '../../interfaces/MessageResponse';
 import { ICategoryRequest, ICategoryResponse } from 'src/app/interfaces/DB_Models';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+
 
 @Injectable({
   providedIn: 'root'
@@ -121,7 +119,7 @@ export class CategoryService {
       
     const URL = this.API.apiHost;
     
-    return this.http.post<MessageResponse>(`${URL}/create-category`, category , httpOptions ).pipe(
+    return this.http.post<MessageResponse>(`${URL}/create-category`, category , this.API.headerJsonType ).pipe(
           delay(100)
       );
 

@@ -1,0 +1,130 @@
+<div class="account-product-main">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+        <div class="account-product-container">
+   
+          <img class="img-account-product" [src]="imageUrl"/>
+      
+        </div> 
+
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <form id="accountProductFormId" class="account-product-form" #accountProductForm="ngForm" (ngSubmit)="onSubmit()" >
+
+          <ion-grid>
+            <ion-row >   
+                  <ion-col>
+                    <div class="ion-text-start">
+                      <ion-checkbox labelPlacement="end"  
+                        [(ngModel)]="product.has_first"
+                        #has_first="ngModel"
+                        name="has_first" 
+                      >{{'product.firstunit' | translate}}</ion-checkbox>
+                    </div>
+                  </ion-col>  
+        
+            </ion-row>
+          
+            <ion-row >
+              
+              <ion-col>
+                <div class="ion-text-start">
+                  <ion-input
+                    label-placement="floating" 
+                    label="{{'product.firstprice' | translate}}"
+                    [(ngModel)]="product.first_price"
+                    #first_price="ngModel"
+                    name="first_price"
+                    color="secondary"
+                    [disabled]="!has_first.value"
+                  ></ion-input>
+                </div>  
+              </ion-col>
+              
+              <ion-col>
+                <div class="ion-text-end">
+                  <ion-text>{{'product.firstunitname' | translate}}</ion-text>
+                  <ion-text> : </ion-text>
+                  <ion-text>{{AccountProduct?.first_unit}}</ion-text>
+                </div>  
+              </ion-col>  
+        
+            </ion-row>
+            
+            <ion-row >
+                  
+              <ion-col>
+                <div class="ion-text-start">
+                  <ion-checkbox labelPlacement="end"  
+                    [(ngModel)]="product.has_second"
+                    #has_second="ngModel"
+                    name="has_second"
+                  >{{'product.secondunit' | translate}}</ion-checkbox>
+                </div>
+              </ion-col>  
+        
+        </ion-row>
+        
+        <ion-row >
+          
+          <ion-col>
+            <div class="ion-text-start">
+              <ion-input
+                label-placement="floating" 
+                label="{{'product.secondprice' | translate}}"
+                [(ngModel)]="product.second_price"
+                #second_price="ngModel"
+                name="second_price"
+                color="secondary"
+                [disabled]="!has_second.value"
+              ></ion-input>
+            </div>  
+          </ion-col> 
+
+          <ion-col>
+            <div class="ion-text-end">
+              <ion-text>{{'product.secondunitname' | translate}}</ion-text>
+              <ion-text> : </ion-text>
+              <ion-text>{{AccountProduct?.second_unit}}</ion-text>
+            </div>  
+          </ion-col>   
+        
+        </ion-row>
+        
+          <ion-row>
+            <ion-col >
+              <ion-button [disabled]="!accountProductForm.valid"
+                          type="submit" 
+                          color="secondary" 
+                          expand="block"
+                          translate="product.registerproduct"
+                          class="submit-button">
+                  @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+              </ion-button>
+            </ion-col>
+            <ion-col >
+              <ion-button 
+                          (click)="cancel()"
+                          color="danger" 
+                          expand="block"
+                          translate="app.cancel"
+                          class="submit-button">
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </form>
+
+      </ion-col>
+    
+
+    </ion-row>
+  </ion-grid>
+
+ 
+</div>

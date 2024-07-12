@@ -1,3 +1,36 @@
-<p>
-  single-selection-search works!
-</p>
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button [disabled]="!selectedItem" (click)="confirmChanges()">{{'single_selection_searchbox.additem' | translate}}</ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">{{ 'single_selection_searchbox.selectitem' | translate }}</ion-title>
+  
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelChanges()">{{ 'single_selection_searchbox.cancel' | translate }}</ion-button>
+    </ion-buttons>
+ 
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInput($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" class="ion-padding">
+
+  <ion-list id="modal-list"  >
+    <ion-radio-group [compareWith]="compareWith" (ionChange)="selectItem($event)">
+      <ion-item  class="ion-border" *ngFor="let item of items ; trackBy: trackItems" [disabled]="item?.exists">
+        <ion-avatar slot="start">
+          <img [src]="apiServer + item?.icon" />
+        </ion-avatar>
+        <ion-radio [value]="item">{{ item?.name }}</ion-radio>
+        @if(item?.exists){
+           <ion-text  color="danger"><small>{{'accountproduct.addnotallow' | translate}}</small></ion-text>
+        }
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+</ion-content>

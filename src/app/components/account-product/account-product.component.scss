@@ -1,0 +1,28 @@
+.account-product-main{
+    margin: 25px;
+}
+
+.account-product-container{
+  display:  flex;
+  justify-items: center;  
+  margin: 0 auto;
+ 
+ }
+
+.img-account-product {
+    width: 250px;
+	height: 250px;
+    margin: 0 auto;
+	box-sizing: border-box;
+	border: 3px white solid;
+	border-radius: 15%;
+	overflow: hidden;
+	box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+	transform: translatey(0px);
+    object-fit: cover;
+    z-index: 2;
+  }
+
+  .account-product-form{
+    margin: 50px auto;
+  }

@@ -58,7 +58,7 @@ export class CategoryPage implements OnInit , OnDestroy{
   constructor(   ) { }
 
   ngOnDestroy(): void {
-   this.subscription!.unsubscribe();
+    if( this.subscription) this.subscription!.unsubscribe();
   }
 
   ngOnInit() {

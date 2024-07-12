@@ -1,5 +1,9 @@
 {
 	"app.title":" صفقه ",
+	"app.search":" بحث ",
+	"app.cancel":"إلغاء",
+	"app.newitem":"جديد",
+	"app.product":" المنتج",
 
 
 	"lang.english":"إنجليزى",
@@ -86,6 +90,14 @@
 	"category.image":"صورة الفئة",
 	"category.account_type":"نوع الحساب",
 	"category.buttonsubmit":" تسجيل فئة ",
-	"category.toastsave":"  تم تسجيل الفئة بنجاح ... فى إنتظار التوثيق "
+	"category.toastsave":"  تم تسجيل الفئة بنجاح ... فى إنتظار التوثيق ",
+
+	"accountproduct.addnotallow":"  تم إضافة المنتج من قبل لايسمح بالتكرار",
+	"accountproduct.productaddedtemporary":"تم اضافة هذا المنتج مؤقتا لحين تعديل أسعاره",
+	"accountproduct.accountproductmenu":" منتجاتى",
+
+	"single_selection_searchbox.additem":" إضافة ",
+	"single_selection_searchbox.selectitem":" إختيار  ",
+	"single_selection_searchbox.cancel":"إلغاء"
 
 }

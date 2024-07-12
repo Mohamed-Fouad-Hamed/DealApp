@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {  Photo } from '@capacitor/camera';
 import { IonicModule , ModalController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/Photos/PhotoService';
-import { finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
 //import {LoadingController} from '@ionic/angular';
 

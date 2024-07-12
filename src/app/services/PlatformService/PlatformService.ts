@@ -4,6 +4,7 @@ import { Platform } from "@ionic/angular/standalone";
 @Injectable({
   providedIn: 'root'
 })
+
 export class PlatformService {
 
   platform: Platform = inject(Platform);

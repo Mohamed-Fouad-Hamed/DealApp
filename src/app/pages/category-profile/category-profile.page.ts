@@ -40,8 +40,8 @@ export class CategoryProfilePage implements OnInit ,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription!.unsubscribe();
-    this.imageSubscription!.unsubscribe();
+    if( this.subscription) this.subscription!.unsubscribe();
+    if( this.imageSubscription) this.imageSubscription!.unsubscribe();
   }
 
  async ngOnInit() {

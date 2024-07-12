@@ -50,3 +50,12 @@ export interface IProductResponse{
     second_price:number;
     product_image:string;
 }
+
+export interface IAccountProduct{
+    accountId : number;
+    productId : number;
+    has_first : boolean;
+    first_price : number;
+    has_second : boolean;
+    second_price : number;
+}

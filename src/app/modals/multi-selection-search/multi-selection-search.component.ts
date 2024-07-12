@@ -1,12 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { IonicModule ,IonInput } from '@ionic/angular';
+
+import { APIService } from 'src/app/services/API/api.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core'; 
 import { Item } from 'src/app/types/types';
 
 @Component({
   selector: 'app-multi-selection-search',
   templateUrl: './multi-selection-search.component.html',
   styleUrls: ['./multi-selection-search.component.scss'],
+  standalone:true,
+  imports: [IonicModule, CommonModule,TranslateModule]
 })
-export class MultiSelectionSearchComponent  implements OnInit {
+export class MultiSelectionSearchComponent  implements OnInit,AfterViewInit {
 
   @Input() items: Item[] = [];
   @Input() selectedItems: string[] = [];
@@ -14,13 +21,26 @@ export class MultiSelectionSearchComponent  implements OnInit {
 
   @Output() selectionCancel = new EventEmitter<void>();
   @Output() selectionChange = new EventEmitter<string[]>();
+  @Output() searchEmit = new EventEmitter<string>();
 
-  filteredItems: Item[] = [];
+  @ViewChild('inputSearch') input!: IonInput;
+
   workingSelectedValues: string[] = [];
 
+  apiServer:string = '';
+
+  constructor(private api:APIService){}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.input.setFocus();
+    }, 500);
+  }
+
+
   ngOnInit() {
-    this.filteredItems = [...this.items];
     this.workingSelectedValues = [...this.selectedItems];
+    this.apiServer = this.api.apiHost;
   }
 
   trackItems(index: number, item: Item) {
@@ -36,34 +56,10 @@ export class MultiSelectionSearchComponent  implements OnInit {
   }
 
   searchbarInput(ev:any) {
-    this.filterList(ev.target.value);
+    this.searchEmit.emit(ev.target.value);
   }
 
-  /**
-   * Update the rendered view with
-   * the provided search query. If no
-   * query is provided, all data
-   * will be rendered.
-   */
-  filterList(searchQuery: string | undefined) {
-    /**
-     * If no search query is defined,
-     * return all options.
-     */
-    if (searchQuery === undefined) {
-      this.filteredItems = [...this.items];
-    } else {
-      /**
-       * Otherwise, normalize the search
-       * query and check to see which items
-       * contain the search query as a substring.
-       */
-      const normalizedQuery = searchQuery.toLowerCase();
-      this.filteredItems = this.items.filter((item) => {
-        return item.text.toLowerCase().includes(normalizedQuery);
-      });
-    }
-  }
+ 
 
   isChecked(value: string) {
     return this.workingSelectedValues.find((item) => item === value);
