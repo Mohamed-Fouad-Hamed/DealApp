@@ -6,7 +6,7 @@
     </ion-card-header>
   
     <ion-card-content class="card-content">
-      <ion-img class="img-selected" *ngIf="photo" [src]="photo"></ion-img>
+      <img class="img-selected" id="photoTaked" #photoTaked *ngIf="photo" [src]="photo"/>
       <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
         @if(photo===''){
         <ion-fab-button   size="small" (click)="selectImageFromCamera()">

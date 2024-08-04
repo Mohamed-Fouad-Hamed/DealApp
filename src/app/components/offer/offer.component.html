@@ -1,3 +1,132 @@
-<p>
-  offer works!
-</p>
+<div class="offer-container">
+  <form id="accountOfferFormId" class="account-offer-form" #accountOfferForm="ngForm" (ngSubmit)="onSubmit()" >
+    <ion-grid>
+
+         <ion-row >
+            <ion-col >
+                <div class="ion-text-start">
+                    <ion-input
+                      label-placement="floating" 
+                      label="{{'accountoffer.off_name' | translate}}"
+                      [(ngModel)]="accountOfferReq.off_name"
+                      #off_name="ngModel"
+                      name="off_name"
+                      color="secondary"
+                    ></ion-input>
+                  </div>  
+            </ion-col>
+         </ion-row>
+         <ion-row>
+            <ion-col >
+                <ion-list>
+                  <ion-item id="open-modal-offer-date">
+                    <ion-label><small>{{'accountoffer.o_date' | translate}}</small></ion-label>
+                    <ion-note slot="end">{{ o_dateString }}</ion-note>
+                  </ion-item>
+                  <ion-modal trigger="open-modal-offer-date" [cssClass]="'bottom-end'">
+                    <ng-template>
+                      <ion-content>
+                          <ion-datetime
+                            presentation="date-time"
+                            #o_date
+                            [value]="o_dateValue"
+                            name="o_date"
+                            size="cover"
+                            (ionChange)="oDateChanged(o_date.value)"
+                          >
+                          <ion-buttons slot="buttons">
+                            <ion-button slot="start" (click)="oDateConfirm()" color="primary">Select</ion-button>
+                            <ion-button slot="end" (click)="oDateCancel()">Cancel</ion-button>
+                          </ion-buttons>
+                          
+                        </ion-datetime>
+                      </ion-content>
+                    </ng-template> </ion-modal
+                ></ion-list>
+            </ion-col>
+         </ion-row>
+
+         <ion-row >
+          <ion-col >
+            <ion-list>
+              <ion-item id="open-modal-startAt">
+                <ion-label><small>{{'accountoffer.startat' | translate}}</small></ion-label>
+                <ion-note slot="end">{{accountOfferReq.startAt | date: 'YYYY/MM/dd hh:mm a'}}</ion-note>
+              </ion-item>
+              <ion-modal trigger="open-modal-startAt" [cssClass]="'bottom-end'">
+                <ng-template>
+                  <ion-datetime
+                    presentation="date-time"
+                    [(ngModel)]="accountOfferReq.startAt"
+                    #startAt="ngModel"
+                    [value]="accountOfferReq.startAt"
+                    name="startAt"
+                    size="cover"
+                    [showDefaultButtons]="true"
+                  ></ion-datetime>
+                </ng-template> </ion-modal
+            ></ion-list>
+          </ion-col>
+         </ion-row>
+         <ion-row>
+          <ion-col >
+              <ion-list>
+                <ion-item id="open-modal-endAt">
+                  <ion-label><small>{{'accountoffer.endat' | translate}}</small></ion-label>
+                  <ion-note slot="end">{{accountOfferReq.endAt | date: 'YYYY/MM/dd hh:mm a'}}</ion-note>
+                </ion-item>
+                <ion-modal trigger="open-modal-endAt" [cssClass]="'bottom-end'">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="date-time"
+                      [(ngModel)]="accountOfferReq.endAt"
+                      #endAt="ngModel"
+                      [value]="accountOfferReq.endAt"
+                      name="endAt"
+                      size="cover"
+                      [showDefaultButtons]="true"
+                    ></ion-datetime>
+                  </ng-template> </ion-modal
+              ></ion-list>
+          </ion-col>
+       </ion-row>
+       
+       <ion-row >  
+          <ion-col>
+            <div class="ion-text-start">
+              <ion-checkbox labelPlacement="end"  
+                [(ngModel)]="accountOfferReq.is_active"
+                #is_active="ngModel"
+                name="is_active" 
+              >{{'accountoffer.is_active' | translate}}</ion-checkbox>
+            </div>
+          </ion-col>  
+       </ion-row>
+
+       <ion-row>
+        <ion-col >
+          <ion-button [disabled]="!accountOfferForm.valid"
+                      type="submit" 
+                      color="secondary" 
+                      expand="block"
+                      translate="accountoffer.regoffer"
+                      class="submit-button">
+              @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+          </ion-button>
+        </ion-col>
+        <ion-col >
+          <ion-button 
+                      (click)="cancel()"
+                      color="danger" 
+                      expand="block"
+                      translate="app.cancel"
+                      class="submit-button">
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+  </form>
+
+</div>

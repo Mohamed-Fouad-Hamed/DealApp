@@ -22,17 +22,21 @@ export class StartPage implements OnInit {
   private platform = inject(PlatformService);
   
   appLanguages:Language[] = [];
-  
 
+  currentDate : Date = new Date() ;
+  
+  dateExample?:string =  new Date().toString();
 
   constructor() {
-
+    
    }
 
   ngOnInit() {
     this.appLanguages = LANGUAGES;
     this.translateService.setDefaultLang('ar');
     this.platform.setRightToLeft();
+    console.log(new Date())
+    console.log(this.dateExample!)
   }
 
   onLanguageChange(event:any){

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {  Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {  Photo } from '@capacitor/camera';
 import { IonicModule , ModalController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/Photos/PhotoService';
@@ -21,7 +21,10 @@ export class SelectImageComponent  implements OnInit {
 
   imageBlob : Blob | undefined;
 
+  @ViewChild('photoTaked') public img?: ElementRef;
+
   constructor(private photoService:PhotoService , private modalCtrl: ModalController ) { }
+
 
   ngOnInit() {}
 
@@ -45,7 +48,28 @@ export class SelectImageComponent  implements OnInit {
         return;
     this.imageBlob  = await this.photoService.getBlob(photo);    
     const imageAsBase64 =  await this.photoService.ImageAsBase64(photo);
-    this.photo = `${imageAsBase64.base64}`;
+
+
+
+    const image = new Image();
+    
+
+    image.onload = () => {
+      
+      const base64str = image.src.substring(22);
+
+      const decoded = atob(base64str);
+      
+      console.log(`image loaded width = ${image.width} , height = ${image.height} , size = ${decoded.length}`);
+
+      this.photo = image.src ;   //`${imageAsBase64.base64}`;
+
+    };
+
+    image.src = `${imageAsBase64.base64}`;
+
+
+    
   }
 
   /*

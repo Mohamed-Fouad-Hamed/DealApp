@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './account-product-list.page.html',
   styleUrls: ['./account-product-list.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule ,MultiSelectionSearchComponent,AccountProductComponent,TranslateModule,RouterLink,RouterLink]
+  imports: [IonicModule, CommonModule, FormsModule ,MultiSelectionSearchComponent,AccountProductComponent,TranslateModule,RouterLink]
 })
 export class AccountProductListPage implements OnInit,OnDestroy {
 
@@ -30,8 +30,6 @@ export class AccountProductListPage implements OnInit,OnDestroy {
   private accountProductService = inject(AccountProductService);
 
   private route = inject(ActivatedRoute);
-
-  private router = inject(Router);
 
   private api = inject(APIService);
 

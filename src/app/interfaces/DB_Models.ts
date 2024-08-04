@@ -59,3 +59,69 @@ export interface IAccountProduct{
     has_second : boolean;
     second_price : number;
 }
+
+export interface IAccountOfferReq{
+
+          id : number ;
+
+          accountId : number;
+
+          off_name : string;
+
+          o_date : Date;
+
+          startAt : Date;
+
+          endAt : Date;
+
+          is_active : boolean;
+          
+          offerDetailsList : IOfferDetailsReq[];
+}
+
+export interface IOfferDetailsReq{
+     id : number;
+     product_id : number;
+     unit : string;
+     max_quan : number;
+     max_limit : number;
+     percent_discount : number; 
+     price : number;
+     o_price : number;
+}
+
+export interface IAccountOfferRes{
+
+    id : number ;
+
+    accountId : number;
+
+    off_name : string;
+
+    o_date : Date;
+
+    startAt : Date;
+
+    endAt : Date;
+
+    o_image : string;
+
+    occasion_image : string ;
+
+    is_active : boolean;
+    
+    offerDetailsList : IOfferDetailsRes[];
+}
+
+export interface IOfferDetailsRes{
+    id : number;
+    product_id : number;
+    product_name:string;
+    product_image:string;
+    unit : string;
+    max_quan : number;
+    max_limit : number;
+    percent_discount : number; 
+    price : number;
+    o_price : number;
+}

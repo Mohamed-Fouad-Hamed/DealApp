@@ -1,0 +1,9 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>account-offer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+   <offer-header [Account]="accountId!" [AccountOffer]="accountOfferReq" (updateEventEmitter)="updateOfferHeader($event)"></offer-header>
+</ion-content>

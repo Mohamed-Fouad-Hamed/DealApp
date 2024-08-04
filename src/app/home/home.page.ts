@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   private authService = inject(AuthenticationService);
   
   accountProductsUrl?:string;
+  accountOfferUrl?:string;
   
    user : IUserResponse = 
    { 
@@ -51,7 +52,7 @@ export class HomePage implements OnInit {
     this.authService.getUserAuth().subscribe((oUser)=>{
       this.user = oUser;
       this.accountProductsUrl = `/account-product-list/${this.user.account_id}`;
-
+      this.accountOfferUrl = `/account-offer/${this.user.account_id}`;
     });
     
 

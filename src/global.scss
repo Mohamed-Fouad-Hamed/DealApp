@@ -95,3 +95,22 @@
     height:calc(100% - 50px);
 }
 
+ion-modal{
+
+    --background:rgba(44,39,45,0.2);
+
+   &::part(content){
+    backdrop-filter: blur(6px);
+   }
+
+   ion-content{
+    --padding-top:15vh;
+    --padding-start:20px;
+    --padding-end:20px;
+    --background:transparent;
+
+    ion-datetime{
+        border-radius: 7px;
+    }
+   }
+}

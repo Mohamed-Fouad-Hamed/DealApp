@@ -8,13 +8,14 @@ import { AccountProductService } from 'src/app/services/model-services/account-p
 import { AccountProductDetail } from 'src/app/types/types';
 import { TranslateModule } from '@ngx-translate/core';
 import { APIService } from 'src/app/services/API/api.service';
+import { OfferDetailsComponent } from '../offer/offer-details/offer-details.component';
 
 @Component({
   selector: 'account-product-form-component',
   templateUrl: './account-product.component.html',
   styleUrls: ['./account-product.component.scss'],
   standalone:true,
-  imports:[IonicModule, CommonModule, FormsModule,TranslateModule]
+  imports:[IonicModule, CommonModule, FormsModule,TranslateModule,OfferDetailsComponent]
 })
 export class AccountProductComponent  implements OnInit ,OnDestroy {
 

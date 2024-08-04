@@ -96,6 +96,16 @@
 	"accountproduct.productaddedtemporary":"تم اضافة هذا المنتج مؤقتا لحين تعديل أسعاره",
 	"accountproduct.accountproductmenu":" منتجاتى",
 
+	"accountoffer.off_name":"عنوان العرض",
+	"accountoffer.o_date":"تاريخ العرض",
+	"accountoffer.startat":"يبتدى فى",
+	"accountoffer.endat":"ينتهى فى",
+	"accountoffer.is_active":"العرض سارى",
+	"accountoffer.offerproducts":"المنتجات بالعرض ",
+	"accountoffer.logooffer":" شعار العرض ",
+	"accountoffer.occasionimage":" شعار المناسبه ",
+	"accountoffer.regoffer":"  تسجيل العرض ",
+
 	"single_selection_searchbox.additem":" إضافة ",
 	"single_selection_searchbox.selectitem":" إختيار  ",
 	"single_selection_searchbox.cancel":"إلغاء"

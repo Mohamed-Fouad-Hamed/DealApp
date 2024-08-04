@@ -90,12 +90,23 @@
 	"category.placeholderdescr":" Enter Category description ",
 	"category.image":"Category image",
 	"category.account_type":" Account Type",
-	"category.buttonsubmit":"  Registration category ",
+	"category.buttonsubmit":"  Register category ",
 	"category.toastsave":"The category has been registered successfully... awaiting as documentation",
 
 	"accountproduct.addnotallow":"The product has been added before, does not allow for duplication",
 	"accountproduct.productaddedtemporary":"this product has been added temporarily until its prices are modified",
 	"accountproduct.accountproductmenu":" My Products",
+
+
+	"accountoffer.off_name":"Offer Title",
+	"accountoffer.o_date":"Offer Date",
+	"accountoffer.startat":"Start At",
+	"accountoffer.endat":"End At",
+	"accountoffer.is_active":"Offer is active",
+	"accountoffer.offerproducts":" Products of Offer ",
+	"accountoffer.logooffer":" Logo of Offer ",
+	"accountoffer.occasionimage":" Occasion logo ",
+	"accountoffer.regoffer":" Register offer ",
 
 	"single_selection_searchbox.additem":" Add ",
 	"single_selection_searchbox.selectitem":" Selection  ",

@@ -69,6 +69,12 @@ export const routes: Routes = [
           path: 'account-product-list/:accountid',
           loadComponent: () => import('../pages/account-product-list/account-product-list.page').then( m => m.AccountProductListPage)
         }
+        ,
+        {
+          path: 'account-offer/:accountid',
+          loadComponent: () => import('../pages/account-offer/account-offer.page').then( m => m.AccountOfferPage)
+        }
+ 
     ]
   }
 ];
