@@ -19,8 +19,6 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
 
   @Input() public Account:string = '';
 
-  //@Input() public AccountOffer:IAccountOfferReq | undefined;
-
   AccountOffer = input.required<IAccountOfferReq>();
 
   @Output() updateEventEmitter = new EventEmitter<IAccountOfferRes>();
@@ -45,9 +43,13 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
 
   startAtString:string =  format( new Date() ,'yyyy/MM/dd hh:mm a');
 
+  startAtValue:string = format( new Date() ,'yyyy-MM-dd') + 'T' + format( new Date() ,'HH:mm');
+
   @ViewChild(IonDatetime) endAt?: IonDatetime ;
 
   endAtString:string =  format( new Date() ,'yyyy/MM/dd hh:mm a');
+
+  endAtValue:string = format( new Date() ,'yyyy-MM-dd')+'T'+format( new Date() ,'HH:mm');
 
   private subscription? : Subscription;
 
@@ -59,11 +61,11 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
 
     off_name : '',
 
-    o_date : new Date() ,
+    o_date : new Date().toISOString() ,
 
-    startAt : new Date(),
+    startAt : new Date().toISOString(),
 
-    endAt : new Date(),
+    endAt : new Date().toISOString(),
 
     is_active : false,
     
@@ -76,7 +78,12 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
 
     effect(()=>{
       this.accountOfferReq = this.AccountOffer();
-      console.log('effect offer req ', this.AccountOffer())
+      this.o_dateValue = format( this.accountOfferReq.o_date ,'yyyy-MM-dd')+'T'+format( this.accountOfferReq.o_date ,'HH:mm'); 
+      this.o_dateString = format( this.accountOfferReq.o_date ,'yyyy/MM/dd hh:mm a') ;
+      this.startAtValue = format( this.accountOfferReq.startAt ,'yyyy-MM-dd')+'T'+format( this.accountOfferReq.startAt ,'HH:mm'); 
+      this.startAtString = format( this.accountOfferReq.startAt ,'yyyy/MM/dd hh:mm a') ;
+      this.endAtValue = format( this.accountOfferReq.endAt ,'yyyy-MM-dd')+'T'+format( this.accountOfferReq.endAt ,'HH:mm'); 
+      this.endAtString = format( this.accountOfferReq.endAt ,'yyyy/MM/dd hh:mm a') ;
     })
 
   }
@@ -97,7 +104,6 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
   oDateChanged(value:any){
     this.o_dateValue = value;
     this.o_dateString = format(value,'yyyy/MM/dd hh:mm a');
-
   }
 
   oDateConfirm(){
@@ -106,6 +112,34 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
 
   oDateCancel(){
       this.o_date!.cancel(true);
+  }
+
+  
+  startAtChanged(value:any){
+    this.startAtValue! = value;
+    this.startAtString = format(value,'yyyy/MM/dd hh:mm a');
+  }
+
+  startAtConfirm(){
+     this.startAt!.confirm(true);
+  }
+
+  startAtCancel(){
+      this.startAt!.cancel(true);
+  }
+
+
+  endAtChanged(value:any){
+    this.endAtValue! = value;
+    this.endAtString = format(value,'yyyy/MM/dd hh:mm a');
+  }
+
+  endAtConfirm(){
+     this.endAt!.confirm(true);
+  }
+
+  endAtCancel(){
+      this.endAt!.cancel(true);
   }
 
   async  onSubmit() {
@@ -119,6 +153,9 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
     try{
    
       this.accountOfferReq.accountId = +this.Account;
+      this.accountOfferReq.o_date = this.o_dateValue;
+      this.accountOfferReq.startAt = this.startAtValue;
+      this.accountOfferReq.endAt = this.endAtValue;
       
       this.subscription = this.offerService.uploadOffer(
             this.accountOfferReq

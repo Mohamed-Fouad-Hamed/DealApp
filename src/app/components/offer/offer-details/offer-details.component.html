@@ -3,28 +3,110 @@
 
 <ion-card class="one-margin-padding" >
   <ion-card-content >
+  
+    @if(displayMode() === 1)  
+    {
+      <form id="accountOfferFormId" class="account-offer-form" #accountOfferForm="ngForm" (ngSubmit)="onSubmit()" >
+          <ion-grid >
+            <ion-row   class="ion-justify-content-center" >
+              <ion-col size="12"> 
+                <div class="row-center-img">
+                  <img class="img-product" [alt]="offerDetailsInput().product_name" [src]="offerDetailsInput().product_image" />
+                  <span class="product-discount">
+                    {{offerDetailsInput().percent_discount}}
+                  </span>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row   class="ion-justify-content-center" >
+              <ion-col size="12"> 
+                <p class="ion-col-center">{{offerDetailsInput().product_name}}</p>
+              </ion-col>
+            </ion-row>   
+            <ion-row   class="ion-justify-content-around" >
+              <ion-col size="5"> 
+                  <ion-input
+                      type="number"
+                      label-placement="floating" 
+                      label="{{'accountoffer.max_quan' | translate}}"
+                      [(ngModel)]="offerDetails.max_quan"
+                      #max_quan="ngModel"
+                      name="max_quan"
+                      color="secondary"
+                ></ion-input>
+              </ion-col>
+              <ion-col size="5"> 
+                  <ion-input
+                        type="number"
+                        label-placement="floating" 
+                        label="{{'accountoffer.max_limit' | translate}}"
+                        [(ngModel)]="offerDetails.max_limit"
+                        #o_price="ngModel"
+                        name="max_limit"
+                        color="secondary"
+                  ></ion-input>
+              </ion-col>
+            </ion-row> 
+            <ion-row   class="ion-justify-content-around" >
+              <ion-col size="4"> 
+                <p class="ion-col-center price-ignore"> {{offerDetailsInput().price}} </p>
+              </ion-col>
+              <ion-col size="4"> 
+                <ion-input
+                      type="number"
+                      label-placement="floating" 
+                      label="{{'accountoffer.discount_rate' | translate}}"
+                      [(ngModel)]="offerDetails.percent_discount"
+                      #percent_discount="ngModel"
+                      name="percent_discount"
+                      color="secondary"
+                ></ion-input>
+            </ion-col>
+              <ion-col size="4"> 
+                  <ion-input
+                        type="number"
+                        label-placement="floating" 
+                        label="{{'accountoffer.o_price' | translate}}"
+                        [(ngModel)]="offerDetails.o_price"
+                        #o_price="ngModel"
+                        name="o_price"
+                        color="secondary"
+                  ></ion-input>
+              </ion-col>
+            </ion-row>   
+            <ion-row   class="ion-justify-content-center" >
+              <ion-col size="12"> 
+                <ion-button fill="outline"> {{'accountoffer.save_offer_price' | translate}} </ion-button>
+              </ion-col>
+            </ion-row>  
+          </ion-grid>
+      </form>    
+  }
+  
+  @if(displayMode() === 0)  
+  {
     <ion-grid >
       <ion-row   class="ion-justify-content-center" >
         <ion-col size="12"> 
           <div class="row-center-img">
-            <img class="img-product" alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+            <img class="img-product" [alt]="offerDetailsInput().product_name" [src]="offerDetailsInput().product_image" />
             <span class="product-discount">
-              3% off
+               {{offerDetailsInput().percent_discount}}
             </span>
           </div>
         </ion-col>
       </ion-row>
       <ion-row   class="ion-justify-content-center" >
         <ion-col size="12"> 
-          <p class="ion-col-center"> this is product name and we can describe this product by explain components and enter helper material </p>
+          <p class="ion-col-center">{{offerDetailsInput().product_name}}</p>
         </ion-col>
       </ion-row>   
       <ion-row   class="ion-justify-content-around" >
         <ion-col size="5"> 
-          <p class="ion-col-center price-ignore"> 25589.25 LE </p>
+          <p class="ion-col-center price-ignore"> {{offerDetailsInput().price}} </p>
         </ion-col>
         <ion-col size="5"> 
-          <p class="ion-col-center"> 25033.25 LE </p>
+          <p class="ion-col-center"> {{offerDetailsInput().o_price}} </p>
         </ion-col>
       </ion-row>   
       <ion-row   class="ion-justify-content-center" >
@@ -33,5 +115,7 @@
         </ion-col>
       </ion-row>  
     </ion-grid>
+  }
+
   </ion-card-content>
 </ion-card>

@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { APIService } from '../../API/api.service';
 import { delay, Observable, switchMap, timer } from 'rxjs';
 import { MessageResponse } from '../../interfaces/MessageResponse';
-import { IAccountOfferReq } from 'src/app/interfaces/DB_Models';
+import { IAccountOfferReq, IOfferDetailsReq } from 'src/app/interfaces/DB_Models';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +59,19 @@ export class OfferService {
       );
 
   }
+
+  
+
+  updateOfferDetails(offerDetails:IOfferDetailsReq):Observable<MessageResponse>{
+      
+    const URL = this.API.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/update-offer-details`, offerDetails , this.API.headerJsonType ).pipe(
+          delay(100)
+      );
+
+  }
+
 
   uploadOfferWithImagePath(formData:FormData):Observable<MessageResponse>{
       

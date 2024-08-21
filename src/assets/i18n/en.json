@@ -4,6 +4,8 @@
 	"app.cancel":"Cancel",
 	"app.newitem":"New",
 	"app.product":" Product ",
+	"app.selectDate":" Select ",
+	"app.cancelDate":" Cancel ",
 
 	"_comment": "Translate Languages",
 	"lang.english":"English",
@@ -77,7 +79,7 @@
 	"product.secondprice":"Second price",
 	"product.image":"Product image",
 	"product.category":" Category",
-	"product.registerproduct":" Create Product ",
+	"product.registerproduct":" Register Product ",
 	"product.toastsave":"The product has been registered successfully... awaiting as documentation",
 
 	"_comment":" Category screen ",
@@ -98,6 +100,7 @@
 	"accountproduct.accountproductmenu":" My Products",
 
 
+	"accountoffer.off_set_activate":"Activate offer times",
 	"accountoffer.off_name":"Offer Title",
 	"accountoffer.o_date":"Offer Date",
 	"accountoffer.startat":"Start At",
@@ -107,6 +110,15 @@
 	"accountoffer.logooffer":" Logo of Offer ",
 	"accountoffer.occasionimage":" Occasion logo ",
 	"accountoffer.regoffer":" Register offer ",
+	"accountoffer.unit":" Unit ",
+	"accountoffer.max_quan":" Maximum Quantity ",
+	"accountoffer.max_limit":" Maximum Limit ",
+	"accountoffer.discount_rate":" Discount rate ",
+	"accountoffer.price":" Price ",
+	"accountoffer.o_price":" Offer Price ",
+	"accountoffer.save_offer_price":" register offer price ",
+
+
 
 	"single_selection_searchbox.additem":" Add ",
 	"single_selection_searchbox.selectitem":" Selection  ",

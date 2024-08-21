@@ -21,7 +21,7 @@
 
   @if (accountProduct) {
     <ion-toolbar>
-      <ion-text>{{ accountProduct!.product_name }}</ion-text>
+      <ion-title>{{ accountProduct!.product_name }}</ion-title>
     </ion-toolbar>
 }
 </ion-header>
@@ -81,16 +81,4 @@
     ></app-multi-selection-search>
   </ng-template>
 
- <!--
-  <ng-template>
-    <app-single-selection-search
-      class="ion-page"
-      title="Select item"
-      [items]="items"
-      (searchEmit)="searchValueEmit($event)"
-      (selectionChange)="itemSelected($event)"
-      (selectionCancel)="modal.dismiss()"
-    ></app-single-selection-search>
-  </ng-template>
- --> 
 </ion-modal>

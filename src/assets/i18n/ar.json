@@ -4,6 +4,8 @@
 	"app.cancel":"إلغاء",
 	"app.newitem":"جديد",
 	"app.product":" المنتج",
+	"app.selectDate":" إختيار ",
+	"app.cancelDate":" إلغاء ",
 
 
 	"lang.english":"إنجليزى",
@@ -96,6 +98,7 @@
 	"accountproduct.productaddedtemporary":"تم اضافة هذا المنتج مؤقتا لحين تعديل أسعاره",
 	"accountproduct.accountproductmenu":" منتجاتى",
 
+	"accountoffer.off_set_activate":" تفعيل أوقات العرض ",
 	"accountoffer.off_name":"عنوان العرض",
 	"accountoffer.o_date":"تاريخ العرض",
 	"accountoffer.startat":"يبتدى فى",
@@ -105,6 +108,14 @@
 	"accountoffer.logooffer":" شعار العرض ",
 	"accountoffer.occasionimage":" شعار المناسبه ",
 	"accountoffer.regoffer":"  تسجيل العرض ",
+	"accountoffer.unit":" الوحدة ",
+	"accountoffer.max_quan":" أقصى كميه ",
+	"accountoffer.max_limit":" الحد الأقصى ",
+	"accountoffer.discount_rate":" نسبة الخصم ",
+	"accountoffer.price":" السعر ",
+	"accountoffer.o_price":" سعر العرض ",
+	"accountoffer.save_offer_price":" تسجيل عرض السعر ",
+
 
 	"single_selection_searchbox.additem":" إضافة ",
 	"single_selection_searchbox.selectitem":" إختيار  ",

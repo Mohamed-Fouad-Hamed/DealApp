@@ -2,6 +2,14 @@
   <form id="accountOfferFormId" class="account-offer-form" #accountOfferForm="ngForm" (ngSubmit)="onSubmit()" >
     <ion-grid>
 
+          <ion-row >
+            <ion-col >
+              <ion-text color="secondary">
+                <h2> {{'accountoffer.off_set_activate' | translate}} </h2>
+              </ion-text>
+            </ion-col>
+          </ion-row>  
+
          <ion-row >
             <ion-col >
                 <div class="ion-text-start">
@@ -24,9 +32,12 @@
                     <ion-note slot="end">{{ o_dateString }}</ion-note>
                   </ion-item>
                   <ion-modal trigger="open-modal-offer-date" [cssClass]="'bottom-end'">
+                    
                     <ng-template>
+                      
                       <ion-content>
-                          <ion-datetime
+                         
+                         <ion-datetime
                             presentation="date-time"
                             #o_date
                             [value]="o_dateValue"
@@ -34,9 +45,10 @@
                             size="cover"
                             (ionChange)="oDateChanged(o_date.value)"
                           >
+
                           <ion-buttons slot="buttons">
-                            <ion-button slot="start" (click)="oDateConfirm()" color="primary">Select</ion-button>
-                            <ion-button slot="end" (click)="oDateCancel()">Cancel</ion-button>
+                            <ion-button slot="start" (click)="oDateConfirm()" color="primary">{{'app.selectDate' | translate}}</ion-button>
+                            <ion-button slot="end" (click)="oDateCancel()">{{'app.cancelDate' | translate}}</ion-button>
                           </ion-buttons>
                           
                         </ion-datetime>
@@ -51,19 +63,27 @@
             <ion-list>
               <ion-item id="open-modal-startAt">
                 <ion-label><small>{{'accountoffer.startat' | translate}}</small></ion-label>
-                <ion-note slot="end">{{accountOfferReq.startAt | date: 'YYYY/MM/dd hh:mm a'}}</ion-note>
+                <ion-note slot="end">{{ startAtString }}</ion-note>
               </ion-item>
               <ion-modal trigger="open-modal-startAt" [cssClass]="'bottom-end'">
                 <ng-template>
-                  <ion-datetime
-                    presentation="date-time"
-                    [(ngModel)]="accountOfferReq.startAt"
-                    #startAt="ngModel"
-                    [value]="accountOfferReq.startAt"
-                    name="startAt"
-                    size="cover"
-                    [showDefaultButtons]="true"
-                  ></ion-datetime>
+                  <ion-content>
+                    <ion-datetime
+                      presentation="date-time"
+                      #startAt
+                      [value]="startAtValue"
+                      name="startAt"
+                      size="cover"
+                      (ionChange)="startAtChanged(startAt.value)"
+                      >
+
+                      <ion-buttons slot="buttons">
+                        <ion-button slot="start" (click)="startAtConfirm()" color="primary">{{'app.selectDate' | translate}}</ion-button>
+                        <ion-button slot="end" (click)="startAtCancel()">{{'app.cancelDate' | translate}}</ion-button>
+                      </ion-buttons>
+
+                    </ion-datetime>
+                  </ion-content>
                 </ng-template> </ion-modal
             ></ion-list>
           </ion-col>
@@ -73,19 +93,27 @@
               <ion-list>
                 <ion-item id="open-modal-endAt">
                   <ion-label><small>{{'accountoffer.endat' | translate}}</small></ion-label>
-                  <ion-note slot="end">{{accountOfferReq.endAt | date: 'YYYY/MM/dd hh:mm a'}}</ion-note>
+                  <ion-note slot="end">{{ endAtString }}</ion-note>
                 </ion-item>
                 <ion-modal trigger="open-modal-endAt" [cssClass]="'bottom-end'">
                   <ng-template>
-                    <ion-datetime
-                      presentation="date-time"
-                      [(ngModel)]="accountOfferReq.endAt"
-                      #endAt="ngModel"
-                      [value]="accountOfferReq.endAt"
-                      name="endAt"
-                      size="cover"
-                      [showDefaultButtons]="true"
-                    ></ion-datetime>
+                    <ion-content>
+                      <ion-datetime
+                        presentation="date-time"
+                        #endAt
+                        [value]="endAtValue"
+                        name="endAt"
+                        size="cover"
+                        (ionChange)="endAtChanged(endAt.value)"
+                        >
+  
+                        <ion-buttons slot="buttons">
+                          <ion-button slot="start" (click)="endAtConfirm()" color="primary">{{'app.selectDate' | translate}}</ion-button>
+                          <ion-button slot="end" (click)="endAtCancel()">{{'app.cancelDate' | translate}}</ion-button>
+                        </ion-buttons>
+  
+                      </ion-datetime>
+                    </ion-content>
                   </ng-template> </ion-modal
               ></ion-list>
           </ion-col>

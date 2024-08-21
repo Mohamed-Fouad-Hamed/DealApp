@@ -71,11 +71,11 @@ export class AccountOfferPage implements OnInit,OnDestroy {
 
     off_name : '',
 
-    o_date : new Date() ,
+    o_date : new Date().toISOString() ,
 
-    startAt : new Date(),
+    startAt : new Date().toISOString(),
 
-    endAt : new Date(),
+    endAt : new Date().toISOString(),
 
     is_active : false,
     
@@ -126,24 +126,25 @@ export class AccountOfferPage implements OnInit,OnDestroy {
         
             off_name : offer.off_name,
         
-            o_date : offer.o_date ,
+            o_date :  offer.o_date ,
         
-            startAt : offer.startAt,
+            startAt :  offer.startAt ,
         
-            endAt : offer.endAt,
+            endAt :  offer.endAt ,
         
-            is_active : offer.active,
+            is_active : offer.active ,
             
             offerDetailsList : offer.offerDetailsList.map((offerDetails:any)=>{ 
               const offerDetailsReq : IOfferDetailsReq ={
-              id : offerDetails.id,
-              product_id : offerDetails.product_id,
-              unit : offerDetails.unit,
-              max_quan : offerDetails.max_quan,
-              max_limit : offerDetails.max_limit,
-              percent_discount : offerDetails.percent_discount,
-              price : offerDetails.price,
-              o_price : offerDetails.o_price
+                  id : offerDetails.id,
+                  offer_id : offer.id ,
+                  product_id : offerDetails.product_id,
+                  unit : offerDetails.unit,
+                  max_quan : offerDetails.max_quan,
+                  max_limit : offerDetails.max_limit,
+                  percent_discount : offerDetails.percent_discount,
+                  price : offerDetails.price,
+                  o_price : offerDetails.o_price
          }
            return offerDetailsReq;
         })
@@ -193,7 +194,7 @@ export class AccountOfferPage implements OnInit,OnDestroy {
  }
 
  updateOfferHeader( offerRes:any ){
-    console.log(offerRes);
+    //console.log(offerRes);
  }
 
 }

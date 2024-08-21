@@ -68,11 +68,11 @@ export interface IAccountOfferReq{
 
           off_name : string;
 
-          o_date : Date;
+          o_date : string;
 
-          startAt : Date;
+          startAt : string;
 
-          endAt : Date;
+          endAt : string;
 
           is_active : boolean;
           
@@ -81,6 +81,7 @@ export interface IAccountOfferReq{
 
 export interface IOfferDetailsReq{
      id : number;
+     offer_id : number;
      product_id : number;
      unit : string;
      max_quan : number;
