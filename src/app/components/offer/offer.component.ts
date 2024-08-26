@@ -186,7 +186,6 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
 
 cancel(){
     this.cancelEventEmitter.emit();
-    console.log(this.AccountOffer())
 }
 
 }

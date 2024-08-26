@@ -11,7 +11,7 @@
             <ion-row   class="ion-justify-content-center" >
               <ion-col size="12"> 
                 <div class="row-center-img">
-                  <img class="img-product" [alt]="offerDetailsInput().product_name" [src]="offerDetailsInput().product_image" />
+                  <img class="img-product" [alt]="offerDetailsInput().product_name" [src]="productImage" />
                   <span class="product-discount">
                     {{offerDetailsInput().percent_discount}}
                   </span>
@@ -71,12 +71,30 @@
                         #o_price="ngModel"
                         name="o_price"
                         color="secondary"
+                        (ionFocus)="offerPriceFocusEevent($event)"
                   ></ion-input>
               </ion-col>
             </ion-row>   
             <ion-row   class="ion-justify-content-center" >
-              <ion-col size="12"> 
-                <ion-button fill="outline"> {{'accountoffer.save_offer_price' | translate}} </ion-button>
+              <ion-col size="5"> 
+                <ion-button fill="outline"
+                            [disabled]="!accountOfferForm.valid"
+                            type="submit" 
+                            color="secondary" 
+                            expand="block"
+                            translate="accountoffer.save_offer_price"
+                            class="submit-button">
+                    @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+                </ion-button>
+              </ion-col>
+              <ion-col size="5">
+                <ion-button fill="outline"
+                            (click)="cancel()"
+                            color="danger" 
+                            expand="block"
+                            translate="app.cancel"
+                            class="submit-button">
+                </ion-button>
               </ion-col>
             </ion-row>  
           </ion-grid>
@@ -89,7 +107,7 @@
       <ion-row   class="ion-justify-content-center" >
         <ion-col size="12"> 
           <div class="row-center-img">
-            <img class="img-product" [alt]="offerDetailsInput().product_name" [src]="offerDetailsInput().product_image" />
+            <img class="img-product" [alt]="offerDetailsInput().product_name" [src]="productImage" />
             <span class="product-discount">
                {{offerDetailsInput().percent_discount}}
             </span>

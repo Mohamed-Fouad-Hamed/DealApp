@@ -29,6 +29,8 @@ export class MultiSelectionSearchComponent  implements OnInit,AfterViewInit {
 
   apiServer:string = '';
 
+  msg:string = 'accountproduct.addnotallow' ;
+
   constructor(private api:APIService){}
 
   ngAfterViewInit(): void {

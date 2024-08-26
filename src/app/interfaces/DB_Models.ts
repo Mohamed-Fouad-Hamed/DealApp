@@ -116,6 +116,7 @@ export interface IAccountOfferRes{
 
 export interface IOfferDetailsRes{
     id : number;
+    offer_id:number;
     product_id : number;
     product_name:string;
     product_image:string;

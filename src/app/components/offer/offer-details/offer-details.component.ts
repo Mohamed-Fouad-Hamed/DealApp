@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, input, OnDestroy, OnInit, Signal, ViewChild } from '@angular/core';
+import { Component, effect, EventEmitter, inject, input, OnDestroy, OnInit, Output, Signal, ViewChild } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { IAccountOfferReq, IOfferDetailsReq, IOfferDetailsRes } from 'src/app/interfaces/DB_Models';
 import { OfferService } from 'src/app/services/model-services/account-offer/offer.service';
 import { finalize, Subscription } from 'rxjs';
+import { APIService } from 'src/app/services/API/api.service';
 
 
 @Component({
-  selector: 'app-offer-details',
+  selector: 'offer-details-form-component',
   templateUrl: './offer-details.component.html',
   styleUrls: ['./offer-details.component.scss'],
   standalone:true,
@@ -17,15 +18,21 @@ import { finalize, Subscription } from 'rxjs';
 })
 export class OfferDetailsComponent  implements OnInit , OnDestroy{
 
-  displayMode : Signal<number> = input.required<number>(); // 0 means component view only
+  displayMode = input(0); // 0 means component view only
 
-  offerDetailsInput : Signal<IOfferDetailsRes> = input.required<IOfferDetailsRes>(); // offer details inputs
+  offerDetailsInput  = input.required<IOfferDetailsRes>(); // offer details inputs
 
-  offerIdInput  : Signal<number> = input.required<number>(); // Offer Id
+  @Output() saveEventEmitter = new EventEmitter<IOfferDetailsRes>();
+
+  @Output() cancelEventEmitter = new EventEmitter<void>();
 
   private offerDetailsService = inject(OfferService);
 
+  private api = inject(APIService);
+
   @ViewChild('accountOfferForm') public accountOfferFrm!: NgForm;
+
+  productImage?:string;
 
   isLoading : boolean = false ;
 
@@ -50,10 +57,15 @@ export class OfferDetailsComponent  implements OnInit , OnDestroy{
     effect(()=>{
        if(this.offerDetailsInput()){
           this.offerDetails.id =  this.offerDetailsInput().id;
-          this.offerDetails.offer_id = this.offerIdInput().valueOf();
+          this.offerDetails.offer_id =  this.offerDetailsInput().offer_id;
           this.offerDetails.product_id = this.offerDetailsInput().product_id ;
           this.offerDetails.unit = this.offerDetailsInput().unit ;
           this.offerDetails.price = this.offerDetailsInput().price ;
+          this.offerDetails.max_quan = this.offerDetailsInput().max_quan;
+          this.offerDetails.max_limit = this.offerDetailsInput().max_limit;
+          this.offerDetails.percent_discount = this.offerDetailsInput().percent_discount;
+          this.offerDetails.o_price = this.offerDetailsInput().o_price;
+          this.productImage = this.api.apiHost + this.offerDetailsInput().product_image ;
        }
     });
   }
@@ -62,7 +74,8 @@ export class OfferDetailsComponent  implements OnInit , OnDestroy{
    this.subscription?.unsubscribe();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
 
   async  onSubmit() {
@@ -70,11 +83,11 @@ export class OfferDetailsComponent  implements OnInit , OnDestroy{
     if (this.accountOfferFrm.invalid) {
       return;
     }
+
     this.isLoading = true;
 
     try{
    
-    
       
       this.subscription = this.offerDetailsService.updateOfferDetails(
             this.offerDetails
@@ -90,11 +103,13 @@ export class OfferDetailsComponent  implements OnInit , OnDestroy{
          
           if(res.status === 200){
             
-              // this.saveEventEmitter.emit(res.entity);
+               this.saveEventEmitter.emit(res.entity);
            }
           
          }
-         ,error:(err:any)=>{ this.error = err.message }} 
+         ,error:(err:any)=>{
+           this.error = err.message
+         }} 
         );
 
     }catch( e:any){
@@ -102,6 +117,16 @@ export class OfferDetailsComponent  implements OnInit , OnDestroy{
   
     }
 
+  }
+
+  cancel(){
+    this.cancelEventEmitter.emit();
+  }
+
+  offerPriceFocusEevent($event:any){
+   const discountPrice = this.offerDetails.price * (this.offerDetails.percent_discount / 100);
+   const offerPrice = this.offerDetails.price - discountPrice;
+   this.offerDetails.o_price = +offerPrice.toFixed(2);
   }
 
 }

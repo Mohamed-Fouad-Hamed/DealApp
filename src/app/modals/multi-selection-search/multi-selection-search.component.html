@@ -19,20 +19,26 @@
 
 <ion-content color="light" class="ion-padding">
   <ion-list id="modal-list" [inset]="true">
-    <ion-item *ngFor="let item of items; trackBy: trackItems" [disabled]="item?.exists">
+    <ion-item *ngFor="let item of items; trackBy: trackItems" >
       <ion-avatar slot="start">
         <img [src]="apiServer + item?.icon" />
       </ion-avatar>
      
-      <ion-checkbox [value]="item.value" [checked]="isChecked(item.value)" (ionChange)="checkboxChange($event)"
-        >{{ item.text }}
-
-        @if(item?.exists){
-          <ion-text  color="danger"><small> --- </small><small>{{'accountproduct.addnotallow' | translate}}</small></ion-text>
-        }
-      
-      </ion-checkbox>
-       
+                
+      @if(item?.exists){
+        <span>
+            {{ item.text }}
+        </span>
+        <ion-text color="danger"><small> --- </small><small>{{ msg | translate}}</small></ion-text>
+      }
+      @else{
+          <ion-checkbox
+            [value]="item.value" 
+            [checked]="isChecked(item.value)" 
+            (ionChange)="checkboxChange($event)">
+              {{ item.text }} 
+          </ion-checkbox>
+    }
     </ion-item>
   </ion-list>
 </ion-content>

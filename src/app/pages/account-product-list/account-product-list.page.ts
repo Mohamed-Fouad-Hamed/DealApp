@@ -7,7 +7,7 @@ import { Subscription, map } from 'rxjs';
 import { ProductService } from 'src/app/services/model-services/product-service/product.service';
 import {  MultiSelectionSearchComponent} from 'src/app/modals/multi-selection-search/multi-selection-search.component';
 import { OverlayEventDetail } from '@ionic/core/components';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AccountProductService } from 'src/app/services/model-services/account-product/account-product.service';
 import { APIService } from 'src/app/services/API/api.service';
 import {AccountProductComponent} from 'src/app/components/account-product/account-product.component';
@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './account-product-list.page.html',
   styleUrls: ['./account-product-list.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule ,MultiSelectionSearchComponent,AccountProductComponent,TranslateModule,RouterLink]
+  imports: [IonicModule, CommonModule, FormsModule , MultiSelectionSearchComponent,AccountProductComponent,TranslateModule,RouterLink]
 })
 export class AccountProductListPage implements OnInit,OnDestroy {
 

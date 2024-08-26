@@ -1,9 +1,150 @@
 <ion-header [translucent]="true">
+
   <ion-toolbar>
-    <ion-title>account-offer</ion-title>
+    
+    <ion-buttons>
+      <ion-button [disabled]="currentOfferDetails"  id="select-items" >{{'app.newitem' | translate}}</ion-button>
+    </ion-buttons>
+
+    @if(step===0){
+      <ion-title class="ion-text-center"> {{'accountoffer.off_set_activate' | translate}} </ion-title>
+    }
   </ion-toolbar>
+  @if (step===1 && !currentOfferDetails) {
+    <ion-toolbar>
+      <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
+    </ion-toolbar>
+  }
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
-   <offer-header [Account]="accountId!" [AccountOffer]="accountOfferReq" (updateEventEmitter)="updateOfferHeader($event)"></offer-header>
+  @if(step===0){
+    <offer-header 
+                [Account]="accountId!" 
+                [AccountOffer]="accountOfferReq" 
+                (updateEventEmitter)="updateOfferHeader($event)"
+                (cancelEventEmitter)="cancelOfferHeader()" >
+    </offer-header>
+  }
+
+  @if(step===1){
+    <ng-template #offerProductFormTemplate  let-offerProduct="currentOfferProduct"  >
+ 
+      <offer-details-form-component 
+               [displayMode]="1"
+               [offerDetailsInput]="offerProduct"
+               (saveEventEmitter)="offerProductSaved($event)"
+               (cancelEventEmitter)="cancelOfferProductDailog()"
+                >
+      </offer-details-form-component>
+  
+    </ng-template>
+  
+    @if (currentOfferDetails) {
+        <ng-container 
+          *ngTemplateOutlet="offerProductFormTemplate;context:offerProductCtx">
+        </ng-container>
+    }
+  
+    <ng-template #offerProductsList >
+  
+      <ion-list [inset]="true">
+        <ion-item [button]="true" class="ion-border" *ngFor="let product of filteredProducts ; trackBy: trackItems" (click)="viewDetail(product)">
+          <ion-avatar slot="start">
+            <img [src]="apiServer! + product?.product_image" />
+          </ion-avatar>
+          <ion-text>{{ product.product_name }}</ion-text>
+          @if(product?.notUpdate){
+            <ion-text slot="end"  color="danger"><small>{{'accountproduct.productaddedtemporary' | translate}}</small></ion-text>
+          }
+        </ion-item>
+
+        <ion-item>
+          <ion-button 
+            fill="outline"
+            color="secondary" 
+            expand="block"
+            translate="accountoffer.save_offer_price"
+            (click)="updateOfferDetails()">
+          </ion-button>
+          <ion-button fill="outline"
+            (click)="cancelOfferHeader()"
+            color="danger" 
+            expand="block"
+            translate="app.cancel"
+            class="submit-button">
+          </ion-button>
+        </ion-item>
+
+      </ion-list>
+      
+    </ng-template>
+  
+    @if (!currentOfferDetails) {
+      <ng-container 
+        [ngTemplateOutlet]="offerProductsList">
+      </ng-container>
+      }
+
+    }
+
+    @if(step===2){
+      <ng-container 
+         [ngTemplateOutlet]="offerUploadImages">
+      </ng-container>
+    }
+
+    <ng-template #offerUploadImages >
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="img-container">
+   
+              <img class="img-offer" [src]="imageUrl"/>
+          
+              <ion-fab  class="image-fab">
+                <ion-fab-button class="camera-button"  size="small" (click)="openModalImage()" >
+                  <ion-icon  name="camera"></ion-icon>
+                </ion-fab-button>
+              </ion-fab>
+
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="img-container">
+   
+              <img class="img-offer" [src]="occasionUrl"/>
+          
+              <ion-fab  class="image-fab">
+                <ion-fab-button class="camera-button"  size="small" (click)="openModalOccasionImage()" >
+                  <ion-icon  name="camera"></ion-icon>
+                </ion-fab-button>
+              </ion-fab>
+              
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ng-template>
+
+
 </ion-content>
+
+<ion-modal trigger="select-items" #modal (willDismiss)="onWillDismiss($event)">
+ 
+  <ng-template>
+    <app-multi-selection-search
+      class="ion-page"
+      title="{{ 'single_selection_searchbox.selectitem' | translate }}"
+      [items]="items"
+      (searchEmit)="searchValueEmit($event)"
+      (selectionChange)="itemSelected($event)"
+      (selectionCancel)="modal.dismiss()"
+    ></app-multi-selection-search>
+  </ng-template>
+
+</ion-modal>

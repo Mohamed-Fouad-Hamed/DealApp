@@ -36,6 +36,18 @@ export class AccountProductService {
       );
   }
 
+  
+
+  getAccountProductsByProductName(accountId:string,productName:string){
+    const URL = this.API.apiHost;
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessageResponse>(`${URL}/get-account-products-by-product-name?accountId=${accountId}&productName=${productName}`)
+        })
+      );
+  }
+
 
   updateAccountProduct(product:IAccountProduct):Observable<MessageResponse>{
       
