@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { IonicModule , ModalController ,PopoverController} from '@ionic/angular';
+import { IonicModule  ,PopoverController} from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { IProductRequest, IProductResponse } from 'src/app/interfaces/DB_Models';
 import { ProductService } from 'src/app/services/model-services/product-service/product.service';
@@ -95,7 +95,6 @@ export class ProductPage implements OnInit , OnDestroy {
                                        }))
                                     .subscribe((categories)=>{  
                                                 this.mItems = categories ; 
-                                                console.log(this.mItems) 
                                       })
 
   }

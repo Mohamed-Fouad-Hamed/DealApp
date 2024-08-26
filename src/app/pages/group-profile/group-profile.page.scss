@@ -1,0 +1,31 @@
+.group-container{
+    position:relative;
+    height:40%;
+    width:100%;
+ }
+
+.img-group {
+    position: absolute;
+    width: 150px;
+	height: 150px;
+    right:10%;
+    bottom: 30%; 
+	box-sizing: border-box;
+	border: 5px white solid;
+	border-radius: 15%;
+	overflow: hidden;
+	box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+	transform: translatey(0px);
+    object-fit: cover;
+    z-index: 2;
+  }
+
+  .image-fab {
+    position: absolute;
+    right: calc( 10% + 125px );
+    bottom: 23%; 
+}
+
+.camera-button{
+    --background:#1a73b3;
+}

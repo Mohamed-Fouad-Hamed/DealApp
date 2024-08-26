@@ -3,157 +3,153 @@ import { Injectable, inject } from '@angular/core';
 import { APIService } from '../../API/api.service';
 import { Observable, delay, switchMap, timer } from 'rxjs';
 import { MessageResponse } from '../../interfaces/MessageResponse';
-import { ICategoryRequest, ICategoryResponse } from 'src/app/interfaces/DB_Models';
-
-
+import { IGroupRequest, IGroupResponse } from 'src/app/interfaces/DB_Models';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class CategoryService {
+export class GroupService {
 
   private http = inject(HttpClient);
 
   private API = inject(APIService);
 
-  getCategory(id:string): Observable<ICategoryResponse>{
+  getGroup(id:string): Observable<IGroupResponse>{
 
     const URL = this.API.apiHost;
 
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<ICategoryResponse>(`${URL}/get-category?id=${id}`)
+          return this.http.get<IGroupResponse>(`${URL}/get-group?id=${id}`)
         })
       );
 
   }
 
-  categoryExists(id:string){
+  groupExists(id:string){
       
     const URL = this.API.apiHost;
 
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<any>(`${URL}/category-name?id=${id}`)
+          return this.http.get<any>(`${URL}/group-name?id=${id}`)
         })
       );
   }
 
-  getCategories(){
+  getGroups(){
 
     const URL = this.API.apiHost;
 
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<any>(`${URL}/get-categories`)
+          return this.http.get<any>(`${URL}/get-groups`)
         })
       );
   }
 
-  getCategoriesByAccountType(accountType:string){
+  getGroupsByAccountType(accountType:string){
 
     const URL = this.API.apiHost;
 
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<ICategoryResponse[]>(`${URL}/get-categories-by-account-type?accountType=${accountType}`)
+          return this.http.get<IGroupResponse[]>(`${URL}/get-groups-by-account-type?accountType=${accountType}`)
         })
       );
   }
   
-  getCategoriesRowStates(){
+  getGroupsRowStates(){
 
     const URL = this.API.apiHost;
 
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<MessageResponse>(`${URL}/get-categories-row-states`)
+          return this.http.get<MessageResponse>(`${URL}/get-groups-row-states`)
         })
       );
 
   }
 
-  getAcceptedCategories(){
+  getAcceptedGroups(){
 
     const URL = this.API.apiHost;
 
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<MessageResponse>(`${URL}/get-categories-accepted`)
+          return this.http.get<MessageResponse>(`${URL}/get-groups-accepted`)
         })
       );
   }
 
-  getPendingCategories(){
+  getPendingGroups(){
 
     const URL = this.API.apiHost;
 
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<MessageResponse>(`${URL}/get-categories-pending`)
+          return this.http.get<MessageResponse>(`${URL}/get-groups-pending`)
         })
       );
   }
 
-  getRejectedCategories(){
+  getRejectedGroups(){
 
     const URL = this.API.apiHost;
 
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<MessageResponse>(`${URL}/get-categories-rejected`)
+          return this.http.get<MessageResponse>(`${URL}/get-groups-rejected`)
         })
       );
   }
 
-  uploadCategory(category:ICategoryRequest):Observable<MessageResponse>{
+  uploadGroup(group:IGroupRequest):Observable<MessageResponse>{
       
     const URL = this.API.apiHost;
     
-    return this.http.post<MessageResponse>(`${URL}/create-category`, category , this.API.headerJsonType ).pipe(
+    return this.http.post<MessageResponse>(`${URL}/create-group`, group , this.API.headerJsonType ).pipe(
           delay(100)
       );
 
   }
 
-  uploadCategoryImage(formData:FormData):Observable<MessageResponse>{
+  uploadGroupImage(formData:FormData):Observable<MessageResponse>{
     
     const URL = this.API.apiHost;
     
-    return this.http.post<MessageResponse>(`${URL}/category-upload-image`, formData ).pipe(
+    return this.http.post<MessageResponse>(`${URL}/group-upload-image`, formData ).pipe(
             delay(100)
         );
 
   }
 
-setCategoryAccepted(formData:FormData){
+setGroupAccepted(formData:FormData){
   
   const URL = this.API.apiHost;
     
-  return this.http.post<MessageResponse>(`${URL}/set-category-accepted`, formData ).pipe(
+  return this.http.post<MessageResponse>(`${URL}/set-group-accepted`, formData ).pipe(
           delay(100)
       );
 
 }
 
-setCategoryRejected(formData:FormData){
+setGroupRejected(formData:FormData){
   
   const URL = this.API.apiHost;
     
-  return this.http.post<MessageResponse>(`${URL}/set-category-rejected`, formData ).pipe(
+  return this.http.post<MessageResponse>(`${URL}/set-group-rejected`, formData ).pipe(
           delay(100)
       );
 
 }
-
 
 }

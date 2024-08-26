@@ -11,11 +11,27 @@ export interface IDBUser{
     token:string;
 }
 
+export interface IGroupRequest{
+    id:number;
+    name:string;
+    descr:string;
+    account_type:string;
+}
+
+export interface IGroupResponse{
+    id:number;
+    name:string;
+    descr:string;
+    img:string;
+    accountType:string;
+}
+
 export interface ICategoryRequest{
     id:number;
     name:string;
     descr:string;
     account_type:string;
+    group_id:number;
 }
 
 export interface ICategoryResponse{

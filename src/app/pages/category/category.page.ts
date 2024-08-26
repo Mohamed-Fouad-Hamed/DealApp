@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule , PopoverController } from '@ionic/angular';
 import { CategoryService } from 'src/app/services/model-services/category-service/category.service';
 import { Router } from '@angular/router';
 import { ICategoryRequest, ICategoryResponse } from 'src/app/interfaces/DB_Models';
@@ -9,7 +9,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import {  RouterLink } from '@angular/router';
 import { IonRouterLink } from '@ionic/angular/standalone';
 import { AsyncCategoryNameIsUniqueDirective } from '../../validations/directives/AsyncCategoryNameIsUnique';
-import { Subscription, finalize } from 'rxjs';
+import { PopoverSelectComponent } from 'src/app/modals/popover-select/popover-select.component';
+import { Subscription, finalize, map } from 'rxjs';
+import { SingleItem } from 'src/app/types/types';
+import { GroupService } from 'src/app/services/model-services/group-service/group.service';
 
 
 @Component({
@@ -25,20 +28,30 @@ export class CategoryPage implements OnInit , OnDestroy{
  
   private categoryService = inject(CategoryService);
 
+  private groupService = inject(GroupService);
+
+  private popoverController = inject( PopoverController); 
+
   private router = inject(Router);
 
-  private err?:string;
+  groupName?:SingleItem = {id:'',name:'Select Group',icon:''};
+
+  private mItems : SingleItem[] = [] ;
+
+  err:string ='';
 
   isLoading : boolean = false ;
 
   private subscription? : Subscription;
+  private groupSubscription? : Subscription;
  
 
   categoryRequest:ICategoryRequest = {
           id:0,
           name:'',
           descr:'',
-          account_type:''
+          account_type:'',
+          group_id : 0
         };
 
   categoryResponse:ICategoryResponse = {
@@ -62,6 +75,19 @@ export class CategoryPage implements OnInit , OnDestroy{
   }
 
   ngOnInit() {
+
+    this.groupSubscription = this.groupService.getGroups()
+                                 .pipe(map((groups:any) => {
+                                          const _groups : SingleItem [] = 
+                                          groups.map((group:any) => { const _group : SingleItem =  { id:group.id,name:group.name,icon:group.img } ; 
+                                          return _group; 
+                                          });
+                                          
+                                          return _groups;
+                                       }))
+                                    .subscribe((groups)=>{  
+                                                this.mItems = groups ; 
+                                      })
     
   }
 
@@ -75,7 +101,7 @@ export class CategoryPage implements OnInit , OnDestroy{
     try{
    
     this.subscription =  this.categoryService.uploadCategory(
-        this.categoryFrm.value
+        this.categoryRequest
       ).pipe(finalize(() => {
         setInterval(
           () => {
@@ -111,5 +137,30 @@ export class CategoryPage implements OnInit , OnDestroy{
   }
 
   
+  async openPopOver(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverSelectComponent,
+      event: ev,
+      translucent: false,
+      componentProps: {
+        title: "Groups",
+        items: this.mItems,
+      }
+    });
+     
+     await popover.present();
+     
+     // Listen for onDidDismiss
+     const { data } = await popover.onDidDismiss();
+     
+     if (data) {
+       this.groupName! = data?.selectedItem ;
+       this.categoryRequest.group_id = +this.groupName!.id;
+     }
+     else{
+      this.groupName! = {id:'',name:'Select Group',icon:''};
+      this.categoryRequest.group_id = 0 ;
+     }
+   }
 
 }

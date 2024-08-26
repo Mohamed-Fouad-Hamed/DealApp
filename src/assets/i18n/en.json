@@ -82,6 +82,18 @@
 	"product.registerproduct":" Register Product ",
 	"product.toastsave":"The product has been registered successfully... awaiting as documentation",
 
+	"group.name":" Group name",
+	"group.placeholdername":" Enter group name",
+	"group.namereq":" Group name is required",
+	"group.nameduplicate":"Group name is exists",
+	"group.descr":" Group description ",
+	"group.descrreq":"Description is required",
+	"group.placeholderdescr":" Enter Group description ",
+	"group.image":"Group image",
+	"group.account_type":" Account Type",
+	"group.buttonsubmit":"  Register Group ",
+	"group.toastsave":"The Group has been registered successfully... awaiting as documentation",
+
 	"_comment":" Category screen ",
 	"category.name":" Category name",
 	"category.placeholdername":" Enter category name",

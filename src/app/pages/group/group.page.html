@@ -3,11 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button  [routerLink]="['/']" ></ion-back-button>
     </ion-buttons>
-    <ion-title> CATEGORIES </ion-title>
+    <ion-title> GROUPS </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form id="categoryFormId" class="center-content" #categoryFrm="ngForm" (ngSubmit)="onSubmit()" >
+  <form id="groupFormId" class="center-content" #groupFrm="ngForm" (ngSubmit)="onSubmit()" >
 <!--
     @if( this.error ){
       <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
@@ -18,22 +18,22 @@
     </ng-template>
   -->
 
-          <ion-row >
+    <ion-row >
         
         <ion-col>
             <ion-input
               label-placement="floating" 
-              placeholder="{{'category.placeholdername' | translate}}"
-              label="{{'category.name' | translate}}"
+              placeholder="{{'group.placeholdername' | translate}}"
+              label="{{'group.name' | translate}}"
               counter="true"
               maxlength="50"
-              [(ngModel)]="categoryRequest.name"
+              [(ngModel)]="groupRequest.name"
               #name="ngModel"
               name="name"
               required
               color="secondary"
               [ngModelOptions]="{ updateOn: 'blur' }"
-              CategoryNameIsUnique
+              GroupNameIsUnique
             >
             @if (name!.pending){
               <ion-spinner slot="end"></ion-spinner>
@@ -54,11 +54,11 @@
           }
     
           <ng-template #nameTemplateRequired>
-            <ion-text class="error-text" color="danger"><small>{{'category.namereq' | translate}}</small></ion-text>
+            <ion-text class="error-text" color="danger"><small>{{'group.namereq' | translate}}</small></ion-text>
           </ng-template>
     
           <ng-template #nameTemplateExists>
-            <ion-text class="error-text" color="danger"><small>{{'category.nameduplicate' | translate}}</small></ion-text>
+            <ion-text class="error-text" color="danger"><small>{{'group.nameduplicate' | translate}}</small></ion-text>
           </ng-template>
 
         </ion-col>  
@@ -72,11 +72,11 @@
         <ion-col>
             <ion-input
               label-placement="floating" 
-              placeholder="{{'category.placeholderdescr' | translate}}"
-              label="{{'category.descr' | translate}}"
+              placeholder="{{'group.placeholderdescr' | translate}}"
+              label="{{'group.descr' | translate}}"
               counter="true"
               maxlength="100"
-              [(ngModel)]="categoryRequest.descr"
+              [(ngModel)]="groupRequest.descr"
               #descr="ngModel"
               name="descr"
               required
@@ -92,7 +92,7 @@
             }
       
             <ng-template #descrTemplateRequired>
-              <ion-text class="error-text" color="danger"><small>{{'category.descrreq' | translate}}</small></ion-text>
+              <ion-text class="error-text" color="danger"><small>{{'group.descrreq' | translate}}</small></ion-text>
             </ng-template>
 
         </ion-col>  
@@ -100,11 +100,11 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-select label="{{'category.account_type' | translate}}" 
+          <ion-select label="{{'group.account_type' | translate}}" 
                       label-placement="floating" 
                       fill="outline"
                       required
-                      [(ngModel)]="categoryRequest.account_type"
+                      [(ngModel)]="groupRequest.account_type"
                       #account_type="ngModel"
                       color="secondary"
                       name="account_type"
@@ -117,21 +117,14 @@
           </ion-select>
         </ion-col>
       </ion-row>
-      <ion-row>
-        
-        <ion-col>
-          <ion-label expand="full" (click)="openPopOver($event)">{{categoryName!.name}}</ion-label>
-        </ion-col>
-    
-      </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-button [disabled]="!categoryFrm.valid"
+        <ion-button [disabled]="!groupFrm.valid"
                     type="submit" 
                     color="secondary" 
                     expand="block"
-                    translate="category.buttonsubmit"
+                    translate="group.buttonsubmit"
                     class="submit-button">
              @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
         </ion-button>
@@ -140,7 +133,7 @@
   </form>
   <ion-toast
     [isOpen]="isToastOpen"
-    message="{{'category.toastsave' | translate}}"
+    message="{{'group.toastsave' | translate}}"
     [duration]="3000"
     (didDismiss)="setOpenToast(false)"
   ></ion-toast>

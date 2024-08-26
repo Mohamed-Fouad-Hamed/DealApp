@@ -81,6 +81,17 @@
 	"product.registerproduct":" تسجيل الصنف ",
 	"product.toastsave":"تم تسجيل الصنف بنجاح ... فى إنتظار التوثيق",
 
+	"group.name":"إسم المجموعة ",
+	"group.placeholdername":" أكتب إسم المجموعه",
+	"group.namereq":" إسم المجموعه مطلوب",
+	"group.nameduplicate":" هذا الإسم مستخدم من قبل",
+	"group.descr":"وصف المجموعه",
+	"group.placeholderdescr":"أكتب وصف المجموعه ",
+	"group.descrreq":" الوصف مطلوب ",
+	"group.image":"صورة المجموعه",
+	"group.account_type":"نوع الحساب",
+	"group.buttonsubmit":" تسجيل المجموعه ",
+	"group.toastsave":"  تم تسجيل المجموعه بنجاح ... فى إنتظار التوثيق ",
 	
 	"category.name":"إسم الفئة",
 	"category.placeholdername":" أكتب إسم الفئة",
