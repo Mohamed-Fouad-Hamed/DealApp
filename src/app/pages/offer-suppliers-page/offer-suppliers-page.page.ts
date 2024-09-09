@@ -4,15 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-notifications',
-  templateUrl: './notifications.page.html',
-  styleUrls: ['./notifications.page.scss'],
+  selector: 'app-offer-suppliers-page',
+  templateUrl: './offer-suppliers-page.page.html',
+  styleUrls: ['./offer-suppliers-page.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class NotificationsPage implements OnInit {
-  
-  
+export class OfferSuppliersPagePage implements OnInit {
 
   constructor() { }
 

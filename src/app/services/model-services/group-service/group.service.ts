@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { APIService } from '../../API/api.service';
 import { Observable, delay, switchMap, timer } from 'rxjs';
-import { MessageResponse } from '../../interfaces/MessageResponse';
+import { MessagePageableResponse, MessageResponse } from '../../interfaces/MessageResponse';
 import { IGroupRequest, IGroupResponse } from 'src/app/interfaces/DB_Models';
 
 @Injectable({
@@ -61,6 +61,44 @@ export class GroupService {
           return this.http.get<IGroupResponse[]>(`${URL}/get-groups-by-account-type?accountType=${accountType}`)
         })
       );
+  }
+
+
+
+  get5GroupsByAccountType(accountType:string){
+
+    const URL = this.API.apiHost;
+
+    return timer(300)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<IGroupResponse[]>(`${URL}/get-5groups-by-account-type?accountType=${accountType}`)
+        })
+      );
+  }
+
+  getPageableGroupsByAccountType(accountType:string,pageNumber:number,pageSize:number){
+
+    const URL = this.API.apiHost;
+
+    return timer(300)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<IGroupResponse[]>(`${URL}/get-pageable-groups-by-account-type?accountType=${accountType}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+        })
+      );
+  }
+
+  getCountAndPageableGroupsByAccountType(accountType:string,pageNumber:number,pageSize:number){
+
+    const URL = this.API.apiHost;
+
+    return timer(300)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessagePageableResponse>(`${URL}/get-count-pageable-groups-by-account-type?accountType=${accountType}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+        })
+    );
   }
   
   getGroupsRowStates(){

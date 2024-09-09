@@ -22,5 +22,103 @@
       <ion-row>
         <ion-col offset="1" >{{currentAccount?.account_name}} {{currentAccount?.account_type}}</ion-col>
       </ion-row>
+
+      <form id="accountOptionFormId" class="center-content" #accountOptionFrm="ngForm" (ngSubmit)="updateAccountOption()" >
+
+ 
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="5"> 
+              <ion-input
+                  type="number"
+                  label-placement="floating" 
+                  label="{{'register.min_limit_req' | translate}}"
+                  [(ngModel)]="accountOption.min_value"
+                  #min_value="ngModel"
+                  name="min_value"
+                  color="secondary"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="2"> 
+            <ion-input
+                label-placement="floating" 
+                label="{{'register.currency' | translate}}"
+                [(ngModel)]="accountOption.currency"
+                #currency="ngModel"
+                name="currency"
+                maxlength="10"
+                color="secondary"
+            ></ion-input>
+        </ion-col>
+          <ion-col size="5"> 
+              <ion-input
+                type="number"
+                label-placement="floating" 
+                label="{{'register.min_limit_count' | translate}}"
+                [(ngModel)]="accountOption.min_quan"
+                #min_quan="ngModel"
+                name="min_quan"
+                color="secondary"
+              ></ion-input>
+          </ion-col>
+        </ion-row> 
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="4">
+              <ion-input
+                label-placement="floating" 
+                label="{{'register.delivery_period' | translate}}"
+                [(ngModel)]="accountOption.delivery_period"
+                #delivery_period="ngModel"
+                name="delivery_period"
+                maxlength="30"
+                color="secondary"
+              ></ion-input>
+          </ion-col>
+          <ion-col size="4">
+            <ion-input
+              label-placement="floating" 
+              label="{{'register.work_hours' | translate}}"
+              [(ngModel)]="accountOption.work_hours"
+              #work_hours="ngModel"
+              name="work_hours"
+              maxlength="50"
+              color="secondary"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="4">
+            <ion-input
+              label-placement="floating" 
+              label="{{'register.weekend' | translate}}"
+              [(ngModel)]="accountOption.weekend"
+              #weekend="ngModel"
+              name="weekend"
+              maxlength="30"
+              color="secondary"
+            ></ion-input>
+          </ion-col>
+        </ion-row>    
+            
+            <ion-row>
+              <ion-col>
+                <ion-button [disabled]="!accountOptionFrm.valid"
+                            type="submit" 
+                            color="secondary" 
+                            expand="block"
+                            translate="group.buttonsubmit"
+                            class="submit-button">
+                     @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+
+
   </ion-grid>
+
+  <ion-toast
+      [isOpen]="isToastOpen"
+      message="{{'register.toastsave' | translate}}"
+      [duration]="3000"
+      (didDismiss)="setOpenToast(false)"
+  ></ion-toast>
+
 </ion-content>

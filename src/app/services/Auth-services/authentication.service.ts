@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { debounceTime, delay, first, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { MessageResponse } from '../interfaces/MessageResponse';
-import { IAccountResponse, IAccountSignup , ICredential , INewPassword , ISignup , ITokenLogin , IUniqueLogin , IUserResponse, IVerifyOTP } from '../interfaces/Auth-Interfaces';
+import { IAccountOptionReq, IAccountResponse, IAccountSignup , ICredential , INewPassword , ISignup , ITokenLogin , IUniqueLogin , IUserResponse, IVerifyOTP } from '../interfaces/Auth-Interfaces';
 import { APIService } from '../API/api.service';
 import { BehaviorSubject, from, timer } from 'rxjs';
 import { IDBUser } from '../../interfaces/DB_Models';
@@ -38,7 +38,8 @@ export class AuthenticationService {
   account_id:0,
   account_name:'',
   account_logo:'',
-  account_image:'' 
+  account_image:'',
+  account_type:'' 
 }
 
  private userInfo = new BehaviorSubject<IUserResponse>(this.observableUser);
@@ -122,6 +123,12 @@ userRegister(signUp:ISignup):Observable<MessageResponse>{
       );
  }
 
+ updateAccountOption(accountOption:IAccountOptionReq):Observable<MessageResponse>{
+  return this.http.post<MessageResponse>(this.authURL + 'update-account-options', accountOption , this.API.headerJsonType).pipe(
+         delay(100)
+    );
+}
+ 
  userUploadAvatar(formData:FormData):Observable<MessageResponse>{
   return this.http.post<MessageResponse>(this.authURL + 'upload-user-avatar', formData ).pipe(
          delay(100)

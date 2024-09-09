@@ -12,7 +12,6 @@ export interface IDBUser{
 }
 
 export interface IGroupRequest{
-    id:number;
     name:string;
     descr:string;
     account_type:string;
@@ -48,6 +47,7 @@ export interface IProductRequest{
     has_first:boolean;
     first_unit:string;
     first_price:number;
+    unit_count:number;
     has_second:boolean;
     second_unit:string;
     second_price:number;
@@ -61,6 +61,7 @@ export interface IProductResponse{
     has_first:boolean;
     first_unit:string;
     first_price:number;
+    unit_count:number;
     has_second:boolean;
     second_unit:string;
     second_price:number;
@@ -92,7 +93,7 @@ export interface IAccountOfferReq{
 
           is_active : boolean;
           
-          offerDetailsList : IOfferDetailsReq[];
+       //   offerDetailsList : IOfferDetailsReq[];
 }
 
 export interface IOfferDetailsReq{

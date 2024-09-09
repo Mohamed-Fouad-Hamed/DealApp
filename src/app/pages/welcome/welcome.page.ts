@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit , ViewChild, effect, inject } from '@angular/core';
+import { Component, ElementRef, OnInit , ViewChild,  inject   } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -33,20 +33,8 @@ export class WelcomePage implements OnInit {
 
   private users = this.databaseService.getUsers;
   
+
   
-  // swiper
-  @ViewChild('swiper')
-  swiperRef: ElementRef | undefined;
-
-  public images=[
-    'https://media.istockphoto.com/id/1425993030/photo/european-honey-bees-fly-around-apiary.webp?b=1&s=170667a&w=0&k=20&c=UjrXbrwYQZYMGvAg3x78ysHDrFNWYElKeywRN2rFYJA='
-    ,'https://media.istockphoto.com/id/1486359843/photo/api-application-programming-interface-software-development-tool.webp?b=1&s=170667a&w=0&k=20&c=InbS19OIy9qvqhXwR4j99hXXe3MRxkc9lMvo7prTl9A='
-    ,'https://media.istockphoto.com/id/1602192573/photo/bee-close-up-on-a-flower.webp?b=1&s=170667a&w=0&k=20&c=NCMEsmReAUYUNfFo_RWeshUSxJqvRuuVfB86KePTa_M='
-    ,'https://images.unsplash.com/photo-1710104434504-0261d06fa832?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D'
-    ,'https://images.unsplash.com/photo-1709828593321-48973262f23e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyOHx8fGVufDB8fHx8fA%3D%3D'
-    ,'https://images.unsplash.com/photo-1705499438100-fff66a0fce50?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNXx8fGVufDB8fHx8fA%3D%3D'
-  ];
-
 
   constructor() { 
    
@@ -54,9 +42,9 @@ export class WelcomePage implements OnInit {
    
   }
 
+
   ngOnInit() {
 
-    
    
     this.databaseService.fetchFirstUser().then((user)=>{
       
@@ -84,16 +72,6 @@ export class WelcomePage implements OnInit {
     
   }
 
-  onSlideChange(e:any){
-    console.log('change : ' , e);
-  }
-
-  goNext(){
-    this.swiperRef?.nativeElement.swiper.slideNext();
-  }
-
-  goPrev(){
-    this.swiperRef?.nativeElement.swiper.slidePrev();
-  }
+ 
 
 }

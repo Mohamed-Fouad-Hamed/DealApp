@@ -7,6 +7,7 @@ import { IAccountOfferReq, IAccountOfferRes } from 'src/app/interfaces/DB_Models
 import { OfferService } from 'src/app/services/model-services/account-offer/offer.service';
 import { finalize, Subscription } from 'rxjs';
 import { format } from 'date-fns/format';
+import { hasChanges } from 'src/app/utilities/ObjectsOps';
 
 @Component({
   selector: 'offer-header',
@@ -67,17 +68,18 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
 
     endAt : new Date().toISOString(),
 
-    is_active : false,
-    
-    offerDetailsList : []
+    is_active : false
     
   }
+
+   nativeOffer?:IAccountOfferReq;
 
   
   constructor() { 
 
     effect(()=>{
       this.accountOfferReq = this.AccountOffer();
+      this.nativeOffer! = {...this.accountOfferReq};
       this.o_dateValue = format( this.accountOfferReq.o_date ,'yyyy-MM-dd')+'T'+format( this.accountOfferReq.o_date ,'HH:mm'); 
       this.o_dateString = format( this.accountOfferReq.o_date ,'yyyy/MM/dd hh:mm a') ;
       this.startAtValue = format( this.accountOfferReq.startAt ,'yyyy-MM-dd')+'T'+format( this.accountOfferReq.startAt ,'HH:mm'); 
@@ -144,7 +146,9 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
 
   async  onSubmit() {
 
-    if (this.accountOfferFrm.invalid) {
+   
+
+    if (this.accountOfferFrm.invalid ) {
       return;
     }
   
@@ -156,6 +160,11 @@ export class OfferComponent  implements OnInit , OnDestroy ,AfterViewInit {
       this.accountOfferReq.o_date = this.o_dateValue;
       this.accountOfferReq.startAt = this.startAtValue;
       this.accountOfferReq.endAt = this.endAtValue;
+
+      if(!hasChanges(this.accountOfferReq,this.nativeOffer!)){
+        this.updateEventEmitter.emit(undefined);
+        return;
+      }
       
       this.subscription = this.offerService.uploadOffer(
             this.accountOfferReq

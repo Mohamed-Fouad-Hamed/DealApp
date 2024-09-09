@@ -1,0 +1,85 @@
+swiper-container {
+    width: 100%;
+    height:100%;
+    
+   --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);
+   --swiper-pagination-color: var(--ion-color-primary, #0054e9);
+ 
+ }
+   
+   
+   swiper-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   }
+
+   .group-margin-padding{
+      padding: 1px;
+   }
+   
+   .card-back-color{
+    background-color: lightblue;
+   }
+
+ .image-group{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+ } 
+
+ .name-group{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    background:linear-gradient(to bottom, #feffff 0%,#8e9192 35%,#232425 100%);
+    opacity: 0.5;
+    color: #fff;
+ } 
+
+.top-div-search{
+    height: 5vh;
+    overflow: hidden;
+}
+
+.middle-div-groups{
+    margin-top: 10px;
+    margin-left : 10px;
+    margin-right : 10px;
+    height: 51vh;
+    overflow-y: hidden;
+}
+
+
+
+.top-div-offers{
+    margin-top: 10px;
+    margin-left : 10px;
+    margin-right : 10px;
+    height: 20vh;
+    overflow: hidden;
+}
+
+.image-container{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: antiquewhite;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+ }
+
+ .text-offer{
+    color: white;
+    font-weight: 900;
+    text-align: center;
+ }
+
+ .border-class{
+    border: 5px solid blueviolet;
+ }
+

@@ -97,9 +97,9 @@ async  onSubmit() {
               this.authService.setAuthentication(true);
               this.authService.setAuthUser(res.entity);
 
-              const {id} = res?.entity;
+              const {account_id} = res?.entity;
 
-              this.router.navigate(['/home/notifications']);
+              this.router.navigate(['/home/main-page']);
           }
           
          }
@@ -123,7 +123,7 @@ async  onSubmit() {
 
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+   if(this.subscription) this.subscription.unsubscribe();
  }
 
 

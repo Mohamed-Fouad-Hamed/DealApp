@@ -12,12 +12,14 @@ import { APIService } from 'src/app/services/API/api.service';
 import { AccountProductItem, Item } from 'src/app/types/types';
 import { AccountProductService } from 'src/app/services/model-services/account-product/account-product.service';
 import { OfferService } from 'src/app/services/model-services/account-offer/offer.service';
-import { IAccountOfferReq, IAccountOfferRes, IOfferDetailsReq, IOfferDetailsRes } from 'src/app/interfaces/DB_Models';
+import { IAccountOfferReq, IAccountOfferRes, IOfferDetailsRes } from 'src/app/interfaces/DB_Models';
 import {OfferComponent} from 'src/app/components/offer/offer.component';
 import { OfferDetailsComponent } from 'src/app/components/offer/offer-details/offer-details.component';
 import { SelectImageComponent } from 'src/app/modals/select-image/select-image.component';
 import { MessageResponse } from 'src/app/services/interfaces/MessageResponse';
 import { ProductService } from 'src/app/services/model-services/product-service/product.service';
+import { hasChanges } from 'src/app/utilities/ObjectsOps';
+
 
 
 @Component({
@@ -92,7 +94,7 @@ export class AccountOfferPage implements OnInit,OnDestroy {
 
     is_active : false,
     
-    offerDetailsList : []
+   // offerDetailsList : []
     
   }
 
@@ -202,7 +204,7 @@ export class AccountOfferPage implements OnInit,OnDestroy {
         
             endAt : ''+this.offerRes.endAt,
         
-            is_active : this.offerRes.is_active,
+            is_active : this.offerRes.is_active /*,
             
             offerDetailsList : this.offerRes.offerDetailsList.map((details)=>{
 
@@ -221,7 +223,7 @@ export class AccountOfferPage implements OnInit,OnDestroy {
 
               return offerDetailsReq;
                   
-            })
+            })*/
             
           }
          
@@ -270,9 +272,9 @@ export class AccountOfferPage implements OnInit,OnDestroy {
 
  updateOfferHeader( offerRes:any ){
       if(offerRes){
-        this.step = 1 ;
         this.offerRes = offerRes;
       }
+      this.step = 1 ;
      
  }
 
@@ -281,8 +283,11 @@ export class AccountOfferPage implements OnInit,OnDestroy {
  }
 
  updateOfferDetails(){
+   this.imageUrl =  `${this.apiServer!}${this.offerRes.o_image}` ;
+   this.occasionUrl =  `${this.apiServer!}${this.offerRes.occasion_image}` ;
    this.step = 2 ;
  }
+
 searchValueEmit($value:any){
   this.items = [] ;
   if($value === '') return;
@@ -303,7 +308,7 @@ searchValueEmit($value:any){
       }); 
           return _items;
      }
-  )).subscribe((products) => {
+    )).subscribe((products) => {
      this.items = products 
      console.log('items : ' , this.items)
     });

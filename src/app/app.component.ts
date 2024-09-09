@@ -3,6 +3,9 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
 import { 
+  homeOutline,
+  cartOutline,
+  cashOutline,
    cog,
    send,
    notifications,
@@ -36,7 +39,13 @@ export class AppComponent {
 
   constructor() {
 
-    addIcons({ cog , send , notifications , arrowBack , arrowForward ,eye , eyeOff ,camera ,trashOutline,createOutline });
+    addIcons({
+      homeOutline,
+      cartOutline,
+      cashOutline,
+       cog ,
+       send ,
+       notifications , arrowBack , arrowForward ,eye , eyeOff ,camera ,trashOutline,createOutline });
 
     this.initApiService();
     

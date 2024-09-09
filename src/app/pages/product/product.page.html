@@ -127,6 +127,23 @@
               #first_price="ngModel"
               name="first_price"
               color="secondary"
+              type="number"
+            ></ion-input>
+        </ion-col>  
+
+      </ion-row>
+
+      <ion-row >
+        
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              label="{{'product.unitcount' | translate}}"
+              [(ngModel)]="product.unit_count"
+              #unit_count="ngModel"
+              name="unit_count"
+              color="secondary"
+              type="number"
             ></ion-input>
         </ion-col>  
 
@@ -173,6 +190,7 @@
           #second_price="ngModel"
           name="second_price"
           color="secondary"
+          type="number"
         ></ion-input>
     </ion-col>  
 

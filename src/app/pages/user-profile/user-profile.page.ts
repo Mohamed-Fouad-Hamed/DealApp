@@ -40,7 +40,8 @@ export class UserProfilePage implements OnInit, OnDestroy {
     account_id: 0,
     account_name: '',
     account_logo: '',
-    account_image: ''
+    account_image: '',
+    account_type:''
   };
 
   private subscription? : Subscription;

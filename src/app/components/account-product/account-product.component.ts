@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { IonicModule,IonInput } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { Subscription, finalize } from 'rxjs';
 import { IAccountProduct } from 'src/app/interfaces/DB_Models';
 import { AccountProductService } from 'src/app/services/model-services/account-product/account-product.service';

@@ -7,6 +7,12 @@
 	"app.selectDate":" Select ",
 	"app.cancelDate":" Cancel ",
 
+	"app_menu.main":" Main ",
+	"app_menu.shopping_cart":" Cart ",
+	"app_menu.suppliers":" Suppliers ",
+	"app_menu.offers":" Offers ",
+
+
 	"_comment": "Translate Languages",
 	"lang.english":"English",
 	"lang.arabic":"Arabic",
@@ -47,6 +53,13 @@
 	"register.enterpassword":" Enter a password ",
 	"register.password":"Password",
 	"register.passwordreq":" Password is required ",
+	"register.min_limit_req":"Minimum limit of request",
+	"register.min_limit_count":"Minimum limit of count products",
+	"register.delivery_period":"Delivery period",
+	"register.weekend":"Weekend",
+	"register.work_hours":"Work hours",
+	"register.currency":"Currency",
+	"register.toastsave":"Account has been updated successfully",
 	"login.rememberme":" Remember me",
 	"login.forgetpassword":"Forget password",
 	"login.submit":"Login",
@@ -74,6 +87,7 @@
 	"product.firstunit":" First unit",
 	"product.firstunitname":"First unit name ",
 	"product.firstprice":" First price",
+	"product.unitcount":"Unit Count",
 	"product.secondunit":"Second unit",
 	"product.secondunitname":"Second unit name",
 	"product.secondprice":"Second price",
@@ -82,6 +96,7 @@
 	"product.registerproduct":" Register Product ",
 	"product.toastsave":"The product has been registered successfully... awaiting as documentation",
 
+	"group.menuname":"List Categories",
 	"group.name":" Group name",
 	"group.placeholdername":" Enter group name",
 	"group.namereq":" Group name is required",

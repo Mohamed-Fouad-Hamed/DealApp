@@ -62,6 +62,7 @@ export interface IUserResponse{
       account_name:string;
       account_logo:string;
       account_image:string;
+      account_type:string;
 }
 
 export interface IAccountResponse{
@@ -70,6 +71,25 @@ export interface IAccountResponse{
      account_name : string;
      account_logo : string;
      account_image : string;
+     min_value:number;
+     min_quan:number;
+     credit:number;
+     rating:number;
+     delivery_period : string;
+     weekend  : string;
+     work_hours  : string;
+}
+
+export interface IAccountOptionReq{
+     id : number ;
+     min_value  : number ;
+     min_quan : number ;
+     currency : string ;
+     credit  : number ;
+     rating  : number ;
+     delivery_period  : string ;
+     weekend  : string ;
+     work_hours  : string ;
 }
 
 

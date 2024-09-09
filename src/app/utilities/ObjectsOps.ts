@@ -21,4 +21,17 @@ export function importValues(source:any,target:any){
       
         return d;
       }
+
+
+      export function hasChanges (source:any,target:any){
+            let result = false ;
+            const keys = Object.keys(source);
+            for (const key of keys){
+              const valueSource = source[key];
+              const valueTarget = target[key];
+              if(valueSource != valueTarget)
+                result = true;
+            }
+            return result;
+      }
       

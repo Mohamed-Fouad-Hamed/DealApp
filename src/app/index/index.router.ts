@@ -54,6 +54,15 @@ export const routes: Routes = [
           loadComponent: () => import('../pages/product/product.page').then( m => m.ProductPage)
         },
         {
+          path: 'group',
+          loadComponent: () => import('../pages/group/group.page').then( m => m.GroupPage)
+        },
+        {
+          path: 'group-profile/:id',
+          loadComponent: () => import('../pages/group-profile/group-profile.page').then( m => m.GroupProfilePage)
+        }
+        ,
+        {
           path: 'category',
           loadComponent: () => import('../pages/category/category.page').then( m => m.CategoryPage)
         },

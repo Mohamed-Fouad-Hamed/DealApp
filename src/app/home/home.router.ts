@@ -7,33 +7,57 @@ export const routes: Routes = [
     component: HomePage,
     children:[
         {
-            path: 'notifications',
-            loadComponent: () => import('../pages/notifications/notifications.page').then((m) => m.NotificationsPage)
+            path: 'main-page',
+            children:[{
+              path:'',
+              loadComponent: () => import('../pages/main-page/main-page.page').then((m) => m.MainPagePage)
+            }]
+           
         },
         {
-            path: 'messages',
-            loadComponent: () => import('../pages/messages/messages.page').then((m) => m.MessagesPage)
+          path: 'main-page/list-groups',
+          children:[{
+            path:'',
+            loadComponent: () => import('../pages/list-groups/list-groups.page').then((m) => m.ListGroupsPage)
+          }]
+         
         },
         {
-            path: 'settings',
-            loadComponent: () => import('../pages/settings/settings.page').then((m) => m.SettingsPage)
+            path: 'cart-page',
+            children:[{
+              path:'',
+              loadComponent: () => import('../pages/cart-page/cart-page.page').then((m) => m.CartPagePage)
+            }]
+            
         },
         {
-          path: 'category',
-          loadComponent: () => import('../pages/category/category.page').then((m) => m.CategoryPage)
-        },
+            path: 'suppliers-page',
+            children:[{
+              path:'' ,
+              loadComponent: () => import('../pages/suppliers-page/suppliers-page.page').then((m) => m.SuppliersPagePage)
+            }]
+           
+        }
+        ,
         {
-          path: 'product',
-          loadComponent: () => import('../pages/product/product.page').then((m) => m.ProductPage)
+            path: 'offer-suppliers-page',
+            children:[{
+              path : ''  ,
+              loadComponent: () => import('../pages/offer-suppliers-page/offer-suppliers-page.page').then((m) => m.OfferSuppliersPagePage)
+            }]
+           
         },
         {
           path: '',
-          redirectTo: '/home/notifications',
+          redirectTo: '/home/main-page',
           pathMatch: 'full',
-        },
-
-
+        }
     ]
+  },
+  {
+    path: '',
+    redirectTo: '/home/main-page',
+    pathMatch: 'full',
   }
 
 ];

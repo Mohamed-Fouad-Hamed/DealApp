@@ -1,25 +1,24 @@
-import { Component, OnInit , inject } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
 import {  IonRouterLink } from '@ionic/angular/standalone';
-import { AuthenticationService } from '../services/Auth-services/authentication.service';
-import { IUserResponse } from '../services/interfaces/Auth-Interfaces';
 import { TranslateModule } from '@ngx-translate/core';
-
-
-
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
+import { IUserResponse } from 'src/app/services/interfaces/Auth-Interfaces';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule ,IonRouterLink,RouterLink,TranslateModule]
+  selector: 'app-main-menu',
+  templateUrl: './main-menu.component.html',
+  styleUrls: ['./main-menu.component.scss'],
+  standalone:true,
+  imports:[IonicModule, CommonModule, FormsModule,RouterLink,IonRouterLink,TranslateModule]
 })
+export class MainMenuComponent  implements OnInit {
 
-export class HomePage implements OnInit {
+  @Input('textMenu') textMenu? : string ;
+  @Input('hasBackButton') hasBackButton? : boolean ;
 
   private authService = inject(AuthenticationService);
   
@@ -46,15 +45,12 @@ export class HomePage implements OnInit {
     account_type:'' 
   } ;
 
-   titleHomePage:string = 'app_menu.main';
-
-   mainPage : string = 'main-page';
-   cartPage : string = 'cart-page';
-   suppliersPage : string = 'suppliers-page';
-   offerSuppliersPage : string = 'offer-suppliers-page';
+  
+  
 
   constructor() { }
 
+ 
   async ngOnInit() {
   
     this.authService.getUserAuth().subscribe((oUser)=>{
@@ -67,5 +63,4 @@ export class HomePage implements OnInit {
 
   }
 
- 
 }

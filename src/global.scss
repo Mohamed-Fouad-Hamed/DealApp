@@ -110,9 +110,18 @@ ion-modal {
     --padding-end:20px;
     --background:transparent;
 
-    ion-datetime{
-        border-radius: 7px;
-    }
+        ion-datetime{
+            border-radius: 7px;
+        }
     
    }
+
+  .price-ignore{
+    text-decoration: line-through;
+  }
+
 }
+
+.main-menu {
+    height: 64px;
+ }

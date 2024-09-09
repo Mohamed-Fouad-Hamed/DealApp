@@ -28,6 +28,7 @@ export class ProductProfilePage implements OnInit {
   public currentProduct :  IProductResponse ={ id:0,name:'',descr:'',   has_first:false,
     first_unit:'',
     first_price:0,
+    unit_count:0,
     has_second:false,
     second_unit:'',
     second_price:0,product_image:''}

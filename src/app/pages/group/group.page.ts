@@ -31,7 +31,6 @@ export class GroupPage implements OnInit {
   private subscription? : Subscription;
 
   groupRequest:IGroupRequest = {
-          id:0,
           name:'',
           descr:'',
           account_type:''
@@ -70,7 +69,7 @@ export class GroupPage implements OnInit {
     try{
    
     this.subscription =  this.groupService.uploadGroup(
-        this.groupRequest
+        this.groupFrm.value
       ).pipe(finalize(() => {
         setInterval(
           () => {

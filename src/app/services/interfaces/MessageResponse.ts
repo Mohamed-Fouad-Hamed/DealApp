@@ -5,3 +5,10 @@
     entity:any;
     list:any;
  }
+
+ export interface MessagePageableResponse{
+   message:string;
+   count:number;
+   status:number;
+   list:any;
+}

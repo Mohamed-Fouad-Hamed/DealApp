@@ -10,11 +10,11 @@ export const routes: Routes = [
     loadChildren: () => import('./home/home.router').then( m => m.routes)
   },
   {
-    path: 'group',
-    loadComponent: () => import('./pages/group/group.page').then( m => m.GroupPage)
+    path: 'list-groups',
+    loadComponent: () => import('./pages/list-groups/list-groups.page').then( m => m.ListGroupsPage)
   },
   {
-    path: 'group-profile',
-    loadComponent: () => import('./pages/group-profile/group-profile.page').then( m => m.GroupProfilePage)
+    path: 'list-suppliers',
+    loadComponent: () => import('./pages/list-suppliers/list-suppliers.page').then( m => m.ListSuppliersPage)
   }
 ];

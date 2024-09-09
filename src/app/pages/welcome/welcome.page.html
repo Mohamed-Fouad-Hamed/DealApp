@@ -1,5 +1,5 @@
 
-<!--<ion-header >
+<!-- <ion-header >
   <ion-toolbar color="primary">
     <ion-title >Swiper</ion-title>
     <ion-buttons slot="end">
@@ -13,26 +13,53 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
-  <swiper-container  
-            #swiper
-            (swiperslidechange)="onSlideChange($event)" 
-            [pagination]="true"
-            [slidesPerView]="1"
-            [loop]="true" 
-            [zoom]="true"
-            effect="flip"
-            >
-          
-              <swiper-slide *ngFor="let image of images">
-                <div class="swiper-zoom-container">
-                  <img class="image-swiper" [src]="image" />
-                </div>
-              </swiper-slide>
-            
-  </swiper-container>
-</ion-content>-->
+<ion-content style="overflow: hidden;">
+ 
+  <div class="top-div">
+      <swiper-container  
+                    #swiper 
+                    initial-slide="0"
+                    [slidesPerView]="1"
+                    [navigation]="true"
+                    [loop]="true" 
+                    [autoplay]="true"
+                    >
+                      <swiper-slide *ngFor="let image of images">
+                        
+                          <div class="image-container" style="background-image: url({{image}});" (click)="navigateTo('/login')">
+                            <div class="text-offer" > Image Offer</div>
+                          </div>
+                         
+                         
+                        
+                      </swiper-slide>
+                    
+      </swiper-container>
+    </div>
+
+    <div class="top-div">
+      <swiper-container  
+                    #swiper1 
+                    initial-slide="0"
+                    [slidesPerView]="1"
+                    [navigation]="true"
+                    [loop]="true" 
+                    [autoplay]="true"
+                    >
+                      <swiper-slide *ngFor="let image of images">
+                        
+                          <div class="image-container" style="background-image: url({{image}});" (click)="navigateTo('/login')">
+                            <div class="text-offer" > Image Offer</div>
+                          </div>
+
+                        
+                      </swiper-slide>
+                    
+      </swiper-container>
+    </div>
+  
+</ion-content> -->
 
 
 
- <app-start></app-start>
+<app-start></app-start> 
