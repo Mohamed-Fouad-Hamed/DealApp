@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnDestroy, OnInit,  Output, ViewChild ,AfterViewInit, input,computed, effect } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnDestroy, OnInit,  Output, ViewChild ,AfterViewInit, input, effect } from '@angular/core';
 import { IonicModule ,IonDatetime} from '@ionic/angular';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';

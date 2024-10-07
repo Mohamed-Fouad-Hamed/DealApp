@@ -70,11 +70,11 @@ export class VerfiyOtpPage implements OnInit {
                       ).subscribe({ next: (res) => {
                           
                           if (res.status === 200){
-
+                             /*
                               const userToken = res.entity.token ;
                             
                               const users = this.databaseService.getUsers();
-                               /*
+                             
                                
                                 if(users().length > 0){
 
@@ -94,7 +94,9 @@ export class VerfiyOtpPage implements OnInit {
 
                                 }
                                 */
-                                    this.router.navigate(['/home/notifications']);
+                                  this.authService.setAuthentication(true);
+                                  this.authService.setAuthUser(res?.entity);
+                                  this.router.navigate(['/home/main-page']);
                       
                               }
                               else 

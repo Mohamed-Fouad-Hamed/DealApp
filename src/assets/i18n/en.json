@@ -6,11 +6,16 @@
 	"app.product":" Product ",
 	"app.selectDate":" Select ",
 	"app.cancelDate":" Cancel ",
+	"app.show_more":" Show more ... ",
+	"app.select_all":" All ",
 
 	"app_menu.main":" Main ",
 	"app_menu.shopping_cart":" Cart ",
 	"app_menu.suppliers":" Suppliers ",
 	"app_menu.offers":" Offers ",
+	"app_menu.list_groups":" Groups  ",
+	"app_menu.group_details":" Group Details",
+
 
 
 	"_comment": "Translate Languages",
@@ -39,6 +44,10 @@
 	"register.loginreq":"Login name is required",
 	"register.loginreqpattern":"Invalid email address or mobil number ",
 	"register.loginduplicate":"Login name already exists",
+	"register.phone":"Phone number",
+	"register.placeholderphone":"Enter phone number",
+	"register.phonereq":"Phnoe number required",
+	"register.phonereqpattern":"Phone number invalid",
 	"register.firstname":"First name",
 	"register.enterfirstname":" Enter your first name ",
 	"register.firstnamereq":"First name is required ",

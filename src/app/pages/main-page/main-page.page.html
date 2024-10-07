@@ -1,14 +1,25 @@
-<app-main-menu class="main-menu" [textMenu]="titleHomePage" [hasBackButton]="false" >  </app-main-menu>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'app_menu.main' | translate }}</ion-title>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content >
 
   <div class="top-div-search">
 
-    <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  ></ion-searchbar>
+    <ion-searchbar  showCancelButton="focus" class="custom" #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"   ></ion-searchbar>
     
   </div>
  
-  <div class="top-div-offers"  style="overflow: hidden;">
+  <div class="top-div-offers"  >
       <swiper-container  
                     #swiper 
                     [modules]="swiperModules"
@@ -31,26 +42,20 @@
 
   <div class="middle-div-groups" >
     <ion-content>
-      <ion-grid>
+      <ion-grid scrollable>
         <ion-row>
           @for(group of groups ; track group.name){
           <ion-col size="4"  class="group-margin-padding">
-            <ion-card  class="card-back-color ion-no-margin ion-no-padding">
-              <div class="image-group">
-                  <ion-thumbnail item-start>
-                    <img src="{{ group.img }}">
-                  </ion-thumbnail>
-              </div>
-              <ion-card-header>
-
-              </ion-card-header>
-
-              <ion-card-content>
-             
-              </ion-card-content>
+            <ion-card  class="card-group ion-no-margin ion-no-padding" (click)="groupClicked(group)">
               
+              <div class="image-group">
+                  
+                    <img src="{{ group.img }}" >
+                  
+              </div>
+ 
              <div class="name-group">
-              {{ group.name }}
+                <h1>{{ group.name }}</h1>
              </div> 
 
             </ion-card>
@@ -63,10 +68,13 @@
       <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
         <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-
     </ion-content>
+    
   </div>
 
-  <ion-button [routerLink]="['/home/main-page/list-groups']">Go to list groups</ion-button>
+  <div class="link-list-groups">
+    <a  [routerLink]="['/home/main-page/list-groups']" class="small-text">{{'app.show_more' | translate}}</a>
+  </div>
+ 
 </ion-content>
 

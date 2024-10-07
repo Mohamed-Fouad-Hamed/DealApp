@@ -7,14 +7,14 @@ import {  IonRouterLink } from '@ionic/angular/standalone';
 import { LANGUAGES, Language } from 'src/app/services/interfaces/Languages';
 import {TranslateModule , TranslateService} from '@ngx-translate/core';
 import { PlatformService } from '../../services/PlatformService/PlatformService';
-
+import { SupplierCardComponent } from 'src/app/components/supplier-card/supplier-card.component';
 
 @Component({
   selector: 'app-start',
   templateUrl: './start.page.html',
   styleUrls: ['./start.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,IonRouterLink,RouterLink,TranslateModule]
+  imports: [IonicModule, CommonModule, FormsModule,IonRouterLink,RouterLink,TranslateModule,SupplierCardComponent]
 })
 export class StartPage implements OnInit {
 

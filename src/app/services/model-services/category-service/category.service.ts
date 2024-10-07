@@ -65,6 +65,18 @@ export class CategoryService {
         })
       );
   }
+
+  getCategoriesByGroup(group:string){
+
+    const URL = this.API.apiHost;
+
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<ICategoryResponse[]>(`${URL}/get-categories-by-group?group=${group}`)
+        })
+      );
+  }
   
   getCategoriesRowStates(){
 

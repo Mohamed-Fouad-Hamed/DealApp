@@ -1,0 +1,11 @@
+{
+  "basicMenus":[
+    {
+      "name":"Suppliers" ,
+      "children":[
+        {"name":"New supplier"},
+        {"name":" supplier profile "}
+      ]
+    }
+  ]
+}

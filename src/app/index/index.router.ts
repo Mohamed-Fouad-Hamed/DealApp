@@ -12,7 +12,7 @@ export const routes: Routes = [
             loadComponent: () => import('../pages/welcome/welcome.page').then((m) => m.WelcomePage)
         },
         {
-          path: 'account-profile/:id',
+          path: 'account-profile/:accountId',
           loadComponent: () => import('../pages/account-profile/account-profile.page').then( m => m.AccountProfilePage),
           canActivate: [authGuard]
         },
@@ -31,7 +31,8 @@ export const routes: Routes = [
         },
         {
           path: 'register/:id',
-          loadComponent: () => import('../pages/register/register.page').then((m) => m.RegisterPage)
+          loadComponent: () => import('../pages/register/register.page').then((m) => m.RegisterPage),
+          canActivate: [authGuard]
         },
         {
           path: 'forgot',
@@ -51,37 +52,45 @@ export const routes: Routes = [
         },
         {
           path: 'product',
-          loadComponent: () => import('../pages/product/product.page').then( m => m.ProductPage)
+          loadComponent: () => import('../pages/product/product.page').then( m => m.ProductPage),
+          canActivate: [authGuard]
         },
         {
           path: 'group',
-          loadComponent: () => import('../pages/group/group.page').then( m => m.GroupPage)
+          loadComponent: () => import('../pages/group/group.page').then( m => m.GroupPage),
+          canActivate: [authGuard]
         },
         {
           path: 'group-profile/:id',
-          loadComponent: () => import('../pages/group-profile/group-profile.page').then( m => m.GroupProfilePage)
+          loadComponent: () => import('../pages/group-profile/group-profile.page').then( m => m.GroupProfilePage),
+          canActivate: [authGuard]
         }
         ,
         {
           path: 'category',
-          loadComponent: () => import('../pages/category/category.page').then( m => m.CategoryPage)
+          loadComponent: () => import('../pages/category/category.page').then( m => m.CategoryPage),
+          canActivate: [authGuard]
         },
         {
           path: 'category-profile/:id',
-          loadComponent: () => import('../pages/category-profile/category-profile.page').then( m => m.CategoryProfilePage)
+          loadComponent: () => import('../pages/category-profile/category-profile.page').then( m => m.CategoryProfilePage),
+          canActivate: [authGuard]
         },
         {
           path: 'product-profile/:id',
-          loadComponent: () => import('../pages/product-profile/product-profile.page').then( m => m.ProductProfilePage)
+          loadComponent: () => import('../pages/product-profile/product-profile.page').then( m => m.ProductProfilePage),
+          canActivate: [authGuard]
         },
         {
           path: 'account-product-list/:accountid',
-          loadComponent: () => import('../pages/account-product-list/account-product-list.page').then( m => m.AccountProductListPage)
+          loadComponent: () => import('../pages/account-product-list/account-product-list.page').then( m => m.AccountProductListPage),
+          canActivate: [authGuard]
         }
         ,
         {
           path: 'account-offer/:accountid',
-          loadComponent: () => import('../pages/account-offer/account-offer.page').then( m => m.AccountOfferPage)
+          loadComponent: () => import('../pages/account-offer/account-offer.page').then( m => m.AccountOfferPage),
+          canActivate: [authGuard]
         }
  
     ]

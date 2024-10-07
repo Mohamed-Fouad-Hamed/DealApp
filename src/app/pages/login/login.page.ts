@@ -31,7 +31,7 @@ export class LoginPage implements OnInit , OnDestroy{
 
  // private databaseService = inject(DatabaseService);
   
-  public credential : ICredential = {login:'',password:'',rememberMe:false};
+  public credential : ICredential = { login : '', password : '', rememberMe : false };
 
   public isLoading : boolean = false ;
 
@@ -95,7 +95,7 @@ async  onSubmit() {
              */
 
               this.authService.setAuthentication(true);
-              this.authService.setAuthUser(res.entity);
+              this.authService.setAuthUser(res?.entity);
 
               const {account_id} = res?.entity;
 

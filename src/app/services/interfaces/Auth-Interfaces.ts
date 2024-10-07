@@ -7,6 +7,7 @@ export interface IAccountSignup{
     login:string;
     password:string;
     s_cut:string;
+    phone?:string;
 }
 
 export interface ISignup{
@@ -17,6 +18,7 @@ export interface ISignup{
     login:string;
     password:string;
     s_cut:string;
+    phone:string;
 }
 
 export interface ICredential{

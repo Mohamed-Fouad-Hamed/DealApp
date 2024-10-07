@@ -52,6 +52,7 @@ export interface IProductRequest{
     second_unit:string;
     second_price:number;
     category_id:number;
+    factory_id?:number;
 }
 
 export interface IProductResponse{

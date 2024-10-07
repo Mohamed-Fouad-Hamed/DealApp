@@ -4,7 +4,8 @@ import { APIService } from '../../API/api.service';
 import { Observable, timer } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
 import { IProductRequest } from 'src/app/interfaces/DB_Models';
-import { MessageResponse } from '../../interfaces/MessageResponse';
+import { MessagePageableResponse, MessageResponse } from '../../interfaces/MessageResponse';
+import { IAccountResponse } from '../../interfaces/Auth-Interfaces';
 
 
 @Injectable({
@@ -16,6 +17,19 @@ export class ProductService {
   private http = inject(HttpClient);
 
   private API = inject(APIService);
+  
+
+  getFactoryAccountsByAccountType(accountType:string){
+
+    const URL = this.API.apiHost;
+
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<IAccountResponse[]>(`${URL}/get-factory-accounts-by-account-type?accountType=${accountType}`)
+        })
+      );
+  }
   
     productExists(id:string){
         
@@ -128,7 +142,60 @@ export class ProductService {
           );
     }
 
-    uploadProduct(product:IProductRequest):Observable<MessageResponse>{
+    
+
+    getCountAndPageableProductsByGroupId(groupId:string,pageNumber:number,pageSize:number){
+
+      const URL = this.API.apiHost;
+  
+      return timer(300)
+        .pipe(
+          switchMap(() => {
+            return this.http.get<MessagePageableResponse>(`${URL}/get-count-pageable-products-by-group?groupId=${groupId}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+          })
+      );
+    }
+
+    
+  getPageableProductsByGroupId(groupId:string,pageNumber:number,pageSize:number){
+
+    const URL = this.API.apiHost;
+
+    return timer(300)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessageResponse>(`${URL}/get-pageable-products-by-group?groupId=${groupId}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+        })
+      );
+  }
+
+
+  getCountAndPageableProductsByCategoryId(categoryId:string,pageNumber:number,pageSize:number){
+
+    const URL = this.API.apiHost;
+
+    return timer(300)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessagePageableResponse>(`${URL}/get-count-pageable-products-by-category?categoryId=${categoryId}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+        })
+    );
+  }
+
+  
+getPageableProductsByCategoryId(categoryId:string,pageNumber:number,pageSize:number){
+
+  const URL = this.API.apiHost;
+
+  return timer(300)
+    .pipe(
+      switchMap(() => {
+        return this.http.get<MessageResponse>(`${URL}/get-pageable-products-by-category?categoryId=${categoryId}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+      })
+    );
+}
+
+  uploadProduct(product:IProductRequest):Observable<MessageResponse>{
       
       const URL = this.API.apiHost;
       

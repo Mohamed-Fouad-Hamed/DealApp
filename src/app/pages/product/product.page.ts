@@ -11,6 +11,8 @@ import { IonRouterLink } from '@ionic/angular/standalone';
 import { SingleItem } from 'src/app/types/types';
 import { PopoverSelectComponent } from 'src/app/modals/popover-select/popover-select.component';
 import { CategoryService } from 'src/app/services/model-services/category-service/category.service';
+import { IAccountResponse, IUserResponse } from 'src/app/services/interfaces/Auth-Interfaces';
+import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 
 @Component({
   selector: 'app-product',
@@ -25,6 +27,8 @@ export class ProductPage implements OnInit , OnDestroy {
 
   private popoverController = inject( PopoverController); 
 
+  private authService = inject(AuthenticationService);
+
   @ViewChild('productForm') public productFrm!: NgForm;
  
   isLoading : boolean = false ;
@@ -37,9 +41,17 @@ export class ProductPage implements OnInit , OnDestroy {
 
   private categorySubscription? : Subscription;
 
+  private factoryAccountsSubscription? : Subscription;
+
   categoryName?:SingleItem = {id:'',name:'Select Gategory',icon:''};
 
   private mItems : SingleItem[] = [] ;
+
+  accountName?:SingleItem = {id:'',name:'Select Gategory',icon:''};
+
+  private aItems : SingleItem[] = [] ;
+
+  private observableUser? : IUserResponse;
 
   product:IProductRequest = {
           name:'',
@@ -51,7 +63,8 @@ export class ProductPage implements OnInit , OnDestroy {
           has_second:false,
           second_unit:'',
           second_price:0,
-          category_id:0
+          category_id:0,
+          factory_id:0
         };
  
   productResponse:IProductResponse = {
@@ -81,24 +94,57 @@ export class ProductPage implements OnInit , OnDestroy {
 
 
   ngOnDestroy(): void {
-   if(this.subscription) this.subscription!.unsubscribe();
+    if(this.subscription) this.subscription!.unsubscribe();
     if(this.categorySubscription) this.categorySubscription!.unsubscribe();
+    if(this.factoryAccountsSubscription) this.factoryAccountsSubscription!.unsubscribe();
   }
 
   ngOnInit() {
-    this.categorySubscription = this.categoryService.getCategories()
-                                    .pipe(map((categories:any) => {
-                                          const _categories : SingleItem [] = 
-                                          categories.map((category:any) => { const _category : SingleItem =  { id:category.id,name:category.name,icon:category.img } ; 
-                                          return _category; 
-                                          });
-                                          
-                                          return _categories;
-                                       }))
-                                    .subscribe((categories)=>{  
-                                                this.mItems = categories ; 
-                                      })
+    this.initiUser();
+    this.initiCategories();
+  }
 
+
+  initiUser(){
+
+    this.authService.getUserAuth().subscribe((oUser)=>{
+      this.observableUser = oUser;
+      this.initiAccounts(this.observableUser!.account_type);
+    });
+     
+  }
+
+  initiAccounts(account_type:string){
+
+    this.factoryAccountsSubscription = this.productService.getFactoryAccountsByAccountType(account_type)
+                                      .pipe(map((accounts:any) => {
+                                            const _accounts : SingleItem [] = 
+                                            accounts.map((account:IAccountResponse) => { const _account : SingleItem =  { id:''+account.id,name:account.account_name,icon:account.account_logo } ; 
+                                            return _account; 
+                                            });
+                                            
+                                            return _accounts;
+                                         }))
+                                      .subscribe((accounts)=>{  
+                                                  this.mItems = accounts ; 
+                                        })
+
+  }
+
+
+  initiCategories(){
+    this.categorySubscription = this.categoryService.getCategories()
+    .pipe(map((categories:any) => {
+          const _categories : SingleItem [] = 
+          categories.map((category:any) => { const _category : SingleItem =  { id:category.id,name:category.name,icon:category.img } ; 
+          return _category; 
+          });
+          
+          return _categories;
+       }))
+    .subscribe((categories)=>{  
+                this.mItems = categories ; 
+      });
   }
 
   async  onSubmit() {
@@ -166,6 +212,33 @@ export class ProductPage implements OnInit , OnDestroy {
      else{
       this.categoryName! = {id:'',name:'Select Gategory',icon:''};
       this.product.category_id = 0 ;
+     }
+   }
+
+
+   async openPopOverAccounts(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverSelectComponent,
+      event: ev,
+      translucent: false,
+      componentProps: {
+        title: "Accounts",
+        items: this.aItems,
+      }
+    });
+     
+     await popover.present();
+     
+     // Listen for onDidDismiss
+     const { data } = await popover.onDidDismiss();
+     
+     if (data) {
+       this.accountName! = data?.selectedItem ;
+       this.product.factory_id = +this.accountName!.id;
+     }
+     else{
+      this.accountName! = {id:'',name:'Select Gategory',icon:''};
+      this.product.factory_id = 0 ;
      }
    }
 

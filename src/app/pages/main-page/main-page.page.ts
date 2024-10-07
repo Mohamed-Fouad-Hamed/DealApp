@@ -5,7 +5,6 @@ import { IonicModule , IonicSlides , InfiniteScrollCustomEvent } from '@ionic/an
 import {  IonRouterLink } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MainMenuComponent } from 'src/app/components/main-menu/main-menu.component';
 import { GroupService } from 'src/app/services/model-services/group-service/group.service';
 import { IGroupResponse } from 'src/app/interfaces/DB_Models';
 import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
@@ -21,7 +20,7 @@ import { MessagePageableResponse } from 'src/app/services/interfaces/MessageResp
   templateUrl: './main-page.page.html',
   styleUrls: ['./main-page.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule  ,RouterLink,IonRouterLink , TranslateModule , MainMenuComponent],
+  imports: [IonicModule, CommonModule, FormsModule  ,RouterLink,IonRouterLink , TranslateModule ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
@@ -41,7 +40,7 @@ export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
   groupsSubscription?:Subscription;
 
   groupsCurrentPage:number = 0;
-  groupsPageSize :number = 5;
+  groupsPageSize :number = 12;
   countGroups : number = 0;
 
   titleHomePage:string = 'app_menu.main';
@@ -92,7 +91,7 @@ export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
         .pipe(map((message:MessagePageableResponse)=>{
            this.countGroups = message.count ;
            const groups = message.list.map((group:any)=> { 
-              group.img = `${this.apiService.apiHost}${group.img}` ; 
+              group.img = 'assets/test-imags/producttemplate.jpg'  // `${this.apiService.apiHost}${group.img}` ; 
               return group;
             } );
 
@@ -112,7 +111,7 @@ export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
     this.groupService.getPageableGroupsByAccountType( this.observableUser!.account_type , this.groupsCurrentPage ,this.groupsPageSize    ) .pipe(map((groups:any)=>{
            
       groups.map((group:any)=> { 
-          group.img = `${this.apiService.apiHost}${group.img}` ; 
+          group.img =  '..\/src\/assets\/test-imags\/avatar.jpg' ;//  `${this.apiService.apiHost}${group.img}` ; 
           return group;
         } );
 
@@ -156,5 +155,9 @@ export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
 
   navigateTo(url:string){
     this.router.navigate([url]);
+  }
+
+  groupClicked(event:any){
+     this.navigateTo(`/home/main-page/group-details/${event.id}`)
   }
 }

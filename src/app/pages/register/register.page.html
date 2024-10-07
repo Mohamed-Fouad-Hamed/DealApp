@@ -18,7 +18,7 @@
     </ng-template>
   -->
 
-          <ion-row >
+      <ion-row >
         
         <ion-col>
             <ion-input
@@ -140,7 +140,7 @@
 
       </ion-row>
 
-
+    
 
       <ion-row >
         
@@ -174,7 +174,48 @@
         </ion-col>  
 
       </ion-row>
+      <ion-row >
+        
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'register.placeholderphone' | translate}}"
+              label="{{'register.phone' | translate}}"
+              counter="true"
+              maxlength="30"
+              [(ngModel)]="signUp.phone"
+              #phone="ngModel"
+              name="phone"
+              required
+              color="secondary"
+              appRegexPattern="\d+$"
+            >
 
+          </ion-input>
+          @if (phone!.invalid && (phone!.touched || phone!.dirty)) {
+
+            @if (phone!.errors?.['required']) {
+              <ng-container [ngTemplateOutlet]="phoneTemplateRequired"></ng-container>
+            }
+    
+            @if (login!.errors?.['forbiddenName']?.value !== '' ) {
+              <ng-container [ngTemplateOutlet]="phoneTemplatePattern"></ng-container>
+            }
+            
+          }
+    
+          <ng-template #phoneTemplateRequired>
+            <ion-text class="error-text" color="danger"><small>{{'register.loginreq' | translate}}</small></ion-text>
+          </ng-template>
+    
+          <ng-template #phoneTemplatePattern>
+            <ion-text class="error-text" color="danger"><small>{{'register.phonereqpattern' | translate}}</small></ion-text>
+          </ng-template>
+
+
+        </ion-col>  
+
+      </ion-row>
 
       <ion-row>
         <ion-col>

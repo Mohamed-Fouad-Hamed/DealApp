@@ -1,3 +1,8 @@
+
+:root {
+   --heightcontent: calc(100vh - 63px);
+ }
+
 swiper-container {
     width: 100%;
     height:100%;
@@ -8,50 +13,24 @@ swiper-container {
  }
    
    
-   swiper-slide {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-   }
+swiper-slide {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
 
-   .group-margin-padding{
-      padding: 1px;
-   }
-   
-   .card-back-color{
-    background-color: lightblue;
-   }
-
- .image-group{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
- } 
-
- .name-group{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 25px;
-    background:linear-gradient(to bottom, #feffff 0%,#8e9192 35%,#232425 100%);
-    opacity: 0.5;
-    color: #fff;
- } 
-
+  
 .top-div-search{
-    height: 5vh;
+    height: calc(100vh * 0.09);
     overflow: hidden;
 }
 
 .middle-div-groups{
     margin-top: 10px;
-    margin-left : 10px;
-    margin-right : 10px;
-    height: 51vh;
-    overflow-y: hidden;
+    margin-left : 3px;
+    margin-right : 3px;
+    height:  calc(100vh * 0.49);
 }
 
 
@@ -60,10 +39,16 @@ swiper-container {
     margin-top: 10px;
     margin-left : 10px;
     margin-right : 10px;
-    height: 20vh;
-    overflow: hidden;
+    height: calc(100vh* 0.19);;
+    overflow-y :hidden;
+    direction: ltr;
 }
 
+.link-list-groups{
+   margin-top: 3px;
+   margin-left : 10px;
+   margin-right : 10px;
+}
 .image-container{
     background-repeat: no-repeat;
     background-size: cover;
@@ -75,11 +60,8 @@ swiper-container {
 
  .text-offer{
     color: white;
-    font-weight: 900;
+    font-weight:300;
     text-align: center;
  }
 
- .border-class{
-    border: 5px solid blueviolet;
- }
 

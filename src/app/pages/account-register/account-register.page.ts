@@ -43,7 +43,8 @@ export class AccountRegisterPage implements OnInit {
                 email:'',
                 login:'',
                 password:'',
-                s_cut:''
+                s_cut:'',
+                phone:''
   };
 
   constructor() { }
@@ -65,7 +66,7 @@ export class AccountRegisterPage implements OnInit {
       try{
      
         await this.authService.accountRegister(
-              this.registerFrm.value
+              this.accountSignUp
           ).pipe( finalize(() => {
                   setInterval(
                     ()=>{

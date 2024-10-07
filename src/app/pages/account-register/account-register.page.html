@@ -197,6 +197,48 @@
 
       </ion-row>
 
+      <ion-row >
+        
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'register.placeholderphone' | translate}}"
+              label="{{'register.phone' | translate}}"
+              counter="true"
+              maxlength="30"
+              [(ngModel)]="accountSignUp.phone"
+              #phone="ngModel"
+              name="phone"
+              required
+              color="secondary"
+              appRegexPattern="^\d{11}$"
+            >
+
+          </ion-input>
+          @if (phone!.invalid && (phone!.touched || phone!.dirty)) {
+
+            @if (phone!.errors?.['required']) {
+              <ng-container [ngTemplateOutlet]="phoneTemplateRequired"></ng-container>
+            }
+    
+            @if (login!.errors?.['forbiddenName']?.value !== '' ) {
+              <ng-container [ngTemplateOutlet]="phoneTemplatePattern"></ng-container>
+            }
+            
+          }
+    
+          <ng-template #phoneTemplateRequired>
+            <ion-text class="error-text" color="danger"><small>{{'register.loginreq' | translate}}</small></ion-text>
+          </ng-template>
+    
+          <ng-template #phoneTemplatePattern>
+            <ion-text class="error-text" color="danger"><small>{{'register.phonereqpattern' | translate}}</small></ion-text>
+          </ng-template>
+
+
+        </ion-col>  
+
+      </ion-row>
 
 
       <ion-row >
@@ -235,13 +277,13 @@
 
       <ion-row>
         <ion-col>
-          <ion-select  aria-label="language" 
-                      interface="popover" 
-                      placeholder="{{'register.selectlanguage' | translate}}" 
-                      [(ngModel)]="s_cut"
-                      #s_cut="ngModel"
-                      name="s_cut"
-                      required
+          <ion-select   aria-label="language" 
+                        interface="popover" 
+                        placeholder="{{'register.selectlanguage' | translate}}" 
+                        [(ngModel)]="accountSignUp.s_cut"
+                        #s_cut="ngModel"
+                        name="s_cut"
+                        required
                         >
 
             @for (lang of appLanguages;track lang.name){
@@ -263,10 +305,6 @@
 
         </ion-col>
       </ion-row>
-
-
-
-     
 
       <ion-row >
         <ion-col>

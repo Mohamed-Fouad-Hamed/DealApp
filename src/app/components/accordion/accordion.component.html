@@ -1,0 +1,33 @@
+  @if(item.children){
+
+    <ion-accordion-group>
+      @for(child of item.children;track child.name){
+        <div>
+
+          @if(child.children){
+
+              <ion-accordion >
+
+                <ion-item slot="header">
+                  <ion-label>{{ child.name }}</ion-label>
+                </ion-item>
+                @if(child.children){
+                <app-accordion [item]="child" slot="content" [parent]="parent"></app-accordion>
+                }
+              </ion-accordion>
+
+            }
+            @else{
+              <ng-container [ngTemplateOutlet]="row"></ng-container>
+            }
+
+            <ng-template #row>
+              <ion-item>{{ child.name }}</ion-item>
+            </ng-template>
+
+        </div>  
+      }
+
+    </ion-accordion-group>
+
+  }  

@@ -39,7 +39,7 @@ export class RegisterPage implements OnInit {
 
   appLanguages:Language[] = [];
 
-  signUp:ISignup = { accountId:'', firstName:'',lastName:'',email:'',login:'',password:'',s_cut:''};
+  signUp:ISignup = { accountId:'', firstName:'',lastName:'',email:'',login:'',password:'', s_cut:'', phone:''};
 
 
 

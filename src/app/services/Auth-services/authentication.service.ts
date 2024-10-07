@@ -1,12 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { debounceTime, delay, first, shareReplay, switchMap, tap } from 'rxjs/operators';
+import {  delay, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { MessageResponse } from '../interfaces/MessageResponse';
 import { IAccountOptionReq, IAccountResponse, IAccountSignup , ICredential , INewPassword , ISignup , ITokenLogin , IUniqueLogin , IUserResponse, IVerifyOTP } from '../interfaces/Auth-Interfaces';
 import { APIService } from '../API/api.service';
 import { BehaviorSubject, from, timer } from 'rxjs';
-import { IDBUser } from '../../interfaces/DB_Models';
 import { AuthStorageService } from './auth-storage.service';
 
 
@@ -22,7 +21,6 @@ export class AuthenticationService {
 
  private authStoreService = inject(AuthStorageService);
  
- private authURL:string ='';
 
  private observableUser : IUserResponse = { 
   id : 0,
@@ -49,7 +47,7 @@ export class AuthenticationService {
  private _isAuthenticate: boolean = false;
 
   constructor() {
-    this.authURL = this.API.AUTH_API;
+ 
    }
 
    setAuthentication( auth:boolean ){
@@ -70,7 +68,10 @@ export class AuthenticationService {
 
       this.authStoreService.saveUser(user).then(()=> {
         this.authStoreService.getUser().then(
-          (oUser) => { this.userInfo.next(oUser);})
+          (oUser) => { 
+            this.userInfo.next(oUser);
+          }
+        )
         });
 
    }
@@ -84,11 +85,11 @@ export class AuthenticationService {
    }
 
    getUserPromise(){
-    return this.authStoreService.getUser();
+       return this.authStoreService.getUser();
    }
 
    get authUrl():string{
-       return this.authURL;
+       return this.API.AUTH_API
    }
 
    getUser(login:string) {
@@ -118,71 +119,71 @@ export class AuthenticationService {
   }
 
 userRegister(signUp:ISignup):Observable<MessageResponse>{
-    return this.http.post<MessageResponse>(this.authURL + 'user-register', signUp , this.API.headerJsonType).pipe(
+    return this.http.post<MessageResponse>(this.API.AUTH_API + 'user-register', signUp , this.API.headerJsonType).pipe(
            delay(100)
       );
  }
 
  updateAccountOption(accountOption:IAccountOptionReq):Observable<MessageResponse>{
-  return this.http.post<MessageResponse>(this.authURL + 'update-account-options', accountOption , this.API.headerJsonType).pipe(
+  return this.http.post<MessageResponse>(this.API.AUTH_API + 'update-account-options', accountOption , this.API.headerJsonType).pipe(
          delay(100)
     );
 }
  
  userUploadAvatar(formData:FormData):Observable<MessageResponse>{
-  return this.http.post<MessageResponse>(this.authURL + 'upload-user-avatar', formData ).pipe(
+  return this.http.post<MessageResponse>(this.API.AUTH_API + 'upload-user-avatar', formData ).pipe(
          delay(100)
     );
 }
 
 userUploadImage(formData:FormData):Observable<MessageResponse>{
-  return this.http.post<MessageResponse>(this.authURL + 'upload-user-image', formData ).pipe(
+  return this.http.post<MessageResponse>(this.API.AUTH_API + 'upload-user-image', formData ).pipe(
          delay(100)
     );
 }
 
 accountUploadLogo(formData:FormData):Observable<MessageResponse>{
-  return this.http.post<MessageResponse>(this.authURL + 'upload-account-logo', formData ).pipe(
+  return this.http.post<MessageResponse>(this.API.AUTH_API + 'upload-account-logo', formData ).pipe(
          delay(100)
     );
 }
 
 accountUploadImage(formData:FormData):Observable<MessageResponse>{
-  return this.http.post<MessageResponse>(this.authURL + 'upload-account-image', formData ).pipe(
+  return this.http.post<MessageResponse>(this.API.AUTH_API + 'upload-account-image', formData ).pipe(
          delay(100)
     );
 }
 
  accountRegister(accountSignUp:IAccountSignup):Observable<MessageResponse>{
      
-  return this.http.post<MessageResponse>(this.authURL + 'account-register', accountSignUp , this.API.headerJsonType).pipe(
+  return this.http.post<MessageResponse>(this.API.AUTH_API + 'account-register', accountSignUp , this.API.headerJsonType).pipe(
          delay(100)
     );
 }
 
    login(credentail:ICredential):Observable<MessageResponse>{
      
-      return this.http.post<MessageResponse>(this.authURL + 'login', credentail , this.API.headerJsonType).pipe(
+      return this.http.post<MessageResponse>(this.API.AUTH_API+ 'login', credentail , this.API.headerJsonType).pipe(
              delay(100)
         );
    }
 
    authByToken(iTokenLogin:ITokenLogin){
-    return this.http.post<MessageResponse>(this.authURL + 'authenticate', iTokenLogin , this.API.headerJsonType).pipe(
+    return this.http.post<MessageResponse>(this.API.AUTH_API + 'authenticate', iTokenLogin , this.API.headerJsonType).pipe(
       delay(100)
       );
    }
 
   loginIsExists(login:string){
     const iLogin:IUniqueLogin = {id:login};
-    return this.http.post<MessageResponse>(this.authURL + 'login-exists', iLogin , this.API.headerJsonType).pipe(
+    return this.http.post<MessageResponse>(this.API.AUTH_API + 'login-exists', iLogin , this.API.headerJsonType).pipe(
       delay(100)
       ); 
    }
 
   verfiyOTP(iVerfiyOtp:IVerifyOTP):Observable<MessageResponse>{
      
-    return this.http.post<MessageResponse>(this.authURL + 'verify-register', iVerfiyOtp , this.API.headerJsonType).pipe(
+    return this.http.post<MessageResponse>(this.API.AUTH_API + 'verify-register', iVerfiyOtp , this.API.headerJsonType).pipe(
            delay(100)
       );
 
@@ -190,7 +191,7 @@ accountUploadImage(formData:FormData):Observable<MessageResponse>{
 
    verfiyOTPResetPassword(iVerfiyOtp:IVerifyOTP):Observable<MessageResponse>{
      
-    return this.http.post<MessageResponse>(this.authURL + 'verify-reset-password', iVerfiyOtp , this.API.headerJsonType).pipe(
+    return this.http.post<MessageResponse>(this.API.AUTH_API + 'verify-reset-password', iVerfiyOtp , this.API.headerJsonType).pipe(
            delay(100)
       );
 
@@ -199,7 +200,7 @@ accountUploadImage(formData:FormData):Observable<MessageResponse>{
 
    forgetPassword(iUniqueLogin:IUniqueLogin):Observable<MessageResponse>{
      
-      return this.http.post<MessageResponse>(this.authURL + 'forgot', iUniqueLogin , this.API.headerJsonType).pipe(
+      return this.http.post<MessageResponse>(this.API.AUTH_API + 'forgot', iUniqueLogin , this.API.headerJsonType).pipe(
             delay(100)
         );
 
@@ -207,7 +208,7 @@ accountUploadImage(formData:FormData):Observable<MessageResponse>{
 
     updatePassword(iNewPassword:INewPassword):Observable<MessageResponse>{
      
-      return this.http.post<MessageResponse>(this.authURL + 'update-password', iNewPassword , this.API.headerJsonType).pipe(
+      return this.http.post<MessageResponse>(this.API.AUTH_API + 'update-password', iNewPassword , this.API.headerJsonType).pipe(
             delay(100)
         );
 
