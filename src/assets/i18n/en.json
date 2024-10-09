@@ -131,6 +131,9 @@
 	"category.buttonsubmit":"  Register category ",
 	"category.toastsave":"The category has been registered successfully... awaiting as documentation",
 
+	"account.submit":"Apply",
+	"account.accountprofiletitle":"Account Settings",
+
 	"accountproduct.addnotallow":"The product has been added before, does not allow for duplication",
 	"accountproduct.productaddedtemporary":"this product has been added temporarily until its prices are modified",
 	"accountproduct.accountproductmenu":" My Products",

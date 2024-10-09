@@ -51,6 +51,11 @@ export class AppComponent implements OnInit {
  
   authenticate:boolean=false;
 
+  currentAccountUrl? : string ;
+  productListUrl? : string ;
+  offerListUrl? : string ;
+
+
   user : IUserResponse = 
    { 
     id : 0,
@@ -100,9 +105,12 @@ export class AppComponent implements OnInit {
        this.user = oUser;
        this.authenticate = this.user.account_id !== 0;
        this.authenService.setAuthentication(this.authenticate) ;
+       this.currentAccountUrl! = `${'home/account-profile\/'+this.user.account_id}`;
+       this.productListUrl! =`${'home\/account-product-list\/'+this.user.account_id}`;
+       this.offerListUrl! =`${'home\/account-offer\/'+this.user.account_id}`;
     }
     );
-
+     console.log(" initi APP ...")
   }
 
   async initMultiLanguage(){

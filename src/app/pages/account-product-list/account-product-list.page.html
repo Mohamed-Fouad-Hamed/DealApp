@@ -1,38 +1,38 @@
-
 <ion-header>
-  
   <ion-toolbar>
 
-
-        <ion-buttons >
-          <ion-button [disabled]="accountProduct"  id="select-items" >{{'app.newitem' | translate}}</ion-button>
-        </ion-buttons>
-
- 
-   
-      @if (accountProduct) {
-        <ion-title class="ion-text-center"> {{ accountProduct!.product_name }}  </ion-title> 
-       }
-       @else{
-        <ion-title class="ion-text-center"> {{ 'accountproduct.accountproductmenu' | translate }} </ion-title>
-       }
-    
-  
-    <ion-buttons slot="end">
-      <ion-back-button  [routerLink]="['/home/notifications']" ></ion-back-button>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
- 
-  </ion-toolbar>
 
-  @if (!accountProduct) {
-    <ion-toolbar>
-      <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
-    </ion-toolbar>
-  }
+    @if (accountProduct) {
+      <ion-title class="ion-text-center"> {{ accountProduct!.product_name }}  </ion-title> 
+     }
+     @else{
+      <ion-title class="ion-text-center"> {{ 'accountproduct.accountproductmenu' | translate }} </ion-title>
+     }
+      
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
+
+  </ion-toolbar>
 
 </ion-header>
 
 <ion-content color="light">
+
+  <ion-buttons >
+    <ion-button [disabled]="accountProduct"  id="select-items" >{{'app.newitem' | translate}}</ion-button>
+  </ion-buttons>
+
+  
+  @if (!accountProduct) {
+
+    <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
+
+  }
 
   <ng-template #accountProductFormTemplate let-accountId="currentAccountId" let-accountProduct="currentAccountProduct"  >
  
@@ -59,7 +59,7 @@
         <ion-avatar slot="start">
           <img [src]="apiServer! + product?.product_image" />
         </ion-avatar>
-        <ion-text>{{ product.product_name }}</ion-text>
+        <ion-text>{{ product.product_name }} </ion-text>
         @if(product?.notUpdate){
           <ion-text slot="end"  color="danger"><small>{{'accountproduct.productaddedtemporary' | translate}}</small></ion-text>
         }

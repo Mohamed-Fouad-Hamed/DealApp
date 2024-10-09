@@ -79,8 +79,15 @@ export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
   initiUser(){
 
     this.authService.getUserAuth().subscribe((oUser)=>{
+      
       this.observableUser = oUser;
-      this.initiGroups(this.observableUser!.account_type);
+
+      if(
+         this.observableUser!.account_type && 
+         this.observableUser!.account_type !== '' &&
+         this.observableUser!.account_type !== 'SYS_ADMINISTRATOR'
+        )
+          this.initiGroups(this.observableUser!.account_type);
     });
      
   }

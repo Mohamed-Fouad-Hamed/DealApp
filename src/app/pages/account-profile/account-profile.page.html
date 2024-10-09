@@ -1,4 +1,16 @@
-<ion-content [fullscreen]="true">
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title  class="ion-text-center">{{ 'account.accountprofiletitle' | translate }}</ion-title>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" >
   <div class="image-container">
     <div class="sector-top">
       @if(imageUrl !== ''){
@@ -103,7 +115,7 @@
                             type="submit" 
                             color="secondary" 
                             expand="block"
-                            translate="group.buttonsubmit"
+                            translate="account.submit"
                             class="submit-button">
                      @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
                 </ion-button>

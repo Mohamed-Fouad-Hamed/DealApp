@@ -132,7 +132,7 @@ export class AccountOfferPage implements OnInit,OnDestroy {
 
   initGetAccountId(){
     this.subscriptionRoute = this.route.paramMap.subscribe((params)=>{
-      this.accountId! = params.get('accountid') || '' ;
+      this.accountId! = params.get('accountId') || '' ;
     });
   }
 
@@ -164,7 +164,7 @@ export class AccountOfferPage implements OnInit,OnDestroy {
 
             occasion_image : offer.occasion_image ,
         
-            is_active : offer.active ,
+            is_active : offer._active ,
             
           offerDetailsList : offer.offerDetailsList.map((offerDetails:any)=>{ 
 
@@ -172,7 +172,7 @@ export class AccountOfferPage implements OnInit,OnDestroy {
                   id : offerDetails.id,
                   offer_id : offer.id ,
                   product_id : offerDetails.product_id,
-                  product_name : offerDetails.product_name,
+                  product_name : offerDetails.product_name  ,
                   product_image : offerDetails.product_image,
                   unit : offerDetails.unit,
                   max_quan : offerDetails.max_quan,
@@ -230,7 +230,7 @@ export class AccountOfferPage implements OnInit,OnDestroy {
          this.products = this.offerRes.offerDetailsList.map((_product)=>{
               const product:AccountProductItem = {
                 productId: _product.product_id,
-                product_name: _product.product_name,
+                product_name: _product.product_name  ,
                 product_image: _product.product_image 
               };
                 return product;
@@ -271,6 +271,7 @@ export class AccountOfferPage implements OnInit,OnDestroy {
 
 
  updateOfferHeader( offerRes:any ){
+
       if(offerRes){
         this.offerRes = offerRes;
       }
@@ -298,7 +299,7 @@ searchValueEmit($value:any){
             const _product:Item = {
               id:product.id ,
               name:product.name,
-              text: product.name,
+              text: product.name + ' ' + product.descr ,
               value: product.id,
               des :product.descr,
               icon :product.product_image,
@@ -359,7 +360,7 @@ viewDetail(product:AccountProductItem){
                   id : 0 ,
                   offer_id : this.offerRes.id,
                   product_id : _product.id ,
-                  product_name : _product.name,
+                  product_name : _product.name ,
                   product_image  : _product.product_image,
                   unit : _product.first_unit ,
                   max_quan : 0,
@@ -413,7 +414,7 @@ offerProductSaved(offerProduct:any){
 
   const _product:AccountProductItem = {
     productId: offerProduct.product_id,
-    product_name: offerProduct.product_name,
+    product_name: offerProduct.product_name  ,
     product_image: offerProduct.product_image 
   };
 

@@ -1,24 +1,29 @@
-<ion-header [translucent]="true">
-
+<ion-header>
   <ion-toolbar>
-    
-    <ion-buttons>
-      <ion-button [disabled]="currentOfferDetails"  id="select-items" >{{'app.newitem' | translate}}</ion-button>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
-
     @if(step===0){
       <ion-title class="ion-text-center"> {{'accountoffer.off_set_activate' | translate}} </ion-title>
     }
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
   </ion-toolbar>
-  @if (step===1 && !currentOfferDetails) {
-    <ion-toolbar>
-      <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
-    </ion-toolbar>
-  }
-
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+  <ion-buttons>
+    <ion-button [disabled]="currentOfferDetails"  id="select-items" >{{'app.newitem' | translate}}</ion-button>
+  </ion-buttons>
+
+  @if (step===1 && !currentOfferDetails) {
+
+      <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
+  }
+
   @if(step===0){
     <offer-header 
                 [Account]="accountId!" 

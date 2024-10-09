@@ -126,6 +126,9 @@
 	"category.buttonsubmit":" تسجيل فئة ",
 	"category.toastsave":"  تم تسجيل الفئة بنجاح ... فى إنتظار التوثيق ",
 
+	"account.submit":"موافق",
+	"account.accountprofiletitle":"إعدادات الحساب",
+
 	"accountproduct.addnotallow":"  تم إضافة المنتج من قبل لايسمح بالتكرار",
 	"accountproduct.productaddedtemporary":"تم اضافة هذا المنتج مؤقتا لحين تعديل أسعاره",
 	"accountproduct.accountproductmenu":" منتجاتى",

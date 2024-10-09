@@ -12,11 +12,6 @@ export const routes: Routes = [
             loadComponent: () => import('../pages/welcome/welcome.page').then((m) => m.WelcomePage)
         },
         {
-          path: 'account-profile/:accountId',
-          loadComponent: () => import('../pages/account-profile/account-profile.page').then( m => m.AccountProfilePage),
-          canActivate: [authGuard]
-        },
-        {
           path: 'user-profile/:id',
           loadComponent: () => import('../pages/user-profile/user-profile.page').then( m => m.UserProfilePage),
           canActivate: [authGuard]
@@ -79,17 +74,6 @@ export const routes: Routes = [
         {
           path: 'product-profile/:id',
           loadComponent: () => import('../pages/product-profile/product-profile.page').then( m => m.ProductProfilePage),
-          canActivate: [authGuard]
-        },
-        {
-          path: 'account-product-list/:accountid',
-          loadComponent: () => import('../pages/account-product-list/account-product-list.page').then( m => m.AccountProductListPage),
-          canActivate: [authGuard]
-        }
-        ,
-        {
-          path: 'account-offer/:accountid',
-          loadComponent: () => import('../pages/account-offer/account-offer.page').then( m => m.AccountOfferPage),
           canActivate: [authGuard]
         }
  

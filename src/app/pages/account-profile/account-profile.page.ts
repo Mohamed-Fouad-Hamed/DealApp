@@ -86,7 +86,7 @@ export class AccountProfilePage implements OnInit , OnDestroy{
   ngOnInit() {
 
      this.subscriptionRoute = this.route.paramMap.subscribe((params)=>{
-      this.id = params.get('id') || '' ;
+      this.id = params.get('accountId') || '' ;
       this.accountOption.id = +this.id;
     });
     
@@ -125,6 +125,7 @@ export class AccountProfilePage implements OnInit , OnDestroy{
         const fileName = `logo-account.${data.type.split('\/')[1]}`;
         formData.append('image',data,fileName);
         formData.append('id', this.id);
+        console.log(this.id)
        this.logoSubscription = this.authService.accountUploadLogo(formData).pipe(finalize(()=>{
           console.log(' finally ... ')
         })).subscribe({

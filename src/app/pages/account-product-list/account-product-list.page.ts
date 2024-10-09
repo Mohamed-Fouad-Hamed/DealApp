@@ -76,7 +76,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
 
   initGetAccountId(){
     this.subscriptionRoute = this.route.paramMap.subscribe((params)=>{
-      this.accountId! = params.get('accountid') || '' ;
+      this.accountId! = params.get('accountId') || '' ;
     });
   }
 
@@ -86,7 +86,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
                   const _products = products.list.map((_product:any)=>{ 
                     const product:AccountProductItem = {
                     productId: _product.productId,
-                    product_name: _product.product_name,
+                    product_name: _product.product_name + ' ' + _product.descr ,
                     product_image: _product.product_image 
                   };
                     return product;
@@ -113,7 +113,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
       productId
       ).pipe(map((product:any)=>{ const _product : AccountProductDetail= { 
          productId : product.productId ,
-         product_name : product.product_name,
+         product_name : product.product_name + ' ' + product.descr,
          descr  : product.descr,
          category_name : product.category_name ,
          product_image  : product.product_image ,
@@ -152,7 +152,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
               const _product:Item = {
                 id:product.id ,
                 name:product.name,
-                text: product.name,
+                text: product.name + ' ' + product.descr,
                 value: product.id,
                 des :product.descr,
                 icon :product.product_image,
@@ -208,7 +208,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
                   const _product = res.entity;
                   const _accountProduct:AccountProductDetail = {
                     productId : _product.id ,
-                    product_name : _product.name,
+                    product_name : _product.name + ' ' +  _product.descr,
                     descr  : _product.descr,
                     category_name : '' ,
                     product_image  : _product.product_image ,
@@ -244,7 +244,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
 
     const _product:AccountProductItem = {
       productId: accountProduct.productId,
-      product_name: accountProduct.product_name,
+      product_name: accountProduct.product_name + ' ' + accountProduct.descr,
       product_image: accountProduct.product_image 
     };
 

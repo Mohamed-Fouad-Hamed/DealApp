@@ -1,17 +1,17 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>{{ 'app_menu.suppliers' | translate }}</ion-title>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
   </ion-toolbar>
-  <span class="border-bottom-part-one"></span>
-  <span class="border-bottom-part-two"></span>
-  <span class="border-bottom-part-three"></span>
-  <span class="border-bottom-part-four"></span>
 </ion-header>
 
-<ion-content>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">suppliers-page</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding" [fullscreen]="true" >
+  <app-supplier-card (click)="supplierClicked()"></app-supplier-card>
+
 </ion-content>
