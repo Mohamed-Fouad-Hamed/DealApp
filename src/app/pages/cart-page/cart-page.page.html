@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title> {{ 'app_menu.shopping_cart' | translate }}</ion-title>
+    <ion-title> {{ 'app_menu.shopping_cart' | translate }} </ion-title>
     <span class="border-bottom-part-one"></span>
     <span class="border-bottom-part-two"></span>
     <span class="border-bottom-part-three"></span>
@@ -12,9 +12,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">cart-page</ion-title>
-    </ion-toolbar>
-  </ion-header>
+     @for(order of orders ;track order.id; let idx = $index){
+      <app-order-card 
+         [index]="idx" 
+         [order]="order" 
+         (deleteOrderEmitter)="deleteOrder()"
+         (deleteProductEmitter)="deleteProduct($event)" 
+         (updateProductEmitter)="updateProduct($event)" >
+      </app-order-card>
+     }
+
 </ion-content>

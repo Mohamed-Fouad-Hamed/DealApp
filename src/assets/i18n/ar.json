@@ -151,6 +151,26 @@
 	"accountoffer.o_price":" سعر العرض ",
 	"accountoffer.save_offer_price":" تسجيل عرض السعر ",
 
+	"order.min_req":"الحد الأدنى للطلب",
+	"order.productscount":"عدد المنتجات",
+	"order.valid_value_first":"أضف منتجات بقيمة ",
+	"order.valid_value_last":" لكى تصل إلى الحد الأدنى للطلب",
+	"order.valid_Quan_first":"أضف عدد ",
+	"order.valid_Quan_last":" من المنتجات لكى تصل إلى الحد الأدنى للطلب ",
+	"order.quanavailable":" الكميه متاحة",
+	"order.quanmaximum":" الكمية القصوى",
+	"order.deleteproduct":" حذف المنتج ",
+	"order.deleteorder":"حذف الطلب",
+	"order.message_quan":"  الكمية",
+	"order.max_quan_req":"الحد الأقصى للكمية",
+	"order.inoffer":"  داخل العرض بسعر  ",
+	"order.outoffer":" خارج العرض بسعر ",
+	"order.total":"الإجمالى : ",
+	"order.cash_back":"كاش باك : ",
+	"order.valid":" طلب  صحيح",
+	"order.invalid":"طلب غير صحيح",
+
+
 
 	"single_selection_searchbox.additem":" إضافة ",
 	"single_selection_searchbox.selectitem":" إختيار  ",

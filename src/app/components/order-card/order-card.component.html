@@ -1,0 +1,156 @@
+<div class="cart-container">
+
+  <ion-grid>
+
+    <ion-row class="ion-align-items-center">
+      <ion-col size="3" class="ion-no-padding"> 
+          <img class="seller-logo" [alt]="order!.seller_name" [src]="order!.seller_image" />
+      </ion-col>
+      <ion-col size="5" class="ion-no-padding"> 
+        <ion-text class="ion-text-start ion-text-wrap" >
+          {{ order!.seller_name }} 
+        </ion-text>
+      </ion-col>
+      <ion-col size="4" class="ion-no-padding"> 
+        @if(order!.notValidQuan > 0 || order!.notValidValue > 0 ){
+        <ion-chip color="danger">
+          <ion-icon name="close-circle" color="danger"></ion-icon>
+          <ion-label> {{'order.invalid' | translate}} </ion-label>
+        </ion-chip>
+      }@else{
+        <ion-chip color="success">
+          <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+          <ion-label> {{'order.valid' | translate}} </ion-label>
+        </ion-chip>
+       }
+
+      </ion-col>
+    </ion-row>
+
+    <hr/>
+
+    <ion-row class="ion-justify-content-between">
+      <ion-col size="7"> {{'order.total' | translate}} {{ order!.productsValue.toFixed(2) }} </ion-col>
+      <ion-col size="5" >  {{'order.cash_back' | translate}} {{ order!.cash_back.toFixed(2) }} </ion-col>
+    </ion-row>
+
+    <hr/>
+
+    <ion-row class="ion-align-items-center">
+      <ion-col size="3" class="ion-no-padding"> {{'order.min_req' | translate}} </ion-col>
+      <ion-col size="6" class="ion-no-padding"> {{validTotalValue}} </ion-col>
+      <ion-col size="3" >  <ion-progress-bar [value]="order!.progressTotalValue"></ion-progress-bar> </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-between">
+      <ion-col size="9" > {{'order.productscount' | translate}}  </ion-col>
+      <ion-col size="3" > <ion-text class="ion-text-center"> {{order!.productsCount}} </ion-text></ion-col>
+    </ion-row>
+
+    @if(order!.notValidQuan > 0){
+    <ion-row class="ion-justify-content-between">
+      <ion-col size="12" class="ion-no-padding">
+        <ion-chip color="warning">
+          <ion-icon name="warning-outline" color="danger"></ion-icon>
+          <ion-label>         
+              {{'order.valid_Quan_first' | translate}} {{ order!.notValidQuan }} {{'order.valid_Quan_last' | translate}}  
+          </ion-label> 
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+    }
+
+    @else if(order!.notValidValue > 0){
+      <ion-row class="ion-justify-content-between">
+        <ion-col size="12" class="ion-no-padding"> 
+          <ion-chip color="warning">
+            <ion-icon name="warning-outline" color="danger"></ion-icon>
+            <ion-label>          
+                 {{'order.valid_value_first' | translate}} {{ order!.notValidValue.toFixed(2) }} {{'order.valid_value_last' | translate}} 
+            </ion-label>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+      }
+
+  </ion-grid>
+
+  <div class="items-container">
+     
+    <ion-grid>
+
+    @for(detail of order!.orderDetails;track detail.id; let idx = $index){
+
+      <ion-row class="ion-align-items-center">
+        <ion-col size="3"class="ion-no-padding"> 
+          <img class="seller-logo" [alt]="detail.product_name" [src]="detail.product_image" />
+        </ion-col>
+        <ion-col size="6" class="ion-no-padding">
+          <ion-text class="ion-text-wrap">
+            {{detail.product_name}}
+          </ion-text> 
+        </ion-col>
+        <ion-col size="3" class="ion-no-padding"> 
+          
+            @if(detail.has_offer){
+              <p><small><span>{{detail.o_quan}}</span> <span> {{'order.inoffer' | translate }} </span><span> {{detail.o_subTotal.toFixed(2)}}</span></small> </p>
+            }
+            @if(detail.quan > 0){
+              <p><small><span>{{detail.quan}}</span><span> {{ 'order.outoffer' | translate }}</span><span> {{detail.subTotal.toFixed(2)}}</span></small></p>
+            }
+            @if(detail.has_offer || detail.quan > 0){
+            <hr/>
+            }
+            <p>{{detail.totalValue.toFixed(2)}}</p>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="ion-justify-content-between">
+        <ion-col offset="3" size="6" class="ion-no-padding"> {{detail.unit}} </ion-col>
+      </ion-row>
+  
+      <ion-row class="ion-align-items-center">
+        <ion-col offset="3" size="3" class="ion-no-padding"> 
+          <app-quantity-input [detail]="detail" (quantityChange)="quanChange($event)"></app-quantity-input>
+        </ion-col>
+        <ion-col offset="2" size="4" class="ion-no-padding"> 
+          <ion-button color="danger" fill="outline" (click)="deleteProduct(idx)"> {{'order.deleteproduct' | translate}} </ion-button> 
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-between">
+        @if(detail.isValidMaxLimit){
+          <ion-col size="6" class="ion-no-padding">
+            <ion-chip color="danger">
+             <ion-icon name="close-circle" color="danger"></ion-icon>
+             <ion-label>  {{'order.quanmaximum' | translate}}  </ion-label>
+           </ion-chip>  
+          </ion-col>
+        }
+        @else if(!detail.isValidMaxLimit){
+          <ion-col size="6" class="ion-no-padding">
+            <ion-chip color="success">
+              <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+              <ion-label> {{'order.quanavailable' | translate}} </ion-label>
+            </ion-chip>
+          </ion-col>
+        }
+        <ion-col size="4" class="ion-no-padding"> {{ detail.totalQuan }} <span>/</span> {{detail.max_limit}} </ion-col>
+      </ion-row>
+
+      <hr/>
+    }
+  
+      <ion-row class="ion-justify-content-between">
+        <ion-col size="7" class="ion-no-padding">   {{ order!.seller_name }}  </ion-col>
+        <ion-col size="5" class="ion-no-padding"> 
+          <ion-button color="danger" fill="outline" (click)=" deleteOrder()" > {{'order.deleteorder' | translate}} </ion-button>  
+        </ion-col>
+      </ion-row>
+
+  
+    </ion-grid>
+
+  </div>
+
+
+</div>

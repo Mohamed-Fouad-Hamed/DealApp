@@ -18,7 +18,6 @@ import { OfferDetailsComponent } from 'src/app/components/offer/offer-details/of
 import { SelectImageComponent } from 'src/app/modals/select-image/select-image.component';
 import { MessageResponse } from 'src/app/services/interfaces/MessageResponse';
 import { ProductService } from 'src/app/services/model-services/product-service/product.service';
-import { hasChanges } from 'src/app/utilities/ObjectsOps';
 
 
 

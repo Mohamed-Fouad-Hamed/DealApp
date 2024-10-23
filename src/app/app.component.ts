@@ -1,4 +1,4 @@
-import { Component ,inject, OnInit } from '@angular/core';
+import { Component ,inject, OnDestroy, OnInit } from '@angular/core';
 import { IonRouterOutlet } from '@ionic/angular/standalone';
 import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
@@ -13,7 +13,10 @@ import {
    arrowForward,
    eye, eyeOff,camera,
    trashOutline,
-   createOutline
+   createOutline,
+   closeCircle,
+   checkmarkCircleOutline,
+   warningOutline
   } from 'ionicons/icons';
 import { DatabaseService } from './services/Database-services/database.service';
 import { PreviousRouteService } from './services/Navigation/PreviousRouteService';
@@ -27,6 +30,7 @@ import  basicMenus  from '../assets/menus/basicMenus.json';
 import { AccordionComponent } from '../app/components/accordion/accordion.component';
 import { AuthenticationService } from './services/Auth-services/authentication.service';
 import { IUserResponse } from './services/interfaces/Auth-Interfaces';
+import { Subscription } from 'rxjs';
 
 register();
 
@@ -36,7 +40,7 @@ register();
   standalone: true,
   imports: [IonicModule, IonRouterOutlet,AccordionComponent],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit , OnDestroy{
 
   private databaseService = inject(DatabaseService);
   private previousRouteService = inject(PreviousRouteService);
@@ -55,6 +59,7 @@ export class AppComponent implements OnInit {
   productListUrl? : string ;
   offerListUrl? : string ;
 
+  subscriptionAuth! : Subscription; 
 
   user : IUserResponse = 
    { 
@@ -67,8 +72,8 @@ export class AppComponent implements OnInit {
     token:'',
     user_avatar:'',
     user_image:'',
-    isOtpRequired:false,
-    account_id:0,
+    isOtpRequired: false,
+    account_id: 0,
     account_name:'',
     account_logo:'',
     account_image:'',
@@ -83,9 +88,20 @@ export class AppComponent implements OnInit {
       homeOutline,
       cartOutline,
       cashOutline,
-       cog ,
-       send ,
-       notifications , arrowBack , arrowForward ,eye , eyeOff ,camera ,trashOutline,createOutline });
+      cog ,
+      send ,
+      notifications ,
+      arrowBack ,
+      arrowForward ,
+      eye ,
+      eyeOff ,
+      camera ,
+      trashOutline,
+      createOutline,
+      closeCircle,
+      checkmarkCircleOutline,
+      warningOutline
+     });
 
     this.initApiService();
     
@@ -99,16 +115,23 @@ export class AppComponent implements OnInit {
 
   }
   
+  ngOnDestroy(): void {
+   if(this.subscriptionAuth)
+      this.subscriptionAuth.unsubscribe();
+  }
+  
   async ngOnInit() {
     
-    this.authenService.getUserObservable.subscribe((oUser)=>{
+  this.subscriptionAuth = this.authenService
+                              .getUserObservable
+                              .subscribe((oUser)=>{
        this.user = oUser;
        this.authenticate = this.user.account_id !== 0;
        this.authenService.setAuthentication(this.authenticate) ;
-       this.currentAccountUrl! = `${'home/account-profile\/'+this.user.account_id}`;
+       this.currentAccountUrl! = `${'home\/account-profile\/'+this.user.account_id}`;
        this.productListUrl! =`${'home\/account-product-list\/'+this.user.account_id}`;
        this.offerListUrl! =`${'home\/account-offer\/'+this.user.account_id}`;
-    }
+       }
     );
      console.log(" initi APP ...")
   }

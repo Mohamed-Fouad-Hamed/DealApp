@@ -80,6 +80,7 @@ export interface IAccountResponse{
      delivery_period : string;
      weekend  : string;
      work_hours  : string;
+     currency?:string;
 }
 
 export interface IAccountOptionReq{

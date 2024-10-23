@@ -40,11 +40,11 @@ export class AuthStorageService {
     }
 
     async remove(key:string){
-      let valueOfKey = await this.storage$?.remove(key);
+       await this.storage$?.remove(key);
     }
 
     async clear(){
-      let result = this.storage$?.clear();
+      await this.storage$?.clear();
     }
 
     async keys(){

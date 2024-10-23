@@ -29,7 +29,7 @@ export class ListProductsPage implements OnInit ,OnDestroy{
 
   async ngOnInit() {
 
-    this.route.paramMap.subscribe((params)=>{
+    this.subscription =  this.route.paramMap.subscribe((params)=>{
       this.groupId = params.get('groupId') || '';
     });
     

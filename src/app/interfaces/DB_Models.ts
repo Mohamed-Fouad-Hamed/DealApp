@@ -145,3 +145,233 @@ export interface IOfferDetailsRes{
     price : number;
     o_price : number;
 }
+
+//=== account products
+
+export interface IOrderProduct{
+    account_id : number;
+    product_id : number;
+    product_name : string;
+    product_image : string;
+    unit : string;
+    price : number;
+    has_offer : boolean;
+    max_quan : number;
+    max_limit : number;
+    percent_discount : number; 
+    o_price : number;
+    order_index? : number ;
+    product_index? : number;
+    quan_req? : number ;
+}
+
+//=== Order Classes
+
+export interface IOrder{
+    id : number ;
+    seller_id  : number ;
+    seller_name  : string ;
+    buyer_id  : number ;
+    buyer_name  : string ;
+    ord_date : string ;
+    min_value : number ;
+    min_quan : number ;
+    delivery_period : string ;
+    cash_back : number ;
+    is_valid : boolean ;
+    payment_id : number ;
+    pending : boolean ;
+    cancel : boolean ;
+    accept : boolean ;
+    reject:boolean;
+    on_road : boolean ;
+    receive : boolean ;
+    start_at : string ;
+    end_at : string ;
+    rating : number ;
+    orderDetails : IOrderDetails[];
+}
+
+export interface IOrderDetails{
+    id : number;
+    ord_id:number;
+    product_id : number;
+    product_name:string;
+    product_image:string;
+    unit : string;
+    max_quan : number;
+    max_limit : number;
+    percent_discount : number; 
+    has_offer : boolean;
+    quan : number ;
+    price : number ;
+    subTotal : number ;
+    o_quan : number ;
+    o_price : number ;
+    o_subTotal : number ;
+}
+
+
+export class Order  {
+
+    id: number = 0;
+    seller_id : number= 0;
+    seller_name : string = '';
+    seller_image : string = '';
+    currency : string ='';
+    buyer_id : number= 0;
+    buyer_name : string = '';
+    ord_date : string =  new Date().toISOString() ;
+    min_value: number = 0;
+    min_quan : number =  0;
+    delivery_period : string = '';
+    cash_back : number= 0;
+    is_valid : boolean = false;
+    payment_id : number= 0;
+    pending  : boolean = true;
+    cancel : boolean  = false;
+    accept : boolean  = false;
+    reject : boolean  = false;
+    on_road : boolean  = false;
+    receive : boolean  = false;
+    start_at : string =  new Date().toISOString();
+    end_at : string =  new Date().toISOString();
+    rating: number = 0;
+    orderDetails : OrderDetails[] = [];
+
+    get productsCount():number{
+        return this.orderDetails.length;
+    }
+
+    get productsValue():number {
+     return this.orderDetails
+                .map((current)=>{ return current.subTotal + current.o_subTotal ;})
+                .reduce((accumulator, current) => accumulator + current ,0);
+    }
+
+    get isValidQuan():boolean{
+        let result = false;
+        result = this.productsCount >= this.min_quan ;
+        return result;
+    }
+
+    get validQuanInfo():string{
+       return `${this.productsCount + '\/' + this.min_quan}` 
+    }
+
+    get isValidValue():boolean{
+        return this.productsValue >= this.min_value ;
+    }
+
+    get ValidValueInfo():string{
+        return `${this.min_value.toFixed(2) + '\/' + this.productsValue.toFixed(2)}` 
+    }
+
+    get progressTotalValue() : number{
+        return Number.parseFloat((this.productsValue/this.min_value).toFixed(2));
+    }
+
+    get notValidQuan():number {
+        const result = this.min_quan - this.productsCount ;
+        return result <= 0 ? 0 : result ;  
+    }
+
+    get notValidValue():number {
+        const result = this.min_value - this.productsValue ;
+        return result <= 0 ? 0 : result ;  
+    }
+
+}
+
+export class OrderDetails {
+    
+    id: number = 0 ;
+    ord_id: number = 0;
+    product_id: number = 0;
+    product_name: string = '';
+    product_image: string ='';
+    unit: string ='';
+    max_quan: number = 0;
+    max_limit: number = 0;
+    percent_discount: number = 0;
+    has_offer: boolean = false;
+    quan: number = 0;
+    price: number = 0;
+    subTotal: number = 0;
+    o_quan: number = 0;
+    o_price: number = 0;
+    o_subTotal: number = 0;
+    _totalQuan :number = 0 ;
+    orderProduct?:IOrderProduct;
+
+  private calcSubTotal() : void {
+        this.subTotal = 
+        (!Number.isNaN(this.quan) && this.quan > 0 ) &&
+        (!Number.isNaN(this.price) && this.price > 0 ) ? 
+        this.quan * this.price : 0 ;
+    }
+
+   private calcO_SubTotal() : void {
+        this.o_subTotal = 
+        (!Number.isNaN(this.o_quan) && this.o_quan > 0 ) &&
+        (!Number.isNaN(this.o_price) && this.o_price > 0 ) ? 
+        this.o_quan * this.o_price : 0 ;
+    }
+
+    calcDetail() : void{
+        this._totalQuan =  this.quan + this.o_quan ;
+        this.calcSubTotal();
+        this.calcO_SubTotal();
+
+    }
+
+    get totalQuan():number{
+        return this._totalQuan;
+    }
+
+    get totalValue():number{
+        return this.subTotal + this.o_subTotal ;
+    }
+
+    get isValidMaxLimit():boolean {
+        return this.totalQuan === ( this.max_limit >= this.max_quan ? this.max_limit : this.max_quan) ;
+    }
+
+    
+}
+
+export interface IOrderReq {
+    id : number ;
+    seller_id  : number ;
+    buyer_id  : number ;
+    ord_date : string ;
+    min_value : number ;
+    min_quan : number ;
+    delivery_period : string ;
+    cash_back : number ;
+    is_valid : boolean ;
+    payment_id : number ;
+    pending : boolean ;
+    cancel : boolean ;
+    accept : boolean ;
+    reject:boolean;
+    on_road : boolean ;
+    receive : boolean ;
+    start_at : string ;
+    end_at : string ;
+    rating : number ;
+}
+
+export interface IOrderDetailsReq{
+    id : number;
+    ord_id : number;
+    product_id : number;
+    unit : string;
+    max_quan : number;
+    max_limit : number;
+    percent_discount : number; 
+    quan : number ;
+    price : number ;
+    o_quan : number ;
+    o_price : number ;
+}

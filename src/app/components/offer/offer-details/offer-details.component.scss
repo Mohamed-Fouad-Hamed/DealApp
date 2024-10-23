@@ -1,46 +1,6 @@
 
-.row-center-img {
-    position: relative;
-    margin: 0 auto;
-    height: 38vh;
-    width: fit-content;
-  }
-
-
-.img-product {
-    height: 100%;
-    margin: 0 auto;
-    overflow: hidden;
-    object-fit: cover;
-  }
-
-.product-discount{
-    background: lightgreen;
-    padding-top:2px;
-    font-size: x-small;
-    width: 65px;
-    height: 13px;
-    position: absolute;
-    top: 1px;
-    right: 5px;
-    text-align: center;
-    border-radius: 25px;
-    z-index: 2;
-}
-
-.ion-col-center {
-    color: #1455c5;
-    text-align: center;
-  }
-
-
-  ion-col {
+ion-col {
   //  border: solid 1px #135d54;
   //  border-radius: 5px;
     text-align: center;
-  }
-
-  .one-margin-padding {
-    margin: 3px;
-    padding: 1px;
   }

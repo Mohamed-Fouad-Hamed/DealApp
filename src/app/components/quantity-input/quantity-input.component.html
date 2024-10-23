@@ -1,0 +1,25 @@
+<div class="q-i-container">
+
+ <!--<div class="icon" >
+    <ion-button color="primary"  size="small"  fill="clear" (click)="increment()" >
+      <ion-icon slot="icon-only" name="arrow-up-circle-outline"></ion-icon>
+    </ion-button>
+ </div>-->
+
+  <div class="icon">
+    <ion-icon slot="icon-only" name="arrow-up-circle-outline" class="icon" size="large" color="primary" (click)="increment()"></ion-icon>
+  </div>
+  
+  <ion-text class="ion-text-center text-quantity" (click)="inputQuantity()" >{{ quantity }}</ion-text>
+
+  <div class="icon">
+    <ion-icon slot="icon-only" name="arrow-down-circle-outline" class="icon" size="large" color="primary" (click)="decrement()" ></ion-icon>
+  </div>
+
+  <!--<div class="icon" >
+    <ion-button color="primary" size="small" fill="clear" (click)="decrement()"  >
+          <ion-icon slot="icon-only" name="arrow-down-circle-outline" ></ion-icon>
+      </ion-button>
+  </div> -->
+  
+</div>

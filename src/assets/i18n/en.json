@@ -158,6 +158,28 @@
 	"accountoffer.save_offer_price":" register offer price ",
 
 
+	"order.min_req":"Minimum request",
+	"order.productscount":"Products count",
+	"order.valid_value_first":"Add products with value ",
+	"order.valid_value_last":" to reach minimum request",
+	"order.valid_Quan_first":"Add count ",
+	"order.valid_Quan_last":" of products to reach minimum request",
+	"order.quanavailable":"The quantity is available",
+	"order.quanmaximum":"The quantity is maximum",
+	"order.deleteproduct":" Remove Product",
+	"order.deleteorder":"Remove Order",
+	"order.message_quan":"Quantity",
+	"order.max_quan_req":"Maximum Quantity",
+	"order.inoffer":"in side offer value",
+	"order.outoffer":"out side offer value",
+	"order.total":"Total: ",
+	"order.cash_back":"Cash back: ",
+	"order.valid":"Vaild Order",
+	"order.invalid":"Invaild Order",
+
+
+
+	
 
 	"single_selection_searchbox.additem":" Add ",
 	"single_selection_searchbox.selectitem":" Selection  ",

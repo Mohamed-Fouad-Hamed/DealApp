@@ -34,3 +34,8 @@ export interface Item {
      second_unit? : string;
      second_price? : number;
   }
+
+  export interface QuantityIdx{
+    idx:number;
+    quan:number;
+  }

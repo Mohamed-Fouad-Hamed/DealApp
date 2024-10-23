@@ -1,0 +1,23 @@
+.q-i-container{
+    border: 2px solid #3d88ea;
+    border-radius: 5px;
+    height: 37px;
+    //display: flex;
+    //flex-direction: row;
+}
+
+.icon {
+    display: inline-block;
+    height: 35px;
+    width: 25px;
+    text-align: center;
+}
+
+.text-quantity{
+    display: inline-block;
+    vertical-align: middle;
+    height: 35px;
+    width: calc(100% - 50px);
+}
+
+

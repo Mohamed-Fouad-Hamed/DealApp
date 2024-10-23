@@ -55,6 +55,15 @@ export const routes: Routes = [
         }
         ,
         {
+          path: 'products-by-account/:accountId',
+          children:[{
+            path:'' ,
+            loadComponent: () => import('../pages/products-by-account/products-by-account.page').then( m => m.ProductsByAccountPage),
+            canActivate: [authGuard]
+          }] 
+        }
+        ,
+        {
             path: 'offer-suppliers-page',
             children:[{
               path : ''  ,

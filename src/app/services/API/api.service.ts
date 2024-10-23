@@ -73,5 +73,8 @@ get headerJsonType() {
    return httpOptions;
 }
 
+getResourcePath(resource:string){
+  return `${this.apiHost + resource}`
+}
 
 }

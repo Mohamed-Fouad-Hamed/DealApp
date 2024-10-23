@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title  class="ion-text-center">{{ sellerAccount!.account_name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-supplier-card [supplier]="sellerAccount!" ></app-supplier-card>
+  <ion-grid class="ion-padding">
+    <ion-row>
+      @for(product of accountProducts ; track product.product_id){
+       <ion-col size="6" >
+         <app-product-card 
+            [account]="sellerAccount!" 
+            [currentProduct]="product" 
+            (addNewProduct)="addNewProduct($event)"
+            (updatedProduct)="updateProduct($event)">
+          </app-product-card>
+       </ion-col>  
+      }
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>

@@ -1,0 +1,70 @@
+<ion-card class="one-margin-padding" >
+  <ion-card-content >
+    <ion-grid >
+      <ion-row   class="ion-justify-content-center" >
+        <ion-col size="12"> 
+          <div class="row-center-img">
+
+            @if (currentProduct!.product_image && currentProduct!.product_image.length > 0 ) {
+              <ng-container [ngTemplateOutlet]="productImage"></ng-container>
+            }
+
+            <ng-template #productImage>
+              <img class="img-product" [alt]="currentProduct!.product_name" [src]="currentProduct!.product_image" />
+            </ng-template>
+           
+            @if (currentProduct!.percent_discount > 0 ) {
+              <ng-container [ngTemplateOutlet]="productDiscount"></ng-container>
+            }
+
+            <ng-template #productDiscount>
+              <span class="product-discount">
+                {{percentage}}
+             </span>
+            </ng-template>
+
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row   class="ion-justify-content-center" >
+        <ion-col size="12"> 
+          <p class="ion-col-center">{{currentProduct!.product_name}}</p>
+        </ion-col>
+      </ion-row>   
+      <ion-row   class="ion-justify-content-around" >
+        <ion-col size="5"> 
+          @if(currentProduct!.has_offer){
+            <ng-container [ngTemplateOutlet]="hasOfferPrice"></ng-container>
+          }
+          <ng-template #hasOfferPrice>
+            <p class="ion-col-center price-ignore">  {{priceStr}} </p>
+          </ng-template>
+        </ion-col>
+        <ion-col size="5"> 
+          @if(currentProduct!.has_offer){
+            <ng-container [ngTemplateOutlet]="hasOfferNativePrice"></ng-container>
+          }
+          @else
+          {
+            <ng-container [ngTemplateOutlet]="hasNotOfferNativePrice"></ng-container>
+          }
+          <ng-template #hasOfferNativePrice >
+            <p class="ion-col-center">   {{oPriceStr}} </p>
+          </ng-template>
+          <ng-template #hasNotOfferNativePrice >
+            <p class="ion-col-center">   {{priceStr}} </p>
+          </ng-template>
+        </ion-col>
+      </ion-row>   
+      <ion-row  >
+        <ion-col > 
+        @if( this.currentProduct!.quan_req! === 0){
+          <ion-button color="primary" expand="block" fill="outline" (click)="newProduct()" > Add to card </ion-button>
+        }@else if( this.currentProduct!.quan_req! > 0){
+          <app-quantity-input [detail]="currentProduct!" (quantityChange)="updateProduct($event)"></app-quantity-input>
+        }
+        </ion-col>
+      </ion-row>  
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

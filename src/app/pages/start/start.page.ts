@@ -24,6 +24,7 @@ export class StartPage implements OnInit {
   appLanguages:Language[] = [];
 
 
+
   constructor() {
     
    }
@@ -33,6 +34,8 @@ export class StartPage implements OnInit {
     this.translateService.setDefaultLang('ar');
     this.platform.setRightToLeft();
   }
+
+ 
 
   onLanguageChange(event:any){
     this.translateService.use( event.target.value ? event.target.value : 'ar');
