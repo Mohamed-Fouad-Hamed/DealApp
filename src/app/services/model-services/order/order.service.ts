@@ -1,8 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Order, OrderDetails, IOrderProduct } from 'src/app/interfaces/DB_Models';
+import { BehaviorSubject, delay, Observable, switchMap, timer } from 'rxjs';
+import { Order, OrderDetails, IOrderProduct, IOrderReq, IOrderOptionReq, IOrderPaymentReq, IOrderRateReq } from 'src/app/interfaces/DB_Models';
 import { IAccountResponse } from '../../interfaces/Auth-Interfaces';
 import { APIService } from '../../API/api.service';
+import { HttpClient } from '@angular/common/http';
+import { MessageResponse } from '../../interfaces/MessageResponse';
 
 
 @Injectable({
@@ -10,7 +12,10 @@ import { APIService } from '../../API/api.service';
 })
 export class OrderService {
 
-  private apiService  = inject(APIService);
+  private http = inject(HttpClient);
+
+  private apiService = inject(APIService);
+  
 
   orders : Order[] = [] ;
 
@@ -45,7 +50,6 @@ export class OrderService {
     return this.orders.length - 1;
   }
 
-
   addProduct(detail:IOrderProduct , seller:IAccountResponse) : OrderDetails {
 
     const orderIndex = this.getCurrentOrder(detail.account_id,seller);
@@ -78,10 +82,9 @@ export class OrderService {
     
      return _ord_d;
      
-    }
+  }
 
-
-    updateQuanDetail(detail:IOrderProduct){
+  updateQuanDetail(detail:IOrderProduct){
 
       const _ord_d = this.orders[detail.order_index!].orderDetails[detail.product_index!];
 
@@ -167,8 +170,135 @@ export class OrderService {
         _ord_d.calcDetail();
 
 
+  }
 
 
-    }
+  getOrder(orderId:string){
+
+    const URL = this.apiService.apiHost;
+
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessageResponse>(`${URL}/get-order?orderId=${orderId}`)
+        })
+      );
+  }
+
+
+  getOrdersBySeller(sellerId:string){
+
+    const URL = this.apiService.apiHost;
+
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessageResponse>(`${URL}/get-orders-by-seller?sellerId=${sellerId}`)
+        })
+      );
+  }
+
+  getOrdersByBuer(buyerId:string){
+
+    const URL = this.apiService.apiHost;
+
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessageResponse>(`${URL}/get-orders-by-buyer?sellerId=${buyerId}`)
+        })
+      );
+  }
+
+  updateOrder(order:IOrderReq):Observable<MessageResponse>{
+      
+    const URL = this.apiService.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/set-save-order`, order , this.apiService.headerJsonType ).pipe(
+          delay(100)
+      );
+
+  }
+
+  updateOrderCancel(order:IOrderOptionReq):Observable<MessageResponse>{
+      
+    const URL = this.apiService.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/set-order-cancel`, order , this.apiService.headerJsonType ).pipe(
+          delay(100)
+      );
+
+  }
+
+  updateOrderReject(order:IOrderOptionReq):Observable<MessageResponse>{
+      
+    const URL = this.apiService.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/set-order-reject`, order , this.apiService.headerJsonType ).pipe(
+          delay(100)
+      );
+
+  }
+
+  updateOrderAccept(order:IOrderOptionReq):Observable<MessageResponse>{
+      
+    const URL = this.apiService.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/set-order-accept`, order , this.apiService.headerJsonType ).pipe(
+          delay(100)
+      );
+
+  }
+
+  updateOrderOnRoad(order:IOrderOptionReq):Observable<MessageResponse>{
+      
+    const URL = this.apiService.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/set-order-on-road`, order , this.apiService.headerJsonType ).pipe(
+          delay(100)
+      );
+
+  }
+
+  updateOrderReceive(order:IOrderOptionReq):Observable<MessageResponse>{
+      
+    const URL = this.apiService.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/set-order-receive`, order , this.apiService.headerJsonType ).pipe(
+          delay(100)
+      );
+
+  }
+
+  updateOrderPayment(order:IOrderPaymentReq):Observable<MessageResponse>{
+      
+    const URL = this.apiService.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/set-order-payment`, order , this.apiService.headerJsonType ).pipe(
+          delay(100)
+      );
+  }
+
+  updateOrderRateSeller(order:IOrderRateReq):Observable<MessageResponse>{
+      
+    const URL = this.apiService.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/set-order-rate-seller`, order , this.apiService.headerJsonType ).pipe(
+          delay(100)
+      );
+
+  }
+
+  updateOrderRateBuyer(order:IOrderRateReq):Observable<MessageResponse>{
+      
+    const URL = this.apiService.apiHost;
+    
+    return this.http.post<MessageResponse>(`${URL}/set-order-rate-buyer`, order , this.apiService.headerJsonType ).pipe(
+          delay(100)
+      );
+
+  }
+
+
 
 }

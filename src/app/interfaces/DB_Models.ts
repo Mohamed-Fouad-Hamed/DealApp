@@ -359,7 +359,12 @@ export interface IOrderReq {
     receive : boolean ;
     start_at : string ;
     end_at : string ;
-    rating : number ;
+    total : number ;
+    payment : number ;
+    remainder : number ;
+    rate_seller : number ;
+    rate_buyer : number ;
+    orderDetailsReqList : IOrderDetails[];  
 }
 
 export interface IOrderDetailsReq{
@@ -375,3 +380,19 @@ export interface IOrderDetailsReq{
     o_quan : number ;
     o_price : number ;
 }
+
+export interface IOrderOptionReq{
+    orderId:number;
+    valueChanged:boolean;
+  }
+
+  export interface IOrderRateReq{
+    orderId:number;
+    rate:number;
+  }
+
+ export interface IOrderPaymentReq{
+    orderId : number ;
+    paymentId : number ;
+    payment : number ;
+ }
