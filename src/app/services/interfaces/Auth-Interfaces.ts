@@ -81,6 +81,13 @@ export interface IAccountResponse{
      weekend  : string;
      work_hours  : string;
      currency?:string;
+     paymentTypes? : IAccountPayment[] ;
+}
+
+export interface IPayment {
+    id : number ;
+    name : string ;
+    paymentType : string;
 }
 
 export interface IAccountOptionReq{
@@ -93,6 +100,18 @@ export interface IAccountOptionReq{
      delivery_period  : string ;
      weekend  : string ;
      work_hours  : string ;
+     paymentTypes? : IAccountPayment[];
 }
 
+export interface IAccountPayment{
+    accountId : number;
+    paymentId : number;
+    wallet_number : string;
+    wallet_password : string;
+    card_holder_name : string;
+    account_number : string;
+    expiry_month : string;
+    expiry_year : string;
+    cvc : string;
+}
 

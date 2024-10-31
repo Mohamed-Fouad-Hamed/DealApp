@@ -133,7 +133,16 @@
 
 	"account.submit":"Apply",
 	"account.accountprofiletitle":"Account Settings",
-
+    "account.paymentId":"Payment Method",
+	"account.wallet_number":"Wallet Number",
+	"account.wallet_password":"Wallet Password",
+	"account.card_holder_name":"Card Holder Name",
+	"account.account_number":"Account Number",
+	"account.expiry_month":"Expiry Month",
+	"account.expiry_year":"Expiry Year",
+	"account.cvc":"CVC",
+	"account.addpaymentmethod":"Add Method",
+	"account.updatepaymentmethod":" Update Method ",
 	"accountproduct.addnotallow":"The product has been added before, does not allow for duplication",
 	"accountproduct.productaddedtemporary":"this product has been added temporarily until its prices are modified",
 	"accountproduct.accountproductmenu":" My Products",
@@ -157,6 +166,12 @@
 	"accountoffer.o_price":" Offer Price ",
 	"accountoffer.save_offer_price":" register offer price ",
 
+	"CASH":"Cash",
+	"CREDIT_APP":"Credit App",
+	"CREDIT_CARD":"Credit Card",
+	"WALLET":"Wallet",
+	"INSTALLMENT":"Installment",
+
 
 	"order.min_req":"Minimum request",
 	"order.productscount":"Products count",
@@ -176,8 +191,16 @@
 	"order.cash_back":"Cash back: ",
 	"order.valid":"Vaild Order",
 	"order.invalid":"Invaild Order",
-
-
+	"order.summary":"Summary Order",
+	"order.confirm":"Order Confirm",
+    "order.update":"Order Update",
+	"order.updateCancel":"Order Cancel",
+	"order.updateAccepted":"Order Accepted",
+    "order.updateReject":"Order Rejected",
+	"order.updateOnRoad":"Order On Road",
+	"order.updateReceive":"Order Received",
+	"order.updateRateSeller":"Supplier Rating",
+	"order.updateRateBuyer":"Customer Rating",
 
 	
 

@@ -51,17 +51,20 @@ export class SuppliersPagePage implements OnInit , OnDestroy{
                               .subscribe((oUser)=>{
 
                const {account_type} = oUser ;
+               const { account_id } = oUser;
 
-               this.getAccountsByType(account_type);
+               console.log(oUser);
+
+               this.getAccountsByType(account_type, account_id );
 
            });   
 
   }
 
-  getAccountsByType(type:string){
+  getAccountsByType(type:string,id:number){
 
     this.subscription = this.accountService
-                            .getAccountsByAccountType(type)
+                            .getAccountsByAccountType(type,[id])
                             .pipe(map((accounts:any)=>{
 
                                 const accountsArr = accounts.map((account:IAccountResponse)=>{
@@ -69,7 +72,7 @@ export class SuppliersPagePage implements OnInit , OnDestroy{
                                     return account;
                                 });
 
-                                    return accountsArr;
+                                return accountsArr;
                             }))
                             .subscribe((accounts)=> this.suppliers = accounts );
   }

@@ -33,7 +33,7 @@ export class ProductsByAccountPage implements OnInit , OnDestroy {
   private productService = inject(AccountProductService);
   private authService = inject(AuthenticationService);
   private apiService = inject(APIService);
-  private orderService = inject(OrderService);
+ 
 
   orders:Order[] =  [];
 
@@ -64,7 +64,7 @@ export class ProductsByAccountPage implements OnInit , OnDestroy {
   }
 
 
-  constructor(private loadingCtrl: LoadingController) { }
+  constructor( private orderService :OrderService, private loadingCtrl: LoadingController) { }
 
   async showLoading() {
     const loading = await this.loadingCtrl.create({

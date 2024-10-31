@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import {  delay, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { MessageResponse } from '../interfaces/MessageResponse';
-import { IAccountOptionReq, IAccountResponse, IAccountSignup , ICredential , INewPassword , ISignup , ITokenLogin , IUniqueLogin , IUserResponse, IVerifyOTP } from '../interfaces/Auth-Interfaces';
+import { IAccountOptionReq, IAccountResponse, IAccountSignup , ICredential , INewPassword , IPayment, ISignup , ITokenLogin , IUniqueLogin , IUserResponse, IVerifyOTP } from '../interfaces/Auth-Interfaces';
 import { APIService } from '../API/api.service';
 import { BehaviorSubject, from, timer } from 'rxjs';
 import { AuthStorageService } from './auth-storage.service';
@@ -114,6 +114,18 @@ export class AuthenticationService {
       .pipe(
         switchMap(() => {
           return this.http.get<IAccountResponse>(`${URL}/account-id?id=${id}`)
+        })
+      );
+  }
+
+  getPaymentTypes() {
+    // debounce
+    const URL = this.API.apiHost;
+
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<IPayment[]>(`${URL}/get-payment-types`)
         })
       );
   }

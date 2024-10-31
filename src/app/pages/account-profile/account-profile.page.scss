@@ -81,3 +81,10 @@
 		transform: translatey(0px);
 	}
    }
+
+   .hor-scroll{
+        width: 100%;
+        height: 50px;
+        overflow-x: auto !important;
+        overflow-y: hidden;
+   }

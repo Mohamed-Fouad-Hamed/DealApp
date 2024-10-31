@@ -16,10 +16,12 @@
       <app-order-card 
          [index]="idx" 
          [order]="order" 
-         (deleteOrderEmitter)="deleteOrder()"
-         (deleteProductEmitter)="deleteProduct($event)" 
-         (updateProductEmitter)="updateProduct($event)" >
+         (deleteOrderEmitter)="deleteOrder(idx)"
+         (deleteProductEmitter)="deleteProduct(order,$event)" 
+         (updateProductEmitter)="updateProduct($event)" 
+         (updateOrderEmitter)="updateOrder(idx,order)">
       </app-order-card>
+      
      }
 
 </ion-content>

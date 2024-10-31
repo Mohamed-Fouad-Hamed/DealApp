@@ -1,0 +1,172 @@
+<div class="account-payment-container">
+  <ion-grid>
+
+    <ion-row>
+      <ion-col>
+        <ion-select label="{{'account.paymentId' | translate}}" 
+                label-placement="floating" 
+                fill="outline"
+                required
+                [(ngModel)]="accountPayment!.paymentId"
+                #paymentId="ngModel"
+                color="secondary"
+                name="paymentId"
+                [disabled]="enableType">
+            @for(pay of paymentTypes;track pay.id){
+
+              <ion-select-option [value]="pay.id" >{{ pay.paymentType | translate }}</ion-select-option>
+
+            }
+          </ion-select>
+      </ion-col>
+    </ion-row>
+
+    @if (accountPayment!.paymentId === 4) {
+      <ng-container 
+        *ngTemplateOutlet="wallet">
+      </ng-container>
+    }
+
+    <ng-template #wallet>
+
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'account.wallet_number' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="accountPayment!.wallet_number"
+            #wallet_number="ngModel"
+            color="secondary"
+            name="wallet_number"
+            maxlength="16"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'account.wallet_password' | translate}}" 
+            label-placement="floating" 
+            type="password"
+            fill="outline"
+            [(ngModel)]="accountPayment!.wallet_password"
+            #wallet_password="ngModel"
+            color="secondary"
+            name="wallet_password"
+            maxlength="16"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+
+    
+  @if (accountPayment!.paymentId === 3) {
+    <ng-container 
+      *ngTemplateOutlet="creditcard">
+    </ng-container>
+  }
+
+  <ng-template #creditcard>
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'account.card_holder_name' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="accountPayment!.card_holder_name"
+            #card_holder_name="ngModel"
+            color="secondary"
+            name="card_holder_name"
+            maxlength="50"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'account.account_number' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="accountPayment!.account_number"
+            #account_number="ngModel"
+            color="secondary"
+            name="account_number"
+            maxlength="16"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="3">
+        <ion-input label="{{'account.expiry_month' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="accountPayment!.expiry_month"
+            #expiry_month="ngModel"
+            color="secondary"
+            name="expiry_month"
+            maxlength="2"
+            >
+          </ion-input>
+      </ion-col>
+      <ion-col size="3">
+        <ion-input label="{{'account.expiry_year' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="accountPayment!.expiry_year"
+            #expiry_year="ngModel"
+            color="secondary"
+            name="expiry_year"
+            maxlength="2"
+            >
+          </ion-input>
+      </ion-col>
+      <ion-col size="6">
+        <ion-input label="{{'account.cvc' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="accountPayment!.cvc"
+            #cvc="ngModel"
+            color="secondary"
+            name="cvc"
+            maxlength="4"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+
+    <ion-row>
+      <ion-col >
+        <ion-button [disabled]="accountPayment!.paymentId===0"
+                    color="secondary" 
+                    expand="block"
+                    class="submit-button"
+                    (click)="submit()">
+                    @if( !enableType ){
+                      {{ 'account.addpaymentmethod' | translate  }}
+                    }
+                    @else {
+                      {{ 'account.updatepaymentmethod' | translate  }}
+                    }
+            @if(isLoading) { <ion-spinner class="spinner-button"> </ion-spinner> }
+        </ion-button>
+      </ion-col>
+
+      <ion-col >
+        <ion-button 
+                    (click)="cancel()"
+                    color="danger" 
+                    expand="block"
+                    translate="app.cancel"
+                    class="submit-button">
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</div>

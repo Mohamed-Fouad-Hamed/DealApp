@@ -236,7 +236,11 @@ export class Order  {
     receive : boolean  = false;
     start_at : string =  new Date().toISOString();
     end_at : string =  new Date().toISOString();
-    rating: number = 0;
+    total : number = 0;
+    payment : number = 0 ;
+    remainder : number = 0 ;
+    rate_seller : number = 0 ;
+    rate_buyer : number = 0 ;
     orderDetails : OrderDetails[] = [];
 
     get productsCount():number{
@@ -244,9 +248,10 @@ export class Order  {
     }
 
     get productsValue():number {
-     return this.orderDetails
-                .map((current)=>{ return current.subTotal + current.o_subTotal ;})
-                .reduce((accumulator, current) => accumulator + current ,0);
+     this.total =   this.orderDetails
+                        .map((current)=>{ return current.subTotal + current.o_subTotal ;})
+                        .reduce((accumulator, current) => accumulator + current ,0);  
+     return this.total ;
     }
 
     get isValidQuan():boolean{
@@ -364,7 +369,7 @@ export interface IOrderReq {
     remainder : number ;
     rate_seller : number ;
     rate_buyer : number ;
-    orderDetailsReqList : IOrderDetails[];  
+    orderDetailsReqList : IOrderDetailsReq[];  
 }
 
 export interface IOrderDetailsReq{
@@ -395,4 +400,51 @@ export interface IOrderOptionReq{
     orderId : number ;
     paymentId : number ;
     payment : number ;
+ }
+
+ export function fromOrderToOrderReq(order:Order){
+   
+    const orderReq : IOrderReq = {
+        id : order.id ,
+        seller_id  : order.seller_id ,
+        buyer_id  : order.buyer_id ,
+        ord_date : order.ord_date ,
+        min_value : order.min_value ,
+        min_quan :  order.min_quan ,
+        delivery_period :  order.delivery_period ,
+        cash_back :  order.cash_back ,
+        is_valid :  order.is_valid ,
+        payment_id :  order.payment_id ,
+        pending : order.pending ,
+        cancel :  order.cancel ,
+        accept :  order.accept ,
+        reject:  order.reject ,
+        on_road :  order.on_road ,
+        receive :  order.receive ,
+        start_at :  order.start_at ,
+        end_at :  order.end_at ,
+        total :  order.total ,
+        payment :  order.payment ,
+        remainder :  order.remainder ,
+        rate_seller :   order.rate_seller ,
+        rate_buyer :   order.rate_buyer ,
+        orderDetailsReqList : order.orderDetails.map((detail)=>{
+            const _detail:IOrderDetailsReq = {
+                id : detail.id,
+                ord_id: order.id,
+                product_id : detail.product_id ,
+                unit :  detail.unit ,
+                max_quan :  detail.max_quan ,
+                max_limit :  detail.max_limit ,
+                percent_discount :  detail.percent_discount ,
+                quan :  detail.quan ,
+                price :  detail.price ,
+                o_quan :  detail.o_quan ,
+                o_price :  detail.o_price 
+            }
+            return _detail;
+        }) 
+    }
+
+    return orderReq ;
  }

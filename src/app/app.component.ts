@@ -16,7 +16,7 @@ import {
    createOutline,
    closeCircle,
    checkmarkCircleOutline,
-   warningOutline
+   warningOutline,
   } from 'ionicons/icons';
 import { DatabaseService } from './services/Database-services/database.service';
 import { PreviousRouteService } from './services/Navigation/PreviousRouteService';

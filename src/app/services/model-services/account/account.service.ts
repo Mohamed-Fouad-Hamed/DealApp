@@ -16,12 +16,12 @@ export class AccountService {
 
   constructor() { }
 
-  getAccountsByAccountType(accountType:string){
+  getAccountsByAccountType(accountType:string,owenId:number[]){
     const URL = this.API.apiHost;
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<IAccountResponse[]>(`${URL}/get-accounts-by-account-type?accountType=${accountType}`)
+          return this.http.get<IAccountResponse[]>(`${URL}/get-accounts-by-account-type-not?accountType=${accountType}&owenId=${owenId}`)
         })
       );
   }

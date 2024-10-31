@@ -128,7 +128,16 @@
 
 	"account.submit":"موافق",
 	"account.accountprofiletitle":"إعدادات الحساب",
-
+	"account.paymentId":"طريقة الدفع",
+	"account.wallet_number":"رقم المحفظة",
+	"account.wallet_password":"كلمة المرور",
+	"account.card_holder_name":"الأسم المدون على البطاقة",
+	"account.account_number":"رقم الحساب",
+	"account.expiry_month":"شهر الصلاحية",
+	"account.expiry_year":"سنه الصلاحية",
+	"account.cvc":"أرقام مدونه بالخلف",
+	"account.addpaymentmethod":"إضافة طريقة دفع",
+	"account.updatepaymentmethod":" تحديث طريقة الدفع ",
 	"accountproduct.addnotallow":"  تم إضافة المنتج من قبل لايسمح بالتكرار",
 	"accountproduct.productaddedtemporary":"تم اضافة هذا المنتج مؤقتا لحين تعديل أسعاره",
 	"accountproduct.accountproductmenu":" منتجاتى",
@@ -151,6 +160,12 @@
 	"accountoffer.o_price":" سعر العرض ",
 	"accountoffer.save_offer_price":" تسجيل عرض السعر ",
 
+	"CASH":"كاش",
+	"CREDIT_APP":"رصيد الحساب",
+	"CREDIT_CARD":"بطاقة الإئتمان",
+	"WALLET":"محفظه",
+	"INSTALLMENT":"تقسيط",
+
 	"order.min_req":"الحد الأدنى للطلب",
 	"order.productscount":"عدد المنتجات",
 	"order.valid_value_first":"أضف منتجات بقيمة ",
@@ -169,6 +184,16 @@
 	"order.cash_back":"كاش باك : ",
 	"order.valid":" طلب  صحيح",
 	"order.invalid":"طلب غير صحيح",
+    "order.summary":"ملخص الطلب",
+	"order.confirm":" تأكيد الطلب ",
+    "order.update":"تحديث الطلب",
+	"order.updateCancel":"ألغاء الطلب",
+	"order.updateAccepted":"قبول الطلب ",
+    "order.updateReject":"رفض الطلب",
+	"order.updateOnRoad":"الطلب على الطريق",
+	"order.updateReceive":"تم إستلام الطلب",
+	"order.updateRateSeller":"تقييم البائع",
+	"order.updateRateBuyer":"تقييم المشترى",
 
 
 

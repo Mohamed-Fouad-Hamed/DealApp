@@ -1,20 +1,24 @@
-import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, delay, Observable, switchMap, timer } from 'rxjs';
+import { inject, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, delay, Observable, Subscription, switchMap, timer } from 'rxjs';
 import { Order, OrderDetails, IOrderProduct, IOrderReq, IOrderOptionReq, IOrderPaymentReq, IOrderRateReq } from 'src/app/interfaces/DB_Models';
-import { IAccountResponse } from '../../interfaces/Auth-Interfaces';
+import { IAccountResponse, IUserResponse } from '../../interfaces/Auth-Interfaces';
 import { APIService } from '../../API/api.service';
 import { HttpClient } from '@angular/common/http';
 import { MessageResponse } from '../../interfaces/MessageResponse';
+import { AuthenticationService } from '../../Auth-services/authentication.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService {
+export class OrderService implements  OnDestroy{
+
 
   private http = inject(HttpClient);
 
   private apiService = inject(APIService);
+
+  private authenService = inject(AuthenticationService);
   
 
   orders : Order[] = [] ;
@@ -22,6 +26,26 @@ export class OrderService {
   private ordersBehaviorSubject = new BehaviorSubject<Order[]>(this.orders);
 
   private ordersBehaviorSubject$:Observable<Order[]> = this.ordersBehaviorSubject.asObservable();
+
+  private subscriptionAuth? : Subscription;
+  
+  private currentUser? : IUserResponse;
+
+
+  ngOnDestroy(): void {
+    if(this.subscriptionAuth)
+      this.subscriptionAuth.unsubscribe();
+  }
+
+  constructor(){
+    this.subscriptionAuth! =
+                  this.authenService
+                      .getUserObservable
+                      .subscribe((oUser)=>{
+                       this.currentUser! = oUser ;
+
+                  });   
+  }
   
   get getOrdersBehaviorSubject():Observable<Order[]>{
     return this.ordersBehaviorSubject$;
@@ -42,6 +66,8 @@ export class OrderService {
     _ord.seller_id = seller.id ;
     _ord.seller_name = seller.account_name ;
     _ord.seller_image = this.apiService.getResourcePath(seller.account_logo);
+    _ord.buyer_id =  this.currentUser!.account_id ;
+    _ord.buyer_name = this.currentUser!.account_name ;
     _ord.currency = seller.currency!;
     _ord.min_quan = seller.min_quan ;
     _ord.min_value = seller.min_value;

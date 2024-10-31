@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { EvaluationColors } from 'src/app/types/enums';
 
 @Component({
   selector: 'input-rating',
@@ -23,19 +24,19 @@ export class InputRatingComponent  {
 
   getColor(index: number) {
      if(this.isAboveRating(index)){
-      return COLORS.GREY;
+      return EvaluationColors.GREY;
      }
      switch(this.rating!){
       case 1:
       case 2:
-        return COLORS.RED;
+        return EvaluationColors.RED;
       case 3:
-        return COLORS.YELLOW;
+        return EvaluationColors.YELLOW;
       case 4:
       case 5:
-        return COLORS.GREEN;
+        return EvaluationColors.GREEN;
       default:
-        return COLORS.GREY;      
+        return EvaluationColors.GREY;      
 
      }
     }
@@ -46,9 +47,3 @@ export class InputRatingComponent  {
 
 }
 
-enum COLORS{
-  GREY="#E0E0E0",
-  GREEN="#76FF03",
-  YELLOW="#FFCA28",
-  RED="#DD2C00"
-}

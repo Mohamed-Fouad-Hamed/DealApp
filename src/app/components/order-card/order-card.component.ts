@@ -26,6 +26,8 @@ export class OrderCardComponent  implements OnInit ,OnDestroy{
 
   @Output('updateProductEmitter') updateProductEmitter =  new EventEmitter<IOrderProduct>();
 
+  @Output('updateOrderEmitter') updateOrderEmitter =  new EventEmitter<void>();
+
   get validTotalValue():string{
     return `${this.order!.ValidValueInfo + ' ' + this.order!.currency!}`
   }
@@ -49,6 +51,9 @@ export class OrderCardComponent  implements OnInit ,OnDestroy{
     this.deleteProductEmitter.emit(idx);
   }
 
+  updateOrder(){
+    this.updateOrderEmitter.emit();
+  }
 
   quanChange(orderProduct:IOrderProduct){
     this.updateProductEmitter.emit(orderProduct);
