@@ -4,18 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-list-suppliers',
-  templateUrl: './list-suppliers.page.html',
-  styleUrls: ['./list-suppliers.page.scss'],
+  selector: 'app-outgoing-orders',
+  templateUrl: './outgoing-orders.page.html',
+  styleUrls: ['./outgoing-orders.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class ListSuppliersPage implements OnInit {
+export class OutgoingOrdersPage implements OnInit {
 
   constructor() { }
 
   ngOnInit() {
-    console.log('List suppliers oninit ... ');
   }
 
 }

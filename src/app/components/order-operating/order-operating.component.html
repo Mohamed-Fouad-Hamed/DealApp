@@ -18,18 +18,25 @@
             {{ order!.seller_name }} 
           </ion-text>
         </ion-col>
-        @if(showDetailsOption){
-          <ion-col size="6" class="ion-no-padding"> 
-            <ion-toggle aria-label="Primary toggle" color="primary"  [(ngModel)]="showDetails"></ion-toggle>
-          </ion-col>
-        }
+        <ion-col size="3">
+           
+        </ion-col>
       </ion-row>
   
       <hr/>  
 
     </ng-template>
-    
 
+    @if(showDetailsOption){
+
+      <ion-row>
+          <ion-col size="6" class="ion-no-padding"> 
+            <ion-toggle aria-label="Primary toggle" color="primary"  [(ngModel)]="showDetails"></ion-toggle>
+          </ion-col>
+      </ion-row>
+
+      <hr/>  
+    }
     
     <ion-row class="ion-justify-content-between">
       <ion-col size="4"> {{'order.total' | translate}} {{ order!.productsValue.toFixed(2) }} </ion-col>
@@ -91,7 +98,8 @@
       </ng-container>
     }
 
-    <ng-template #orderDetailsEditableTemplate>     
+    <ng-template #orderDetailsEditableTemplate> 
+
       <ion-row class="ion-align-items-center">
         <ion-col offset="3" size="3" class="ion-no-padding"> 
           <app-quantity-input [detail]="detail" (quantityChange)="quanChange($event)"></app-quantity-input>
@@ -102,6 +110,7 @@
       </ion-row>
 
       <ion-row class="ion-justify-content-between">
+
         @if(detail.isValidMaxLimit){
           <ion-col size="6" class="ion-no-padding">
             <ion-chip color="danger">
@@ -125,7 +134,15 @@
     </ng-template>
 
     }
-    
+    @if( orderProcedure !== OrderProcedures.Summary ){
+      <ion-row>
+        <ion-col>
+              <ion-button color="success" fill="outline" (click)="updateOrder()" >
+                {{ orderProcedure | translate}} 
+              </ion-button>  
+        </ion-col>
+      </ion-row>
+    }
     </ion-grid>
 
   </div>

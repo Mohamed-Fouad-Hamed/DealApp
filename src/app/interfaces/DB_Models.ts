@@ -1,3 +1,5 @@
+import { format } from 'date-fns/format';
+
 export interface IRowStates{
    pendingCount:number;
    acceptCount:number;
@@ -221,7 +223,7 @@ export class Order  {
     currency : string ='';
     buyer_id : number= 0;
     buyer_name : string = '';
-    ord_date : string =  new Date().toISOString() ;
+    ord_date : string =  format( new Date() ,'yyyy-MM-dd') + 'T' + format( new Date() ,'HH:mm:ss');
     min_value: number = 0;
     min_quan : number =  0;
     delivery_period : string = '';
@@ -234,14 +236,33 @@ export class Order  {
     reject : boolean  = false;
     on_road : boolean  = false;
     receive : boolean  = false;
-    start_at : string =  new Date().toISOString();
-    end_at : string =  new Date().toISOString();
+    start_at : string = format( new Date() ,'yyyy-MM-dd') + 'T' + format( new Date() ,'HH:mm:ss');
+    end_at : string = format( new Date() ,'yyyy-MM-dd') + 'T' + format( new Date() ,'HH:mm:ss');
     total : number = 0;
     payment : number = 0 ;
     remainder : number = 0 ;
     rate_seller : number = 0 ;
     rate_buyer : number = 0 ;
     orderDetails : OrderDetails[] = [];
+    
+    get getStatus() : string {
+
+        let status:string = 'order.pending_status';
+
+        if(this.accept)
+            status ='order.accepted_status';
+        if(this.cancel)
+            status = 'order.cancel_status';
+        if(this.reject)
+            status = 'order.rejected_status';
+        if(this.on_road)
+            status = 'order.onroad_status';
+        if(this.receive)
+            status = 'order.receive_status';
+
+        return status;
+
+    }
 
     get productsCount():number{
         return this.orderDetails.length;

@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content class="ion-padding" [fullscreen]="true" >
-  @for(sup of suppliers ; track sup.account_name){
+  @for(sup of suppliers ; track sup.id){
      <app-supplier-card 
              [supplier]="sup"  
              (click)="supplierClicked(sup.id)" >

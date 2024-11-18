@@ -57,13 +57,14 @@ export class CartPagePage implements OnInit , OnDestroy{
   updateOrder(idx:number,order:Order){
 
     const orderReq : IOrderReq = fromOrderToOrderReq(order);
+    
     this.orderBackSubscription = this.orderService
                                      .updateOrder(orderReq)
                                      .subscribe((message:MessageResponse)=>{
-                                      if(message.id === 200){
+                                      if(message.status === 200){
+                                     //   this.orderService.addOrderToOutput(order);
                                         this.orders.splice(idx,1);
-                                      }
-                                      
+                                       }
                                      });
   }
 

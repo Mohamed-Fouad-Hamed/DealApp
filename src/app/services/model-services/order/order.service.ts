@@ -11,7 +11,7 @@ import { AuthenticationService } from '../../Auth-services/authentication.servic
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService implements  OnDestroy{
+export class OrderService implements OnInit, OnDestroy{
 
 
   private http = inject(HttpClient);
@@ -20,6 +20,7 @@ export class OrderService implements  OnDestroy{
 
   private authenService = inject(AuthenticationService);
   
+  
 
   orders : Order[] = [] ;
 
@@ -27,6 +28,31 @@ export class OrderService implements  OnDestroy{
 
   private ordersBehaviorSubject$:Observable<Order[]> = this.ordersBehaviorSubject.asObservable();
 
+
+  
+
+  // Orders inputs
+
+  ordersInput : Order[] = [] ;
+
+  private ordersInputBehaviorSubject = new BehaviorSubject<Order[]>(this.ordersInput);
+
+  private ordersInputBehaviorSubject$:Observable<Order[]> = this.ordersBehaviorSubject.asObservable();
+
+  private subscriptionOrdersInput? : Subscription;
+
+  // Orders Outputs
+
+  ordersOutput : Order[] = [] ;
+
+  private ordersOutputBehaviorSubject = new BehaviorSubject<Order[]>(this.ordersOutput);
+
+  private ordersOutputBehaviorSubject$:Observable<Order[]> = this.ordersBehaviorSubject.asObservable();
+
+  private subscriptionOrdersOutput? : Subscription;
+
+  
+ 
   private subscriptionAuth? : Subscription;
   
   private currentUser? : IUserResponse;
@@ -35,16 +61,43 @@ export class OrderService implements  OnDestroy{
   ngOnDestroy(): void {
     if(this.subscriptionAuth)
       this.subscriptionAuth.unsubscribe();
+    if(this.subscriptionOrdersInput)
+      this.subscriptionOrdersInput.unsubscribe();
+    if(this.subscriptionOrdersOutput)
+      this.subscriptionOrdersOutput.unsubscribe();
   }
 
   constructor(){
-    this.subscriptionAuth! =
+              this.subscriptionAuth! =
                   this.authenService
                       .getUserObservable
                       .subscribe((oUser)=>{
                        this.currentUser! = oUser ;
+                });   
+  }
 
-                  });   
+ async ngOnInit() {
+
+     this.getInputOrders();
+     
+     this.getOutputOrders();
+           
+  }
+
+   getInputOrders = async()=>{
+
+    this.subscriptionOrdersInput = 
+                          await this.getOrdersBySeller(''+this.currentUser!.account_id)
+                                .subscribe((_orders)=> { this.setOrdersInputBehaviorSubject(_orders.list) } );
+      
+  }
+
+  getOutputOrders = async()=>{
+
+    this.subscriptionOrdersOutput = 
+                              await this.getOrdersByBuyer(''+this.currentUser!.account_id)
+                               .subscribe((_orders)=> { this.setOrdersOutputBehaviorSubject(_orders.list); })   
+
   }
   
   get getOrdersBehaviorSubject():Observable<Order[]>{
@@ -53,6 +106,32 @@ export class OrderService implements  OnDestroy{
   
   setOrdersBehaviorSubject(orders:Order[]){
     this.ordersBehaviorSubject.next(orders);
+  }
+
+  get getOrdersInputBehaviorSubject():Observable<Order[]>{
+    return this.ordersInputBehaviorSubject$;
+  }
+  
+  setOrdersInputBehaviorSubject(orders:Order[]){
+    this.ordersInputBehaviorSubject.next(orders);
+  }
+
+  get getOrdersOutputBehaviorSubject():Observable<Order[]>{
+    return this.ordersOutputBehaviorSubject$;
+  }
+  
+  setOrdersOutputBehaviorSubject(orders:Order[]){
+    this.ordersOutputBehaviorSubject.next(orders);
+  }
+
+  addOrderToOutput(order:Order){
+
+    this.subscriptionOrdersOutput = this.getOrdersOutputBehaviorSubject.subscribe((_orders)=>{
+        let ordersOutput = _orders ;
+        ordersOutput.push(order);
+        this.setOrdersOutputBehaviorSubject(ordersOutput);
+    });
+    
   }
 
   private  getCurrentOrder(accountId:number , seller:IAccountResponse) : number {
@@ -209,6 +288,7 @@ export class OrderService implements  OnDestroy{
           return this.http.get<MessageResponse>(`${URL}/get-order?orderId=${orderId}`)
         })
       );
+      
   }
 
 
@@ -224,7 +304,7 @@ export class OrderService implements  OnDestroy{
       );
   }
 
-  getOrdersByBuer(buyerId:string){
+  getOrdersByBuyer(buyerId:string){
 
     const URL = this.apiService.apiHost;
 

@@ -194,6 +194,12 @@
 	"order.updateReceive":"تم إستلام الطلب",
 	"order.updateRateSeller":"تقييم البائع",
 	"order.updateRateBuyer":"تقييم المشترى",
+	"order.pending_status":"الطلب قيد الأنتظار لموافقة البائع",
+	"order.cancel_status":"الطلب تم إلغائة من المشترى",
+	"order.rejected_status":"الطلب تم رفضه من البائع",
+	"order.accepted_status":"الطلب قيد التحضير",
+	"order.onroad_status":"الطلب على الطريق",
+	"order.receive_status":"الطلب تم إستلامة",
 
 
 

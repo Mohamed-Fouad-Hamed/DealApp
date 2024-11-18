@@ -15,6 +15,7 @@
 	"app_menu.offers":" Offers ",
 	"app_menu.list_groups":" Groups  ",
 	"app_menu.group_details":" Group Details",
+	"app_menu.product_list":" My Products List ",
 
 
 
@@ -201,8 +202,13 @@
 	"order.updateReceive":"Order Received",
 	"order.updateRateSeller":"Supplier Rating",
 	"order.updateRateBuyer":"Customer Rating",
+	"order.pending_status":"The order is pending",
+	"order.cancel_status":"The order was canceled",
+	"order.rejected_status":"The order was rejected",
+	"order.accepted_status":"The order was accepted",
+	"order.onroad_status":"The Order on the road",
+	"order.receive_status":"The order was received",
 
-	
 
 	"single_selection_searchbox.additem":" Add ",
 	"single_selection_searchbox.selectitem":" Selection  ",

@@ -15,7 +15,7 @@ import { OrderProcedures } from 'src/app/types/enums';
 })
 export class OrderOperatingComponent  implements OnInit {
 
-  @Input() OrderProcedure : OrderProcedures = OrderProcedures.Summary ;
+  @Input() orderProcedure : OrderProcedures = OrderProcedures.Summary ;
 
   @Input('order') order? : Order ;
 
@@ -28,6 +28,8 @@ export class OrderOperatingComponent  implements OnInit {
   @Output('deleteProductEmitter') deleteProductEmitter =  new EventEmitter<number>();
 
   @Output('updateProductEmitter') updateProductEmitter =  new EventEmitter<IOrderProduct>();
+
+  @Output('updateOrderEmitter') updateOrderEmitter =  new EventEmitter<OrderProcedures>();
 
   showDetails : boolean = false ;
 
@@ -42,5 +44,11 @@ export class OrderOperatingComponent  implements OnInit {
   quanChange(orderProduct:IOrderProduct){
     this.updateProductEmitter.emit(orderProduct);
   }
+
+  updateOrder(){
+    this.updateOrderEmitter.emit(this.orderProcedure);
+  }
+
+  
 
 }
