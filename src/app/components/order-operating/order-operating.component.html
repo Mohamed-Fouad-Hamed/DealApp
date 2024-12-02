@@ -11,15 +11,27 @@
 
       <ion-row class="ion-align-items-center">
         <ion-col size="3" class="ion-no-padding"> 
-            <img class="seller-logo" [alt]="order!.seller_name" [src]="order!.seller_image" />
+          @if(orderDirection! === 'in'){
+            <img class="seller-logo" [alt]="order!.buyer_name" [src]="order!.buyer_logo" />
+          }
+          @else{
+            <img class="seller-logo" [alt]="order!.seller_name" [src]="order!.seller_logo" />
+          }
+           
         </ion-col>
         <ion-col size="6" class="ion-no-padding"> 
           <ion-text class="ion-text-start ion-text-wrap" >
-            {{ order!.seller_name }} 
+            @if(orderDirection! === 'in'){
+              {{ order!.buyer_name }} 
+            }
+            @else{
+              {{ order!.seller_name }} 
+            }
+          
           </ion-text>
         </ion-col>
         <ion-col size="3">
-           
+           <h1> Header Showed</h1>
         </ion-col>
       </ion-row>
   
@@ -31,7 +43,12 @@
 
       <ion-row>
           <ion-col size="6" class="ion-no-padding"> 
-            <ion-toggle aria-label="Primary toggle" color="primary"  [(ngModel)]="showDetails"></ion-toggle>
+            <ion-toggle aria-label="Primary toggle" color="primary"  
+                       [(ngModel)]="showDetails"
+                       [checked]="showDetails"
+                       (ionChange)="showDetailsChanged($event)">
+              show details
+            </ion-toggle>
           </ion-col>
       </ion-row>
 
@@ -39,11 +56,8 @@
     }
     
     <ion-row class="ion-justify-content-between">
-      <ion-col size="4"> {{'order.total' | translate}} {{ order!.productsValue.toFixed(2) }} </ion-col>
-      <ion-col size="4" >  {{'order.cash_back' | translate}} {{ order!.cash_back.toFixed(2) }} </ion-col>
-      <ion-col offset="2" size="4" class="ion-no-padding"> 
-        <ion-button color="success" fill="outline" (click)="deleteProduct(idx)"> {{'order.deleteproduct' | translate}} </ion-button> 
-      </ion-col>
+      <ion-col size="4"> {{'order.total' | translate}} {{ orderTotalValue.toFixed(2) }} </ion-col>
+      <ion-col size="4" >  {{'order.cash_back' | translate}} {{ orderCashBack.toFixed(2) }} </ion-col>
     </ion-row>
 
     <hr/>
@@ -62,92 +76,319 @@
      
     <ion-grid>
 
-    @for(detail of order!.orderDetails;track detail.id; let idx = $index){
+    @for(detail of order!.orderDetails;track detail.id; let idx = $index ; let count = $count){
 
-      <ion-row class="ion-align-items-center">
+      <ion-row class="ion-align-items-center ion-no-padding ion-no-margin">
         <ion-col size="3"class="ion-no-padding"> 
           <img class="seller-logo" [alt]="detail.product_name" [src]="detail.product_image" />
         </ion-col>
-        <ion-col size="6" class="ion-no-padding">
+        <ion-col size="6" class="ion-no-padding ion-no-margin">
           <ion-text class="ion-text-wrap">
             {{detail.product_name}}
+            <br/>
+            {{detail.unit}}
           </ion-text> 
         </ion-col>
-        <ion-col size="3" class="ion-no-padding"> 
+        <ion-col size="3" class="ion-no-padding ion-no-margin"> 
           
-            @if(detail.has_offer){
+            @if(detail.o_quan > 0){
               <p><small><span>{{detail.o_quan}}</span> <span> {{'order.inoffer' | translate }} </span><span> {{detail.o_subTotal.toFixed(2)}}</span></small> </p>
             }
             @if(detail.quan > 0){
               <p><small><span>{{detail.quan}}</span><span> {{ 'order.outoffer' | translate }}</span><span> {{detail.subTotal.toFixed(2)}}</span></small></p>
             }
-            @if(detail.has_offer || detail.quan > 0){
+            @if(detail.o_quan > 0 || detail.quan > 0){
             <hr/>
             }
             <p>{{detail.totalValue.toFixed(2)}}</p>
         </ion-col>
       </ion-row>
-  
-      <ion-row class="ion-justify-content-between">
-        <ion-col offset="3" size="6" class="ion-no-padding"> {{detail.unit}} </ion-col>
-      </ion-row>
-  
-    @if(editableOption){
-      <ng-container 
-          *ngTemplateOutlet="orderDetailsEditableTemplate">
-      </ng-container>
-    }
 
-    <ng-template #orderDetailsEditableTemplate> 
+      @if( (count-1) > idx){
+        <hr style="margin: 0px;padding: 0px;"/>
+      }
+     
+      @if(editableOption){
+        <ng-container 
+            *ngTemplateOutlet="orderDetailsEditableTemplate" >
+        </ng-container>
+      }
 
-      <ion-row class="ion-align-items-center">
-        <ion-col offset="3" size="3" class="ion-no-padding"> 
-          <app-quantity-input [detail]="detail" (quantityChange)="quanChange($event)"></app-quantity-input>
-        </ion-col>
-        <ion-col offset="2" size="4" class="ion-no-padding"> 
-          <ion-button color="danger" fill="outline" (click)="deleteProduct(idx)"> {{'order.deleteproduct' | translate}} </ion-button> 
-        </ion-col>
-      </ion-row>
+      <ng-template #orderDetailsEditableTemplate> 
 
-      <ion-row class="ion-justify-content-between">
-
-        @if(detail.isValidMaxLimit){
-          <ion-col size="6" class="ion-no-padding">
-            <ion-chip color="danger">
-             <ion-icon name="close-circle" color="danger"></ion-icon>
-             <ion-label>  {{'order.quanmaximum' | translate}}  </ion-label>
-           </ion-chip>  
+        <ion-row class="ion-align-items-center">
+          <ion-col offset="3" size="3" class="ion-no-padding"> 
+            <app-quantity-input [detail]="detail" (quantityChange)="quanChange($event)"></app-quantity-input>
           </ion-col>
-        }
-        @else if(!detail.isValidMaxLimit){
-          <ion-col size="6" class="ion-no-padding">
-            <ion-chip color="success">
-              <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
-              <ion-label> {{'order.quanavailable' | translate}} </ion-label>
-            </ion-chip>
+          <ion-col offset="2" size="4" class="ion-no-padding"> 
+            <ion-button color="danger" fill="outline" (click)="deleteProduct(idx)"> {{'order.deleteproduct' | translate}} </ion-button> 
           </ion-col>
-        }
-        <ion-col size="4" class="ion-no-padding"> {{ detail.totalQuan }} <span>/</span> {{detail.max_limit}} </ion-col>
-      </ion-row>
+        </ion-row>
 
-      <hr/>
-    </ng-template>
+        <ion-row class="ion-justify-content-between">
 
-    }
-    @if( orderProcedure !== OrderProcedures.Summary ){
-      <ion-row>
-        <ion-col>
-              <ion-button color="success" fill="outline" (click)="updateOrder()" >
-                {{ orderProcedure | translate}} 
-              </ion-button>  
-        </ion-col>
-      </ion-row>
-    }
-    </ion-grid>
+          @if(detail.isValidMaxLimit){
+            <ion-col size="6" class="ion-no-padding">
+              <ion-chip color="danger">
+              <ion-icon name="close-circle" color="danger"></ion-icon>
+              <ion-label>  {{'order.quanmaximum' | translate}}  </ion-label>
+            </ion-chip>  
+            </ion-col>
+          }
+          @else if(!detail.isValidMaxLimit){
+            <ion-col size="6" class="ion-no-padding">
+              <ion-chip color="success">
+                <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                <ion-label> {{'order.quanavailable' | translate}} </ion-label>
+              </ion-chip>
+            </ion-col>
+          }
+          <ion-col size="4" class="ion-no-padding"> {{ detail.totalQuan }} <span>/</span> {{detail.max_limit}} </ion-col>
+        </ion-row>
 
-  </div>
+        
+
+      </ng-template>
+
+      }
+
+      </ion-grid>
+
+    </div>
 
 </ng-template>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" class="ion-no-padding"> 
+          <ion-toggle aria-label="Primary toggle" color="primary" 
+                    [(ngModel)]="showStatus" 
+                    [checked]="showStatus" 
+                    (ionChange)="orderStatusChanged($event)" 
+                    >
+            show status
+          </ion-toggle>
+        </ion-col>
+      </ion-row>
+
+      @if(showStatus){
+        <ng-container 
+              *ngTemplateOutlet="showStatusTemplate">
+        </ng-container>
+      }
+
+        <ng-template #showStatusTemplate> 
+          
+          @if( orderDirection! === 'in' ){
+            <ng-container 
+              *ngTemplateOutlet="ordersInTemplate">
+            </ng-container>
+          }
+
+          <ng-template #ordersInTemplate>
+  
+            @if(orderStatus === 'order.pending_status'){
+              <ng-container 
+                *ngTemplateOutlet="ordersInPendingStatusTemplate">
+              </ng-container>
+            }
+            <ng-template #ordersInPendingStatusTemplate>
+              <ion-row>
+                <ion-col>
+                  <ion-button color="success" fill="outline" (click)="updateOrder('order.updateCancel')" >
+                    {{ 'order.updateCancel' | translate}} 
+                  </ion-button> 
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+            @if(orderStatus === 'order.cancel_status'){
+              <ng-container 
+                *ngTemplateOutlet="ordersInCancelStatusTemplate">
+              </ng-container>
+            }
+            <ng-template #ordersInCancelStatusTemplate>
+              <ion-row>
+                <ion-col>
+                  <ion-chip color="danger">
+                    <ion-icon name="close-circle" color="danger"></ion-icon>
+                    <ion-label> {{'order.cancel_status' | translate}} </ion-label>
+                  </ion-chip>
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+            @if(orderStatus === 'order.rejected_status'){
+              <ng-container 
+                *ngTemplateOutlet="ordersInRejectedStatusTemplate">
+              </ng-container>
+            }
+            <ng-template #ordersInRejectedStatusTemplate>
+              <ion-row>
+                <ion-col>
+                  <ion-chip color="danger">
+                    <ion-icon name="close-circle" color="danger"></ion-icon>
+                    <ion-label> {{'order.rejected_status' | translate}} </ion-label>
+                  </ion-chip>
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+            @if(orderStatus === 'order.accepted_status'){
+              <ng-container 
+                *ngTemplateOutlet="ordersInAcceptedStatusTemplate">
+              </ng-container>
+            }
+
+            <ng-template #ordersInAcceptedStatusTemplate>
+              <ion-row>
+                <ion-col>
+                  <ion-chip color="success">
+                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                    <ion-label> {{'order.accepted_status' | translate}} </ion-label>
+                  </ion-chip>
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+            @if(orderStatus === 'order.onroad_status'){
+              <ng-container 
+                *ngTemplateOutlet="ordersInOnRoadStatusTemplate">
+              </ng-container>
+            }
+            
+            <ng-template #ordersInOnRoadStatusTemplate>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-chip color="success">
+                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                    <ion-label> {{'order.onroad_status' | translate}} </ion-label>
+                  </ion-chip>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-button color="success" fill="outline" (click)="updateOrder('order.updateReceive')" >
+                    {{ 'order.updateReceive' | translate}} 
+                  </ion-button>  
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+
+          </ng-template>
+
+
+
+          @if( orderDirection === 'out'){
+            <ng-container 
+              *ngTemplateOutlet="ordersOutTemplate">
+            </ng-container>
+          }
+
+          <ng-template #ordersOutTemplate>
+
+            @if(orderStatus === 'order.pending_status'){
+              <ng-container 
+                *ngTemplateOutlet="ordersOutPendingStatusTemplate">
+              </ng-container>
+            }
+            <ng-template #ordersOutPendingStatusTemplate>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-chip color="success">
+                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                    <ion-label> {{'order.pending_status' | translate}} </ion-label>
+                  </ion-chip>
+                </ion-col>  
+                <ion-col size="3">
+                  <ion-button color="success" fill="outline" (click)="updateOrder('order.updateAccepted')" >
+                    {{ 'order.updateAccepted' | translate}} 
+                  </ion-button>  
+                </ion-col>
+                <ion-col size="3">
+                  <ion-button color="danger" fill="outline" (click)="updateOrder('order.updateReject')" >
+                    {{ 'order.updateReject' | translate}} 
+                  </ion-button>  
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+            @if(orderStatus === 'order.cancel_status'){
+              <ng-container 
+                *ngTemplateOutlet="ordersInCancelStatusTemplate">
+              </ng-container>
+            }
+            <ng-template #ordersInCancelStatusTemplate>
+              <ion-row>
+                <ion-col>
+                  <ion-chip color="danger">
+                    <ion-icon name="close-circle" color="danger"></ion-icon>
+                    <ion-label> {{'order.cancel_status' | translate}} </ion-label>
+                  </ion-chip>
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+            @if(orderStatus === 'order.rejected_status'){
+              <ng-container 
+                *ngTemplateOutlet="ordersOutRejectedStatusTemplate">
+              </ng-container>
+            }
+            <ng-template #ordersOutRejectedStatusTemplate>
+              <ion-row>
+                <ion-col >
+                  <ion-chip color="danger">
+                    <ion-icon name="close-circle" color="danger"></ion-icon>
+                    <ion-label> {{'order.rejected_status' | translate}} </ion-label>
+                  </ion-chip> 
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+            @if( orderStatus === 'order.accepted_status' ){
+              <ng-container 
+                *ngTemplateOutlet="ordersOutAcceptedStatusTemplate">
+              </ng-container>
+            }
+            <ng-template #ordersOutAcceptedStatusTemplate>
+              <ion-row>
+                <ion-col size="6" >
+                  <ion-chip color="success">
+                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                    <ion-label> {{'order.accepted_status' | translate}} </ion-label>
+                  </ion-chip>
+                </ion-col>  
+                <ion-col size="6">
+                  <ion-button color="success" fill="outline" (click)="updateOrder('order.updateOnRoad')" >
+                    {{ 'order.updateOnRoad' | translate}} 
+                  </ion-button>  
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+            @if( orderStatus === 'order.onroad_status' ){
+              <ng-container 
+                *ngTemplateOutlet="ordersOutOnRoadStatusTemplate">
+              </ng-container>
+            }
+            <ng-template #ordersOutOnRoadStatusTemplate>
+              <ion-row>
+                <ion-col >
+                  <ion-chip color="success">
+                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                    <ion-label> {{'order.onroad_status' | translate}} </ion-label>
+                  </ion-chip>
+                </ion-col>
+              </ion-row>   
+            </ng-template>
+
+          </ng-template>
+
+        </ng-template>
+    
+      </ion-grid>
+
+    
+
 
 
 </div>

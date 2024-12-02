@@ -15,6 +15,8 @@
 	"app_menu.offers":" العروض ",
 	"app_menu.list_groups":" قائمة المجموعات ",
 	"app_menu.group_details":" تفاصيل المجموعه ",
+	"app_menu.orders_incoming":" الطلبات الواردة ",
+	"app_menu.orders_outcoming":" الطلبات الصادرة ",
 
 	"lang.english":"إنجليزى",
 	"lang.arabic":"عربى",

@@ -90,6 +90,15 @@ export const routes: Routes = [
         }
         ,
         {
+          path: 'orders-incoming/:accountId',
+          loadComponent: () => import('../pages/incoming-orders/incoming-orders.page').then( m => m.IncomingOrdersPage)
+        },
+        {
+          path: 'orders-outcoming/:accountId',
+          loadComponent: () => import('../pages/outgoing-orders/outgoing-orders.page').then( m => m.OutgoingOrdersPage)
+        }
+        ,
+        {
           path: '',
           redirectTo: '/login',
           pathMatch: 'full',

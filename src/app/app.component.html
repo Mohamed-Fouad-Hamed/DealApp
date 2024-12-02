@@ -55,10 +55,18 @@
             </ion-label>
           </ion-item>
 
-          <ion-item detail="false"  (click)="navigateToUrl(offerListUrl!)">
+          <ion-item detail="false"  (click)="navigateToUrl(ordersIncoming!)">
             <ion-label>
               <ion-text color="primary">
-                Offer List
+                {{ 'app_menu.orders_outcoming' | translate }}
+              </ion-text>
+            </ion-label>
+          </ion-item>
+
+          <ion-item detail="false"  (click)="navigateToUrl(ordersOutcoming!)">
+            <ion-label>
+              <ion-text color="primary">
+                {{ 'app_menu.orders_incoming' | translate }}
               </ion-text>
             </ion-label>
           </ion-item>

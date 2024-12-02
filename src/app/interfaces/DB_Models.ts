@@ -219,10 +219,11 @@ export class Order  {
     id: number = 0;
     seller_id : number= 0;
     seller_name : string = '';
-    seller_image : string = '';
+    seller_logo : string = '';
     currency : string ='';
     buyer_id : number= 0;
     buyer_name : string = '';
+    buyer_logo : string = '';
     ord_date : string =  format( new Date() ,'yyyy-MM-dd') + 'T' + format( new Date() ,'HH:mm:ss');
     min_value: number = 0;
     min_quan : number =  0;
@@ -268,12 +269,15 @@ export class Order  {
         return this.orderDetails.length;
     }
 
-    get productsValue():number {
-     this.total =   this.orderDetails
-                        .map((current)=>{ return current.subTotal + current.o_subTotal ;})
-                        .reduce((accumulator, current) => accumulator + current ,0);  
+    productsValue() : number {
+     this.total = this.orderDetails
+                        .map((current)=>{
+                            return current.subTotal + current.o_subTotal ;
+                        }).reduce((accumulator, current) => accumulator + current ,0);  
      return this.total ;
     }
+
+        
 
     get isValidQuan():boolean{
         let result = false;
@@ -286,15 +290,15 @@ export class Order  {
     }
 
     get isValidValue():boolean{
-        return this.productsValue >= this.min_value ;
+        return this.productsValue() >= this.min_value ;
     }
 
     get ValidValueInfo():string{
-        return `${this.min_value.toFixed(2) + '\/' + this.productsValue.toFixed(2)}` 
+        return `${this.min_value.toFixed(2) + '\/' + this.productsValue().toFixed(2)}` 
     }
 
     get progressTotalValue() : number{
-        return Number.parseFloat((this.productsValue/this.min_value).toFixed(2));
+        return Number.parseFloat((this.productsValue()/this.min_value).toFixed(2));
     }
 
     get notValidQuan():number {
@@ -303,7 +307,7 @@ export class Order  {
     }
 
     get notValidValue():number {
-        const result = this.min_value - this.productsValue ;
+        const result = this.min_value - this.productsValue() ;
         return result <= 0 ? 0 : result ;  
     }
 
@@ -412,6 +416,11 @@ export interface IOrderOptionReq{
     valueChanged:boolean;
   }
 
+  export interface IOrderStatusReq extends IOrderOptionReq{
+    orderIndex:number;
+    status:string;
+  }
+
   export interface IOrderRateReq{
     orderId:number;
     rate:number;
@@ -421,6 +430,65 @@ export interface IOrderOptionReq{
     orderId : number ;
     paymentId : number ;
     payment : number ;
+ }
+
+ export function entityToOrder(_order:any){
+
+    const _ord = new Order();
+     
+    _ord.id = _order.id;
+    _ord.seller_id = _order.seller_id ;
+    _ord.seller_name = _order.seller ;
+    _ord.seller_logo = _order.seller_logo;
+    _ord.currency = _order.currency;
+    _ord.buyer_id = _order.buyer_id;
+    _ord.buyer_name = _order.buyer_name;
+    _ord.buyer_logo = _order.buyer_logo;
+    _ord.ord_date = _order.ord_date;
+    _ord.min_value = _order.min_value;
+    _ord.min_quan = _order.min_quan;
+    _ord.delivery_period = _order.delivery_period;
+    _ord.cash_back = _order.cash_back;
+    _ord.is_valid = _order.is_valid;
+    _ord.payment_id = _order.payment_id;
+    _ord.pending = _order.pending;
+    _ord.cancel = _order.cancel;
+    _ord.accept = _order.accept;
+    _ord.reject = _order.reject;
+    _ord.on_road = _order.on_road;
+    _ord.receive = _order.receive;
+    _ord.start_at = _order.start_at;
+    _ord.end_at = _order.end_at ;
+    _ord.payment = _order.payment;
+    _ord.remainder = _order.remainder;
+    _ord.rate_seller = _order.rate_seller;
+    _ord.rate_buyer = _order.rate_buyer;
+    _ord.orderDetails = _order.orderDetailsList.map((_detail:any)=>{
+
+      const orderDetails = new OrderDetails();
+      orderDetails.id = _detail.id ;
+      orderDetails.ord_id = _detail.ord_id ;
+      orderDetails.product_id = _detail.product_id ;
+      orderDetails.product_name = _detail.product_name ;
+      orderDetails.product_image = _detail.product_image ;
+      orderDetails.unit = _detail.unit ;
+      orderDetails.percent_discount = _detail.percent_discount ;
+      orderDetails.max_quan = _detail.max_quan ;
+      orderDetails.max_limit = _detail.max_limit ;
+      orderDetails.quan = _detail.quan ;
+      orderDetails.price = _detail.price ;
+      orderDetails.o_quan = _detail.o_quan ;
+      orderDetails.o_price = _detail.o_price ;
+
+      orderDetails.calcDetail();
+
+      return orderDetails;
+
+    }) ;
+
+    _ord.total = _order.total;
+     
+    return _ord;
  }
 
  export function fromOrderToOrderReq(order:Order){

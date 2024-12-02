@@ -144,7 +144,7 @@ export class OrderService implements OnInit, OnDestroy{
     const _ord = new Order();
     _ord.seller_id = seller.id ;
     _ord.seller_name = seller.account_name ;
-    _ord.seller_image = this.apiService.getResourcePath(seller.account_logo);
+    _ord.seller_logo = this.apiService.getResourcePath(seller.account_logo);
     _ord.buyer_id =  this.currentUser!.account_id ;
     _ord.buyer_name = this.currentUser!.account_name ;
     _ord.currency = seller.currency!;
@@ -311,7 +311,7 @@ export class OrderService implements OnInit, OnDestroy{
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<MessageResponse>(`${URL}/get-orders-by-buyer?sellerId=${buyerId}`)
+          return this.http.get<MessageResponse>(`${URL}/get-orders-by-buyer?buyerId=${buyerId}`)
         })
       );
   }

@@ -4,7 +4,7 @@
 
     <ion-row class="ion-align-items-center">
       <ion-col size="3" class="ion-no-padding"> 
-          <img class="seller-logo" [alt]="order!.seller_name" [src]="order!.seller_image" />
+          <img class="seller-logo" [alt]="order!.seller_name" [src]="order!.seller_logo" />
       </ion-col>
       <ion-col size="5" class="ion-no-padding"> 
         <ion-text class="ion-text-start ion-text-wrap" >
@@ -30,7 +30,7 @@
     <hr/>
 
     <ion-row class="ion-justify-content-between">
-      <ion-col size="7"> {{'order.total' | translate}} {{ order!.productsValue.toFixed(2) }} </ion-col>
+      <ion-col size="7"> {{'order.total' | translate}} {{ order!.productsValue().toFixed(2) }} </ion-col>
       <ion-col size="5" >  {{'order.cash_back' | translate}} {{ order!.cash_back.toFixed(2) }} </ion-col>
     </ion-row>
 

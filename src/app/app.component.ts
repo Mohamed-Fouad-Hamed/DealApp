@@ -31,6 +31,7 @@ import { AccordionComponent } from '../app/components/accordion/accordion.compon
 import { AuthenticationService } from './services/Auth-services/authentication.service';
 import { IUserResponse } from './services/interfaces/Auth-Interfaces';
 import { Subscription } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 register();
 
@@ -38,7 +39,7 @@ register();
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [IonicModule, IonRouterOutlet,AccordionComponent],
+  imports: [IonicModule, IonRouterOutlet,AccordionComponent,TranslateModule],
 })
 export class AppComponent implements OnInit , OnDestroy{
 
@@ -58,6 +59,8 @@ export class AppComponent implements OnInit , OnDestroy{
   currentAccountUrl? : string ;
   productListUrl? : string ;
   offerListUrl? : string ;
+  ordersIncoming?: string ;
+  ordersOutcoming?: string ;
 
   subscriptionAuth! : Subscription; 
 
@@ -131,6 +134,8 @@ export class AppComponent implements OnInit , OnDestroy{
        this.currentAccountUrl! = `${'home\/account-profile\/'+this.user.account_id}`;
        this.productListUrl! =`${'home\/account-product-list\/'+this.user.account_id}`;
        this.offerListUrl! =`${'home\/account-offer\/'+this.user.account_id}`;
+       this.ordersIncoming! = `${'home\/orders-incoming\/'+this.user.account_id}`;
+       this.ordersOutcoming! = `${'home\/orders-outcoming\/'+this.user.account_id}`;
        }
     );
      console.log(" initi APP ...")

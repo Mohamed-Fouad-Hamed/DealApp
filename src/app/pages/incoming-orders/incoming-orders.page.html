@@ -1,11 +1,29 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>incoming-orders</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title  class="ion-text-center">{{ 'app_menu.orders_outcoming' | translate }}</ion-title>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
    <div class="incoming-orders-container">
-      
+    @for(order of ordersIn ;track order.id; let idx = $index){
+      <app-order-operating 
+        [order]="order"
+        [orderDirection]="'in'"
+        [orderIdx]="idx"
+        [showHeader]="true"
+        [showDetailsOption]="true"
+        (fetchOrderEmitter)="fetchOrder(idx)"
+        (updateOrderEmitter)="updateOrder($event)"
+      />
+
+    }  
    </div>
 </ion-content>
