@@ -10,9 +10,15 @@
 	"app.select_all":" All ",
 
 	"app_menu.main":" Main ",
+	"app_menu.main_list":" Main menu ",
+	"app_menu.account_profile":" Account profile ",
+	"app_menu.group_menu":" Groups ",
+	"app_menu.category_menu":" Gategories ",
+	"app_menu.product_menu":" Products ",
 	"app_menu.shopping_cart":" Cart ",
 	"app_menu.suppliers":" Suppliers ",
 	"app_menu.offers":" Offers ",
+	"app_menu.offer_list":" My Offers List ",
 	"app_menu.list_groups":" Groups  ",
 	"app_menu.group_details":" Group Details",
 	"app_menu.product_list":" My Products List ",
@@ -210,6 +216,8 @@
 	"order.accepted_status":"The order was accepted",
 	"order.onroad_status":"The Order on the road",
 	"order.receive_status":"The order was received",
+	"order.show_details":"Show details",
+	"order.show_status":"Show status",
 
 
 	"single_selection_searchbox.additem":" Add ",

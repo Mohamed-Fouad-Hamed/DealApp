@@ -3,6 +3,7 @@ import { IonRouterOutlet } from '@ionic/angular/standalone';
 import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
 import { 
+  create,
   homeOutline,
   cartOutline,
   cashOutline,
@@ -57,6 +58,9 @@ export class AppComponent implements OnInit , OnDestroy{
   authenticate:boolean=false;
 
   currentAccountUrl? : string ;
+  groupSetUrl? : string ;
+  categorySetUrl? : string ;
+  productSetUrl? : string ;
   productListUrl? : string ;
   offerListUrl? : string ;
   ordersIncoming?: string ;
@@ -88,6 +92,7 @@ export class AppComponent implements OnInit , OnDestroy{
   constructor() {
 
     addIcons({
+      create,
       homeOutline,
       cartOutline,
       cashOutline,
@@ -136,6 +141,9 @@ export class AppComponent implements OnInit , OnDestroy{
        this.offerListUrl! =`${'home\/account-offer\/'+this.user.account_id}`;
        this.ordersIncoming! = `${'home\/orders-incoming\/'+this.user.account_id}`;
        this.ordersOutcoming! = `${'home\/orders-outcoming\/'+this.user.account_id}`;
+       this.groupSetUrl! =  `${'group'}`;
+       this.productSetUrl! =  `${'product'}`;
+       this.categorySetUrl! =  `${'category'}`;
        }
     );
      console.log(" initi APP ...")

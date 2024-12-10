@@ -9,11 +9,19 @@
 	"app.show_more":" عرض المزيد ... ",
 	"app.select_all":" الكل ",
 
+
 	"app_menu.main":"الرئيسية",
+	"app_menu.main_list":" القائمة الرئيسية ",
+	"app_menu.account_profile":" الملف الشخصى ",
+	"app_menu.group_menu":" إعداد المجموعات ",
+	"app_menu.category_menu":" إعداد الفئات ",
+	"app_menu.product_menu":" إعداد المنتجات ",
 	"app_menu.shopping_cart":" العربه",
 	"app_menu.suppliers":" الموردين ",
 	"app_menu.offers":" العروض ",
+	"app_menu.offer_list":" قائمة العروض ",
 	"app_menu.list_groups":" قائمة المجموعات ",
+	"app_menu.product_list":" قائمة منتجاتى ",
 	"app_menu.group_details":" تفاصيل المجموعه ",
 	"app_menu.orders_incoming":" الطلبات الواردة ",
 	"app_menu.orders_outcoming":" الطلبات الصادرة ",
@@ -202,6 +210,8 @@
 	"order.accepted_status":"الطلب قيد التحضير",
 	"order.onroad_status":"الطلب على الطريق",
 	"order.receive_status":"الطلب تم إستلامة",
+	"order.show_details":" عرض التفاصيل",
+	"order.show_status":" عرض حالة الطلب",
 
 
 

@@ -195,6 +195,18 @@ getPageableProductsByCategoryId(categoryId:string,pageNumber:number,pageSize:num
     );
 }
 
+getPageableProductsByNameLikePageable(name:string,pageNumber:number,pageSize:number){
+
+  const URL = this.API.apiHost;
+
+  return timer(300)
+    .pipe(
+      switchMap(() => {
+        return this.http.get<MessageResponse>(`${URL}/get-products-like-name-pageable?name=${name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+      })
+    ); 
+}
+
   uploadProduct(product:IProductRequest):Observable<MessageResponse>{
       
       const URL = this.API.apiHost;

@@ -64,7 +64,7 @@ constructor(
         this.product.first_price = this.AccountProduct.first_price!;
         this.product.has_second = this.AccountProduct.has_second!;
         this.product.second_price = this.AccountProduct.second_price!;
-        this.imageUrl = `${this.apiService.apiHost}${this.AccountProduct.product_image}`;
+        this.imageUrl = `${this.AccountProduct.product_image}`;
      }
    
   }

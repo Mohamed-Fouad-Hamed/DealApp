@@ -1,17 +1,19 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IonicModule ,IonInput } from '@ionic/angular';
-
+import { InfiniteScrollCustomEvent } from '@ionic/core/components';
 import { APIService } from 'src/app/services/API/api.service';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core'; 
 import { Item } from 'src/app/types/types';
+//scrolling
+import { ScrollingModule} from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-multi-selection-search',
   templateUrl: './multi-selection-search.component.html',
   styleUrls: ['./multi-selection-search.component.scss'],
   standalone:true,
-  imports: [IonicModule, CommonModule,TranslateModule]
+  imports: [IonicModule, CommonModule,TranslateModule,ScrollingModule]
 })
 export class MultiSelectionSearchComponent  implements OnInit,AfterViewInit {
 
@@ -22,6 +24,7 @@ export class MultiSelectionSearchComponent  implements OnInit,AfterViewInit {
   @Output() selectionCancel = new EventEmitter<void>();
   @Output() selectionChange = new EventEmitter<string[]>();
   @Output() searchEmit = new EventEmitter<string>();
+  @Output() infiniteScrollEmit = new EventEmitter<any>();
 
   @ViewChild('inputSearch') input!: IonInput;
 
@@ -30,6 +33,8 @@ export class MultiSelectionSearchComponent  implements OnInit,AfterViewInit {
   apiServer:string = '';
 
   msg:string = 'accountproduct.addnotallow' ;
+
+  searchValue : string = '' ;
 
   constructor(private api:APIService){}
 
@@ -58,7 +63,8 @@ export class MultiSelectionSearchComponent  implements OnInit,AfterViewInit {
   }
 
   searchbarInput(ev:any) {
-    this.searchEmit.emit(ev.target.value);
+    this.searchValue = ev.target.value ;
+    this.searchEmit.emit(this.searchValue);
   }
 
  
@@ -75,5 +81,15 @@ export class MultiSelectionSearchComponent  implements OnInit,AfterViewInit {
     } else {
       this.workingSelectedValues = this.workingSelectedValues.filter((item) => item !== value);
     }
+  }
+
+  onIonInfinite(ev:any) {
+    
+     if(this.searchValue === ''){
+      (ev as InfiniteScrollCustomEvent).target.complete();
+      return;
+     }
+        
+     this.infiniteScrollEmit.emit(ev);
   }
 }

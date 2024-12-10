@@ -17,28 +17,41 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="light" class="ion-padding">
-  <ion-list id="modal-list" [inset]="true">
-    <ion-item *ngFor="let item of items; trackBy: trackItems" >
-      <ion-avatar slot="start">
-        <img [src]="apiServer + item?.icon" />
-      </ion-avatar>
-     
-                
-      @if(item?.exists){
-        <span>
-            {{ item.text }}
-        </span>
-        <ion-text color="danger"><small> --- </small><small>{{ msg | translate}}</small></ion-text>
-      }
-      @else{
-          <ion-checkbox
-            [value]="item.value" 
-            [checked]="isChecked(item.value)" 
-            (ionChange)="checkboxChange($event)">
-              {{ item.text }} 
-          </ion-checkbox>
-    }
-    </ion-item>
-  </ion-list>
+<ion-content color="light" class="ion-padding" [scrollY]="false">
+
+  @if (items && items.length > 0) {
+    <ng-container [ngTemplateOutlet]="searchItemsList"></ng-container>
+  }
+
+  <ng-template #searchItemsList>
+
+      <cdk-virtual-scroll-viewport itemSize="150" class="ion-content-scroll-host">
+        <ion-list id="modal-list" [inset]="true">
+          <ion-item *ngFor="let item of items; trackBy: trackItems" >
+            <ion-avatar slot="start">
+              <img [src]="item?.icon" />
+            </ion-avatar>
+          
+                      
+            @if(item?.exists){
+              <span>
+                  {{ item.text }}
+              </span>
+              <ion-text color="danger"><small> --- </small><small>{{ msg | translate}}</small></ion-text>
+            }
+            @else{
+                <ion-checkbox
+                  [value]="item.value" 
+                  [checked]="isChecked(item.value)" 
+                  (ionChange)="checkboxChange($event)">
+                    {{ item.text }} 
+                </ion-checkbox>
+          }
+          </ion-item>
+        </ion-list>
+        <ion-infinite-scroll  (ionInfinite)="onIonInfinite($event)" threshold="100px">
+          <ion-infinite-scroll-content loadingText="{{'app.show_more' | translate}}" loadingSpinner="lines-sharp"></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </cdk-virtual-scroll-viewport>
+  </ng-template>
 </ion-content>

@@ -22,6 +22,7 @@ import { errorInterceptor } from './app/services/Auth-functions/ErrorInterceptor
 
 
 
+
 export function HttpLoaderFactory(httpHandler: HttpBackend) {
   return new TranslateHttpLoader(new HttpClient(httpHandler),'./assets/i18n/','.json');
 }

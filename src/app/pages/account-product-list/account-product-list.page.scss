@@ -2,7 +2,85 @@
     align-items: center;
     justify-items: center;
 }
+
 .center-product-label{
     border: 1px solid black;
     margin: 0 auto;
+}
+
+
+
+#pointer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 30px;
+    width: calc(100% - 40px);
+    height: 40px;
+    position: relative;
+    background: red;
+  }
+  #pointer:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+
+    border-left: 20px solid rgb(21, 90, 239);
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+   
+  }
+
+  #pointer:before {
+    content: "";
+    position: absolute;
+    right: -20px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+  
+    border-left: 20px solid white;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+  }
+
+.container-button-add{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: calc(100% - 20px);
+    height: 45px;
+    margin: 10px;
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 5px;
+}
+
+.text-des-add{
+    height:30px;
+    width: calc(100% - 90px);
+    font-weight: 900;
+    font-size: 12px;
+    margin: auto 3px ;
+    text-align: center;
+   // border: 1px solid var(--ion-color-primary);
+}
+
+.button-add{
+     margin: 3px;
+     height:30px;
+     width: 75px;
+     max-width: 80px;
+     min-width: 55px;
+}
+
+cdk-virtual-scroll-viewport {
+  height: 100%;
+  width: 100%;
 }

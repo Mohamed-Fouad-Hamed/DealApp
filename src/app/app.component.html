@@ -7,34 +7,34 @@
         <ion-menu-toggle auto-hide="false">
           <ion-item detail="false">
             <h1>
-              Main Menu
+              {{'app_menu.main_list' | translate}}
             </h1>
           </ion-item>
           <ion-item detail="false" (click)="navigateToUrl(currentAccountUrl!)">
             <ion-label>
               <ion-text color="primary">
-                Account Profile
+                {{'app_menu.account_profile' | translate}}
               </ion-text>
             </ion-label>
           </ion-item>
-          <ion-item detail="false" >
+          <ion-item detail="false" (click)="navigateToUrl(groupSetUrl!)">
             <ion-label>
               <ion-text color="primary">
-                Group
+                {{'app_menu.group_menu' | translate}}
               </ion-text>
             </ion-label>
           </ion-item>
-          <ion-item detail="false"  >
+          <ion-item detail="false"   (click)="navigateToUrl(categorySetUrl!)">
             <ion-label>
               <ion-text color="primary">
-                Category
+                {{'app_menu.category_menu' | translate}}
               </ion-text>
             </ion-label>
           </ion-item>
-          <ion-item detail="false" >
+          <ion-item detail="false"  (click)="navigateToUrl(productSetUrl!)">
             <ion-label>
               <ion-text color="primary">
-                Product
+                {{'app_menu.product_menu' | translate}}
               </ion-text>
             </ion-label>
           </ion-item>
@@ -42,7 +42,7 @@
           <ion-item detail="false" (click)="navigateToUrl(productListUrl!)">
             <ion-label>
               <ion-text color="primary">
-                Product List
+               {{'app_menu.product_list' | translate}}
               </ion-text>
             </ion-label>
           </ion-item>
@@ -50,7 +50,7 @@
           <ion-item detail="false"  (click)="navigateToUrl(offerListUrl!)">
             <ion-label>
               <ion-text color="primary">
-                Offer List
+                {{'app_menu.offer_list' | translate}}
               </ion-text>
             </ion-label>
           </ion-item>

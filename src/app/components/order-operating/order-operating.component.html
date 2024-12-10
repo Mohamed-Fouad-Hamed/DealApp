@@ -47,7 +47,7 @@
                        [(ngModel)]="showDetails"
                        [checked]="showDetails"
                        (ionChange)="showDetailsChanged($event)">
-              show details
+              {{'order.show_details' | translate}}
             </ion-toggle>
           </ion-col>
       </ion-row>
@@ -83,11 +83,14 @@
           <img class="seller-logo" [alt]="detail.product_name" [src]="detail.product_image" />
         </ion-col>
         <ion-col size="6" class="ion-no-padding ion-no-margin">
-          <ion-text class="ion-text-wrap">
-            {{detail.product_name}}
+          <div class="ion-text-center">
+            <ion-text >
+              {{detail.product_name}}
+            </ion-text> 
             <br/>
-            {{detail.unit}}
-          </ion-text> 
+            <br/>
+            <ion-text  dir="ltr">{{detail.unit}}</ion-text>
+          </div>  
         </ion-col>
         <ion-col size="3" class="ion-no-padding ion-no-margin"> 
           
@@ -166,7 +169,7 @@
                     [checked]="showStatus" 
                     (ionChange)="orderStatusChanged($event)" 
                     >
-            show status
+                    {{'order.show_status' | translate}}
           </ion-toggle>
         </ion-col>
       </ion-row>
@@ -195,9 +198,11 @@
             <ng-template #ordersInPendingStatusTemplate>
               <ion-row>
                 <ion-col>
-                  <ion-button color="success" fill="outline" (click)="updateOrder('order.updateCancel')" >
-                    {{ 'order.updateCancel' | translate}} 
-                  </ion-button> 
+                  <div class="ion-text-center">
+                    <ion-button color="success" fill="outline" (click)="updateOrder('order.updateCancel')" >
+                      {{ 'order.updateCancel' | translate}} 
+                    </ion-button> 
+                  </div>
                 </ion-col>
               </ion-row>   
             </ng-template>
@@ -210,10 +215,12 @@
             <ng-template #ordersInCancelStatusTemplate>
               <ion-row>
                 <ion-col>
-                  <ion-chip color="danger">
-                    <ion-icon name="close-circle" color="danger"></ion-icon>
-                    <ion-label> {{'order.cancel_status' | translate}} </ion-label>
-                  </ion-chip>
+                  <div class="ion-text-center">
+                    <ion-chip color="danger">
+                      <ion-icon name="close-circle" color="danger"></ion-icon>
+                      <ion-label> {{'order.cancel_status' | translate}} </ion-label>
+                    </ion-chip>
+                  </div>  
                 </ion-col>
               </ion-row>   
             </ng-template>
@@ -226,10 +233,12 @@
             <ng-template #ordersInRejectedStatusTemplate>
               <ion-row>
                 <ion-col>
-                  <ion-chip color="danger">
-                    <ion-icon name="close-circle" color="danger"></ion-icon>
-                    <ion-label> {{'order.rejected_status' | translate}} </ion-label>
-                  </ion-chip>
+                  <div class="ion-text-center">
+                    <ion-chip color="danger">
+                      <ion-icon name="close-circle" color="danger"></ion-icon>
+                      <ion-label> {{'order.rejected_status' | translate}} </ion-label>
+                    </ion-chip>
+                  </div>  
                 </ion-col>
               </ion-row>   
             </ng-template>
@@ -243,10 +252,12 @@
             <ng-template #ordersInAcceptedStatusTemplate>
               <ion-row>
                 <ion-col>
-                  <ion-chip color="success">
-                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
-                    <ion-label> {{'order.accepted_status' | translate}} </ion-label>
-                  </ion-chip>
+                  <div class="ion-text-center">
+                    <ion-chip color="success">
+                      <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                      <ion-label> {{'order.accepted_status' | translate}} </ion-label>
+                    </ion-chip>
+                  </div>  
                 </ion-col>
               </ion-row>   
             </ng-template>
@@ -260,15 +271,19 @@
             <ng-template #ordersInOnRoadStatusTemplate>
               <ion-row>
                 <ion-col size="6">
-                  <ion-chip color="success">
-                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
-                    <ion-label> {{'order.onroad_status' | translate}} </ion-label>
-                  </ion-chip>
+                  <div class="ion-text-center">
+                    <ion-chip color="success">
+                      <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                      <ion-label> {{'order.onroad_status' | translate}} </ion-label>
+                    </ion-chip>
+                  </div>  
                 </ion-col>
                 <ion-col size="6">
-                  <ion-button color="success" fill="outline" (click)="updateOrder('order.updateReceive')" >
-                    {{ 'order.updateReceive' | translate}} 
-                  </ion-button>  
+                  <div class="ion-text-center">
+                    <ion-button color="success" fill="outline" (click)="updateOrder('order.updateReceive')" >
+                      {{ 'order.updateReceive' | translate}} 
+                    </ion-button>  
+                  </div>  
                 </ion-col>
               </ion-row>   
             </ng-template>
@@ -291,23 +306,30 @@
                 *ngTemplateOutlet="ordersOutPendingStatusTemplate">
               </ng-container>
             }
+
             <ng-template #ordersOutPendingStatusTemplate>
               <ion-row>
                 <ion-col size="6">
-                  <ion-chip color="success">
-                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
-                    <ion-label> {{'order.pending_status' | translate}} </ion-label>
-                  </ion-chip>
+                  <div class="ion-text-center">
+                    <ion-chip color="success">
+                      <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                      <ion-label> {{'order.pending_status' | translate}} </ion-label>
+                    </ion-chip>
+                  </div>  
                 </ion-col>  
                 <ion-col size="3">
-                  <ion-button color="success" fill="outline" (click)="updateOrder('order.updateAccepted')" >
-                    {{ 'order.updateAccepted' | translate}} 
-                  </ion-button>  
+                  <div class="ion-text-center">
+                    <ion-button color="success" fill="outline" (click)="updateOrder('order.updateAccepted')" >
+                      {{ 'order.updateAccepted' | translate}} 
+                    </ion-button>
+                  </div>    
                 </ion-col>
                 <ion-col size="3">
-                  <ion-button color="danger" fill="outline" (click)="updateOrder('order.updateReject')" >
-                    {{ 'order.updateReject' | translate}} 
-                  </ion-button>  
+                  <div class="ion-text-center">
+                    <ion-button color="danger" fill="outline" (click)="updateOrder('order.updateReject')" >
+                      {{ 'order.updateReject' | translate}} 
+                    </ion-button> 
+                  </div>   
                 </ion-col>
               </ion-row>   
             </ng-template>
@@ -319,12 +341,14 @@
             }
             <ng-template #ordersInCancelStatusTemplate>
               <ion-row>
-                <ion-col>
-                  <ion-chip color="danger">
-                    <ion-icon name="close-circle" color="danger"></ion-icon>
-                    <ion-label> {{'order.cancel_status' | translate}} </ion-label>
-                  </ion-chip>
-                </ion-col>
+                <div class="ion-text-center">
+                  <ion-col>
+                    <ion-chip color="danger">
+                      <ion-icon name="close-circle" color="danger"></ion-icon>
+                      <ion-label> {{'order.cancel_status' | translate}} </ion-label>
+                    </ion-chip>
+                  </ion-col>
+                </div>  
               </ion-row>   
             </ng-template>
 
@@ -335,12 +359,14 @@
             }
             <ng-template #ordersOutRejectedStatusTemplate>
               <ion-row>
-                <ion-col >
-                  <ion-chip color="danger">
-                    <ion-icon name="close-circle" color="danger"></ion-icon>
-                    <ion-label> {{'order.rejected_status' | translate}} </ion-label>
-                  </ion-chip> 
-                </ion-col>
+                <div class="ion-text-center">
+                  <ion-col >
+                    <ion-chip color="danger">
+                      <ion-icon name="close-circle" color="danger"></ion-icon>
+                      <ion-label> {{'order.rejected_status' | translate}} </ion-label>
+                    </ion-chip> 
+                  </ion-col>
+                </div>   
               </ion-row>   
             </ng-template>
 
@@ -352,15 +378,19 @@
             <ng-template #ordersOutAcceptedStatusTemplate>
               <ion-row>
                 <ion-col size="6" >
-                  <ion-chip color="success">
-                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
-                    <ion-label> {{'order.accepted_status' | translate}} </ion-label>
-                  </ion-chip>
+                  <div class="ion-text-center">
+                    <ion-chip color="success">
+                      <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                      <ion-label> {{'order.accepted_status' | translate}} </ion-label>
+                    </ion-chip>
+                  </div>  
                 </ion-col>  
                 <ion-col size="6">
-                  <ion-button color="success" fill="outline" (click)="updateOrder('order.updateOnRoad')" >
-                    {{ 'order.updateOnRoad' | translate}} 
-                  </ion-button>  
+                  <div class="ion-text-center">
+                    <ion-button color="success" fill="outline" (click)="updateOrder('order.updateOnRoad')" >
+                      {{ 'order.updateOnRoad' | translate}} 
+                    </ion-button>  
+                  </div>  
                 </ion-col>
               </ion-row>   
             </ng-template>
@@ -373,10 +403,12 @@
             <ng-template #ordersOutOnRoadStatusTemplate>
               <ion-row>
                 <ion-col >
-                  <ion-chip color="success">
-                    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
-                    <ion-label> {{'order.onroad_status' | translate}} </ion-label>
-                  </ion-chip>
+                  <div class="ion-text-center">
+                    <ion-chip color="success">
+                      <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                      <ion-label> {{'order.onroad_status' | translate}} </ion-label>
+                    </ion-chip>
+                  </div>  
                 </ion-col>
               </ion-row>   
             </ng-template>

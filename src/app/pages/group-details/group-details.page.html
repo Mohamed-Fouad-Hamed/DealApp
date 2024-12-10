@@ -17,7 +17,7 @@
 <ion-content>
   <div class="group-details-container">
     <div class="categories-section">
-      <ion-grid>
+      <ion-grid class="ion-padding">
         <ion-row>
            <ion-col size="12">
                <ion-segment scrollable >
@@ -40,46 +40,51 @@
         
         </ion-row> 
       </ion-grid>
-
     </div>
+
     <div class="products-section">
+      <ion-content [scrollY]="false">
+        <cdk-virtual-scroll-viewport itemSize="150" class="ion-content-scroll-host">
 
-      <ion-grid>
-        <ion-row >
-          @for(product of products ; track product.name){
-           <ion-col size="6"  class="group-margin-padding">
-            <ion-card  class="card-back-color ion-no-margin ion-no-padding">
-              <div class="image-group">
-                  <ion-thumbnail item-start>
-                    <img src="{{ product.product_image }}">
-                  </ion-thumbnail>
-              </div>
-              <ion-card-header>
+          <ion-grid>
+            <ion-row >
+              @for(product of products ; track product.name){
+              <ion-col size="6"  class="group-margin-padding">
+                <!-- <div class="product-card">
+                  <div class="product-image-card">
+                    <img class="img-product-card" src="{{ product.product_image }}" >
+                  </div>
+                  <div class="product-title-card">
+                    <h1> {{ product.name }}</h1>
+                  </div>
+                </div> -->
+                <ion-card  class="card-group ion-no-margin ion-no-padding">
+                  
+                  <div class="image-group">
+                      
+                        <img src="{{ product.product_image }}" >
+                      
+                  </div>
     
-              </ion-card-header>
-    
-              <ion-card-content>
-             
-              </ion-card-content>
-              
-             <div class="name-group">
-              {{ product.name }}
-             </div> 
-    
-            </ion-card>
-    
-        
-          </ion-col> 
-        }
-        </ion-row> 
-      </ion-grid> 
+                <div class="name-group">
+                    <h1>{{ product.name }}</h1>
+                </div> 
 
-      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-        <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
+                </ion-card>
+              </ion-col> 
+            }
+            </ion-row> 
+          </ion-grid> 
 
+          <ion-infinite-scroll  (ionInfinite)="onIonInfinite($event)" threshold="100px">
+            <ion-infinite-scroll-content loadingText="{{'app.show_more' | translate}}" loadingSpinner="lines-sharp"></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+        </cdk-virtual-scroll-viewport>
+  </ion-content>
 
     </div>
-  </div>
+  </div> 
+  </ion-content>
+
   
-</ion-content>
+

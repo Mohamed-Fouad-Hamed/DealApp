@@ -58,6 +58,19 @@ export class AccountProductService {
       );
   }
 
+  getPageableProductsAccountByNameLike(accountId:string,name:string,pageNumber:number,pageSize:number){
+
+    const URL = this.API.apiHost;
+  
+    return timer(300)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessageResponse>(`${URL}/get-products-account-like-name-pageable?accountId=${accountId}&name=${name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+        })
+      );
+      
+  }
+
 
   updateAccountProduct(product:IAccountProduct):Observable<MessageResponse>{
       

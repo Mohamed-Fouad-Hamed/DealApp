@@ -21,16 +21,21 @@
 
 </ion-header>
 
-<ion-content color="light">
+<ion-content >
 
-  <ion-buttons >
-    <ion-button [disabled]="accountProduct"  id="select-items" >{{'app.newitem' | translate}}</ion-button>
-  </ion-buttons>
+  <div class="container-button-add">
+    <div class="text-des-add">
+      {{'app.newitem' | translate}}
+    </div>
+    <ion-button class="button-add" [disabled]="accountProduct"  id="select-items" ><ion-icon name="create"></ion-icon></ion-button>
+  </div>
+
+
 
   
   @if (!accountProduct) {
 
-    <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
+    <ion-searchbar #inputSearch [debounce]="1500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
 
   }
 
@@ -53,19 +58,29 @@
   }
 
   <ng-template #accountProductsList >
+    <ion-content [scrollY]="false">
 
-    <ion-list [inset]="true">
-      <ion-item [button]="true" class="ion-border" *ngFor="let product of filteredProducts ; trackBy: trackItems" (click)="viewDetail(product)">
-        <ion-avatar slot="start">
-          <img [src]="apiServer! + product?.product_image" />
-        </ion-avatar>
-        <ion-text>{{ product.product_name }} </ion-text>
-        @if(product?.notUpdate){
-          <ion-text slot="end"  color="danger"><small>{{'accountproduct.productaddedtemporary' | translate}}</small></ion-text>
-        }
-      </ion-item>
-    </ion-list>
+      <cdk-virtual-scroll-viewport itemSize="150" class="ion-content-scroll-host">
 
+        <ion-list [inset]="true">
+          <ion-item [button]="true" class="ion-border" *ngFor="let product of filteredProducts ; trackBy: trackItems" (click)="viewDetail(product)">
+            <ion-avatar slot="start">
+              <img [src]="product?.product_image" />
+            </ion-avatar>
+            <ion-text>{{ product.product_name }} </ion-text>
+            @if(product?.notUpdate){
+              <ion-text slot="end"  color="danger"><small>{{'accountproduct.productaddedtemporary' | translate}}</small></ion-text>
+            }
+          </ion-item>
+        </ion-list>
+
+        <ion-infinite-scroll  (ionInfinite)="onIonInfiniteCurrentProducts($event)" threshold="100px">
+          <ion-infinite-scroll-content loadingText="{{'app.show_more' | translate}}" loadingSpinner="lines-sharp"></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+
+      </cdk-virtual-scroll-viewport>
+
+    </ion-content>
   </ng-template>
 
   @if (!accountProduct) {
@@ -85,6 +100,7 @@
       (searchEmit)="searchValueEmit($event)"
       (selectionChange)="itemSelected($event)"
       (selectionCancel)="modal.dismiss()"
+      (infiniteScrollEmit)="infiniteScrollEmit($event)"
     ></app-multi-selection-search>
   </ng-template>
 

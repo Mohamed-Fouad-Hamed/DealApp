@@ -242,6 +242,49 @@ ion-modal {
 
  // display grid of groups
 
+ .product-card {
+    position: relative;
+    padding: 3px;
+    height: 200px;
+    width: 100%;
+    border: 2px solid #7686a3;
+    border-radius: 5px;
+ }
+
+ .product-image-card{
+    padding: 1px;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+ }
+ 
+ .img-product-card{
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    border-radius: 5px;
+ }
+ .product-title-card {
+    padding: 1px;
+    position: absolute;
+    max-height: 50px;
+    top: 75%;
+    height: calc(25% - 5px);
+    width: calc(100% - 5px);
+    text-align: center;
+    opacity: .6;
+    background-color: black;
+    color: #cdc8c8 ;
+    border-radius: 5px;
+    h1 {
+      position: absolute;
+      margin: 0 auto ;
+      font-weight: 900;
+      font-size: 12px;
+      text-align: center;
+    }
+ }
+
  .group-margin-padding{
   padding: 1px;
 }
@@ -275,9 +318,9 @@ ion-modal {
   top: 75%;
   height: 25%;
   width: 100%;
-  opacity: .7;
-  background-color: black;
-  color: #cdc8c8 ;
+  opacity: .8;
+  background-color: var(--ion-color-primary);
+  color: #f5f2f2 ;
   h1 {
     position: absolute;
     margin:0 auto ;
@@ -330,15 +373,7 @@ ion-modal {
   padding: 1px;
 }
 
-// hide loading control
-/*
-ion-loading.custom-loading {
-  .loading-wrapper {
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-}
-*/
+
 .loading-wrapper {
   visibility: hidden;
 }

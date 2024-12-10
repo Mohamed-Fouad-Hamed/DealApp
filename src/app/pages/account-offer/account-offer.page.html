@@ -21,7 +21,7 @@
 
   @if (step===1 && !currentOfferDetails) {
 
-      <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
+      <ion-searchbar #inputSearch [debounce]="1500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
   }
 
   @if(step===0){
