@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule , ModalController , LoadingController } from '@ionic/angular';
-import { AccountProductDetail, AccountProductItem, Item } from 'src/app/types/types';
+import { AccountProductDetail, AccountProductItem, Item, UomAccountPrice, UomPrice } from 'src/app/types/types';
 import { Subscription, finalize, map } from 'rxjs';
 import { ProductService } from 'src/app/services/model-services/product-service/product.service';
 import {  MultiSelectionSearchComponent} from 'src/app/modals/multi-selection-search/multi-selection-search.component';
@@ -14,6 +14,7 @@ import {AccountProductComponent} from 'src/app/components/account-product/accoun
 import { TranslateModule } from '@ngx-translate/core';
 //scrolling
 import { ScrollingModule} from '@angular/cdk/scrolling';
+import { MessageResponse } from 'src/app/services/interfaces/MessageResponse';
 
 
 @Component({
@@ -40,11 +41,11 @@ export class AccountProductListPage implements OnInit,OnDestroy {
   accountProduct?:AccountProductDetail ;
 
   productsCurrentPage : number = 0;
-  productsPageSize : number = 15;
+  productsPageSize : number = 11;
   productsCount : number = 0;
 
   accountProductsCurrentPage : number = 0;
-  accountProductsPageSize : number = 15;
+  accountProductsPageSize : number = 11;
   accountProductsCount : number = 0;
 
   accountProductCtx = {
@@ -68,12 +69,17 @@ export class AccountProductListPage implements OnInit,OnDestroy {
   private subscriptionAccountProduct?: Subscription;
   private subscriptionNewProduct?: Subscription;
   private productsSubscription?:Subscription;
+  private subscriptionAccountProductIds?: Subscription;
 
   selecteditemText:string = 'select item';
 
   productsLoading : boolean = false;
 
+  accountProductsLoading : boolean = false;
+
   searchTextValue : string = '';
+
+  searchAccountProductsValue? : string ;
 
   constructor( private loadingCtrl : LoadingController ) { }
 
@@ -96,6 +102,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
   
   ngOnInit() {
     this.initGetAccountId();
+    this.initAccountProductsListIds();
     this.initAccountProductsList();
     this.apiServer! = this.api.apiHost;
   }
@@ -106,58 +113,192 @@ export class AccountProductListPage implements OnInit,OnDestroy {
     });
   }
 
+  initAccountProductsListIds(){
+
+    this.subscriptionAccountProductIds! = 
+       this.accountProductService.getAccountProductsIds(this.accountId!)
+       .pipe(map((msg:MessageResponse)=>{
+          const ids = msg.list.map((product:any)=>  {return product.id} )
+          return ids;
+       }))
+       .subscribe({ next:(ids:any)=>{
+            this.productsArr! = [ ... ids] ;
+       },error : (err)=>{
+
+        console.log(err);
+
+       }})
+
+  }
+
   initAccountProductsList(){
-    
-     this.subscriptionList = this.accountProductService.getAccountProducts(this.accountId!)
-     .pipe(map((products:any)=> {
+
+     this.accountProductsCurrentPage = 0 ;
+     this.accountProductsLoading = true ;
+     this.showLoading();
+
+     this.subscriptionList = this.accountProductService.getProductsAccountPageable(
+             this.accountId!,
+             this.accountProductsCurrentPage,
+             this.accountProductsPageSize
+            )
+     .pipe(finalize(()=>{
+         this.accountProductsLoading = false ;
+         setTimeout(()=> this.hideLoading(),1000);
+     }), map((products:any)=> {
+                  this.accountProductsCount = products.count ;
                   const _products = products.list.map((_product:any)=>{ 
-                    const productImage =  _product.product_image !== undefined && _product.product_image !== '' ? `${this.apiServer}${_product.product_image}` : '../../assets/images/no-image.jpg'; 
+                    const productImage =  _product.product_image  && _product.product_image !== '' ? `${this.apiServer}${_product.product_image}` : '../../assets/images/no-image.jpg'; 
                     const product:AccountProductItem = {
-                    productId: _product.productId,
-                    product_name: _product.product_name + ' ' + _product.descr ,
+                    productId: _product.id,
+                    product_name: _product.name  ,
                     product_image: productImage
                   };
                     return product;
               });
                   return _products;
-           }) ).subscribe((_products:AccountProductItem[]) => {
-                           
-                           this.products = _products; 
+           }) ).subscribe({next :(_products:AccountProductItem[]) => {
 
-                           this.filteredProducts = [...this.products];
-
-                           this.productsArr! = [...this.products.map(({productId})=>  {return productId} )]
+                           this.filteredProducts = [ ... _products];
                           
-                          });
+                          },error : ()=>{
 
-           
+                            this.accountProductsLoading = false ;
+
+                            setTimeout(()=> this.hideLoading(),1000);
+
+                          }});
+        
   }
 
+  loadMoreAccountProducts(ev:any){
+
+    if( this.accountProductsLoading ) return;
+
+    this.accountProductsCurrentPage++ ;
+    this.accountProductsLoading = true ;
+
+    if(this.searchAccountProductsValue && this.searchAccountProductsValue !== ''){
+
+        this.subscriptionList = this.accountProductService.getPageableProductsAccountByNameLike(
+                this.accountId!,
+                this.searchAccountProductsValue!,
+                this.accountProductsCurrentPage,
+                this.accountProductsPageSize
+              )
+        .pipe(finalize(()=>{
+            this.accountProductsLoading = false ;
+            setTimeout(()=>  (ev as InfiniteScrollCustomEvent).target.complete(),1000);
+        }), map((products:any)=> {
+                    this.accountProductsCount = products.count ;
+                    const _products = products.list.map((_product:any)=>{ 
+                      const productImage =  _product.product_image  && _product.product_image !== '' ? `${this.apiServer}${_product.product_image}` : '../../assets/images/no-image.jpg'; 
+                      const product:AccountProductItem = {
+                      productId: _product.id,
+                      product_name: _product.name  ,
+                      product_image: productImage
+                    };
+                      return product;
+                });
+                    return _products;
+              }) ).subscribe({next :(_products:AccountProductItem[]) => {
+                              
+
+                              this.filteredProducts.push( ... _products );
+                            
+                            },error : ()=>{
+
+                              this.accountProductsLoading = false ;
+                              setTimeout(()=>  (ev as InfiniteScrollCustomEvent).target.complete(),1000);
+
+                            }});
+          } else {
+
+            this.subscriptionList = this.accountProductService.getProductsAccountPageable(
+              this.accountId!,
+              this.accountProductsCurrentPage,
+              this.accountProductsPageSize
+             )
+            .pipe(finalize(()=>{
+                this.accountProductsLoading = false ;
+                setTimeout(()=>  (ev as InfiniteScrollCustomEvent).target.complete(),1000);
+            }), map((products:any)=> {
+                        this.accountProductsCount = products.count ;
+                        const _products = products.list.map((_product:any)=>{ 
+                          const productImage =  _product.product_image  && _product.product_image !== '' ? `${this.apiServer}${_product.product_image}` : '../../assets/images/no-image.jpg'; 
+                          const product:AccountProductItem = {
+                          productId: _product.id,
+                          product_name: _product.name  ,
+                          product_image: productImage
+                        };
+                          return product;
+                    });
+                        return _products;
+                  }) ).subscribe({next :(_products:AccountProductItem[]) => {
+      
+                                  this.filteredProducts.push( ... _products );
+                                
+                                },error : ()=>{
+      
+                                  this.accountProductsLoading = false ;
+      
+                                  setTimeout(()=>  (ev as InfiniteScrollCustomEvent).target.complete(),1000);
+      
+                                }});
+
+          }
+
+  }
 
   getAccountProduct( accountId:string , productId:string  ){
 
-    this.subscriptionAccountProduct = this.accountProductService.getAccountProduct(
-      accountId,
-      productId
-      ).pipe(map((product:any)=>{ 
-        const productImage =  product.product_image !== undefined && product.product_image !== '' ? `${this.apiServer}${product.product_image}` : '../../assets/images/no-image.jpg'; 
-        const _product : AccountProductDetail= { 
-         productId : product.productId ,
-         product_name : product.product_name + ' ' + product.descr,
-         descr  : product.descr,
-         category_name : product.category_name ,
-         product_image  : productImage ,
-         has_first : product.has_first,
-         first_unit : ' ' + product.first_unit + ' ',
-         first_price : product.first_price,
-         has_second  : product.has_second,
-         second_unit : ' ' + product.second_unit + ' ',
-         second_price : product.second_price
-        } 
-       return _product;
-      })).subscribe((product)=>{ 
-        this.setCurrentAccountProduct(product);
-      });
+    this.subscriptionAccountProduct = this.productService.getAccoutProduct(accountId,productId).pipe(
+      map((res:any) => { 
+            const _product = res.entity;
+            const productImage =  _product.product_image  && _product.product_image !== '' ? `${this.apiServer}${_product.product_image}` : '../../assets/images/no-image.jpg'; 
+            const _accountProduct:AccountProductDetail = {
+              productId : _product.id ,
+              product_name : _product.name ,
+              descr  : _product.descr,
+              category_name : '' ,
+              product_image  : productImage ,
+              has_first : false,
+              first_unit : ' ' + _product.first_unit + ' ',
+              first_price : 0,
+              has_second  : false,
+              second_unit : ' ' + _product.second_unit + ' ',
+              second_price : 0 ,
+              uomPriceList : _product.uomPriceDtoList.map((priceDto:any)=>{ 
+                const uomPrice : UomPrice = {
+                    id: priceDto.id,
+                    uom_id: priceDto.uom_id,
+                    unit_name: priceDto.unit_name,
+                    base_cost: priceDto.base_cost,
+                    base_price: priceDto.base_price,
+                    reduce_per: priceDto.reduce_per,
+                    cost_price: priceDto.cost_price,
+                    price: priceDto.price
+                  };
+                return uomPrice;
+            }) ,
+            uomAccountPriceList : _product.accountProducts.map((price:any)=>{
+                const uomAccountPrice : UomAccountPrice = {
+                      uom_id: price.uom_id,
+                      base_cost: price.base_cost,
+                      base_price: price.base_price,
+                      reduce_per: price.reduce_per,
+                      cost_price: price.cost_price,
+                      price: price.price
+                    };
+                return uomAccountPrice;
+            })
+            }
+          return _accountProduct;
+      }) 
+    ).subscribe((product) => { 
+       this.setCurrentAccountProduct(product);
+     });
+
   }
 
   trackItems(index: number, product: AccountProductItem) {
@@ -171,6 +312,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
       if(this.subscriptionAccountProduct) this.subscriptionAccountProduct!.unsubscribe();
       if(this.subscriptionNewProduct) this.subscriptionNewProduct!.unsubscribe();
       if(this.productsSubscription) this.productsSubscription!.unsubscribe();
+      if(this.subscriptionAccountProductIds) this.subscriptionAccountProductIds!.unsubscribe();
   }
 
   searchValueEmit($value:any){
@@ -195,12 +337,12 @@ export class AccountProductListPage implements OnInit,OnDestroy {
             map((products:any) => { 
               this.productsCount = products.count;
               const _items:Item[] = products.list.map((product:any)=>{
-              const productImage =  product.product_image !== undefined && product.product_image !== '' ? `${this.apiServer}${product.product_image}` : '../../assets/images/no-image.jpg';   
+              const productImage =  product.product_image  && product.product_image !== '' ? `${this.apiServer}${product.product_image}` : '../../assets/images/no-image.jpg';   
               const isExists = this.productsArr!.includes(product.id);  
               const _product:Item = {
                 id:product.id ,
                 name:product.name,
-                text: product.name + ' ' + product.descr,
+                text: product.name ,
                 value: product.id,
                 des : product.descr,
                 icon : productImage,
@@ -244,9 +386,9 @@ export class AccountProductListPage implements OnInit,OnDestroy {
         return product;
       });
 
-      this.products = [...this.products,..._itemsSelected];
+     // this.products = [...this.products,..._itemsSelected];
 
-      this.filteredProducts = [...this.products];
+      this.filteredProducts.unshift(..._itemsSelected);
 
       this.productsArr?.push(...data);   
     }
@@ -259,13 +401,13 @@ export class AccountProductListPage implements OnInit,OnDestroy {
 
     if(product.notUpdate!){
 
-          this.subscriptionNewProduct = this.productService.getProduct(''+product.productId).pipe(
+          this.subscriptionNewProduct = this.productService.getAccoutProduct(this.accountId!,''+product.productId).pipe(
             map((res:any) => { 
                   const _product = res.entity;
-                  const productImage =  _product.product_image !== undefined && _product.product_image !== '' ? `${this.apiServer}${_product.product_image}` : '../../assets/images/no-image.jpg'; 
+                  const productImage =  _product.product_image  && _product.product_image !== '' ? `${this.apiServer}${_product.product_image}` : '../../assets/images/no-image.jpg'; 
                   const _accountProduct:AccountProductDetail = {
                     productId : _product.id ,
-                    product_name : _product.name + ' ' +  _product.descr,
+                    product_name : _product.name ,
                     descr  : _product.descr,
                     category_name : '' ,
                     product_image  : productImage ,
@@ -274,7 +416,31 @@ export class AccountProductListPage implements OnInit,OnDestroy {
                     first_price : 0,
                     has_second  : false,
                     second_unit : ' ' + _product.second_unit + ' ',
-                    second_price : 0
+                    second_price : 0 ,
+                    uomPriceList : _product.uomPriceDtoList.map((priceDto:any)=>{ 
+                      const uomPrice : UomPrice = {
+                          id: priceDto.id,
+                          uom_id: priceDto.uom_id,
+                          unit_name: priceDto.unit_name,
+                          base_cost: priceDto.base_cost,
+                          base_price: priceDto.base_price,
+                          reduce_per: priceDto.reduce_per,
+                          cost_price: priceDto.cost_price,
+                          price: priceDto.price
+                        };
+                      return uomPrice;
+                  }) ,
+                  uomAccountPriceList : _product.accountProducts.map((price:any)=>{
+                      const uomAccountPrice : UomAccountPrice = {
+                            uom_id: price.uom_id,
+                            base_cost: price.base_cost,
+                            base_price: price.base_price,
+                            reduce_per: price.reduce_per,
+                            cost_price: price.cost_price,
+                            price: price.price
+                          };
+                      return uomAccountPrice;
+                  })
                   }
                 return _accountProduct;
             }) 
@@ -299,21 +465,23 @@ export class AccountProductListPage implements OnInit,OnDestroy {
 
   accountProductSaved(accountProduct:any){
 
+    const productImage =  accountProduct.product_image  && accountProduct.product_image !== '' ? `${this.apiServer}${accountProduct.product_image}` : '../../assets/images/no-image.jpg'; 
+
     const _product:AccountProductItem = {
       productId: accountProduct.productId,
-      product_name: accountProduct.product_name + ' ' + accountProduct.descr,
-      product_image: accountProduct.product_image 
+      product_name: accountProduct.product_name ,
+      product_image: productImage 
     };
 
-    const idx = this.products.findIndex(
+    const idx = this.filteredProducts.findIndex(
       (product)=> product.productId === accountProduct.productId
     );
     
     if(idx > -1){
-       this.products.splice(idx,1,_product);
+       this.filteredProducts.splice(idx,1,_product);
     }
     else
-       this.products.push(_product);
+       this.filteredProducts.push(_product);
 
        this.resetFilterProducts();
   }
@@ -324,7 +492,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
   }
 
   resetFilterProducts(){
-    this.filteredProducts = [...this.products];
+   // this.filteredProducts = [...this.products];
     this.accountProduct = undefined;
   }
 
@@ -343,19 +511,67 @@ export class AccountProductListPage implements OnInit,OnDestroy {
      * If no search query is defined,
      * return all options.
      */
-    if (searchQuery === undefined) {
-      this.filteredProducts = [...this.products];
-    } else {
+    // if (searchQuery === undefined) {
+    //   this.filteredProducts = [...this.products];
+    // } else {
       /**
        * Otherwise, normalize the search
        * query and check to see which items
        * contain the search query as a substring.
        */
-      const normalizedQuery = searchQuery.toLowerCase();
-      this.filteredProducts = this.products.filter((item) => {
-        return item.product_name.toLowerCase().includes(normalizedQuery);
-      });
-    }
+      // const normalizedQuery = searchQuery.toLowerCase();
+      // this.filteredProducts = this.products.filter((item) => {
+      //   return item.product_name.toLowerCase().includes(normalizedQuery);
+      // });
+   // }
+
+   if(!searchQuery || searchQuery === '') {
+      this.searchAccountProductsValue = searchQuery;
+      this.initAccountProductsList();
+      return;
+   } 
+
+    this.searchAccountProductsValue = searchQuery ;
+
+    this.accountProductsCurrentPage = 0 ;
+    this.accountProductsLoading = true ;
+
+    this.showLoading();
+
+    this.subscriptionList = this.accountProductService.getPageableProductsAccountByNameLike(
+            this.accountId!,
+            this.searchAccountProductsValue!,
+            this.accountProductsCurrentPage,
+            this.accountProductsPageSize
+           )
+    .pipe(finalize(()=>{
+        this.accountProductsLoading = false ;
+        setTimeout(()=> this.hideLoading() ,1000);
+    }), map((products:any)=> {
+                 this.accountProductsCount = products.count ;
+                 const _products = products.list.map((_product:any)=>{ 
+                   const productImage =  _product.product_image  && _product.product_image !== '' ? `${this.apiServer}${_product.product_image}` : '../../assets/images/no-image.jpg'; 
+                   const product:AccountProductItem = {
+                   productId: _product.id,
+                   product_name: _product.name  ,
+                   product_image: productImage
+                 };
+                   return product;
+             });
+                 return _products;
+          }) ).subscribe({next :(_products:AccountProductItem[]) => {
+                  
+
+                          this.filteredProducts = [..._products];
+                         
+                         },error : ()=>{
+
+                           this.accountProductsLoading = false ;
+                           setTimeout(()=> this.hideLoading() ,1000);
+
+                         }});
+
+
   }
 
 
@@ -376,12 +592,12 @@ export class AccountProductListPage implements OnInit,OnDestroy {
             map((products:any) => { 
               this.productsCount = products.count;
               const _items:Item[] = products.list.map((product:any)=>{
-              const productImage =  product.product_image !== undefined && product.product_image !== '' ? `${this.apiServer}${product.product_image}` : '../../assets/images/no-image.jpg';   
+              const productImage =  product.product_image  && product.product_image !== '' ? `${this.apiServer}${product.product_image}` : '../../assets/images/no-image.jpg';   
               const isExists = this.productsArr!.includes(product.id);  
               const _product:Item = {
                 id:product.id ,
                 name:product.name,
-                text: product.name + ' ' + product.descr,
+                text: product.name ,
                 value: product.id,
                 des : product.descr,
                 icon : productImage,
@@ -406,7 +622,7 @@ export class AccountProductListPage implements OnInit,OnDestroy {
 
   infiniteScrollEmit(ev:any){
 
-    if(this.productsLoading) return;
+    if( this.productsLoading ) return;
 
     if(this.searchTextValue === '')
     {
@@ -429,6 +645,19 @@ export class AccountProductListPage implements OnInit,OnDestroy {
 
   onIonInfiniteCurrentProducts(ev:any){
 
+    if(this.accountProductsLoading) return;
+      
+    const noMoreDataToFetch = (this.filteredProducts!.length == this.accountProductsCount);
+
+    if(noMoreDataToFetch){
+         (ev as InfiniteScrollCustomEvent).target.complete();
+         //(ev as InfiniteScrollCustomEvent).target.disabled = true ;
+    }
+    else{
+      setTimeout(() => {
+        this.loadMoreAccountProducts(ev);
+      }, 1000);
+    }
   }
 
 }

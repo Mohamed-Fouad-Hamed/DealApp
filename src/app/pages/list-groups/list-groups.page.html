@@ -1,12 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-button  [routerLink]="['/home/main-page']" >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>{{ 'app_menu.list_groups' | translate }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
     <span class="border-bottom-part-one"></span>
     <span class="border-bottom-part-two"></span>
     <span class="border-bottom-part-three"></span>
@@ -20,7 +19,7 @@
     <ion-row >
       @for(group of groups ; track group.name){
        <ion-col size="4"  class="group-margin-padding">
-        <ion-card  class="card-back-color ion-no-margin ion-no-padding">
+        <ion-card  class="card-back-color ion-no-margin ion-no-padding" (click)="groupClicked(group)">
           <div class="image-group">
               <ion-thumbnail item-start>
                 <img src="{{ group.img }}">

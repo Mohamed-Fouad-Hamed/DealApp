@@ -1,100 +1,53 @@
 <div class="account-product-main">
-  <ion-grid>
+  <ion-grid class="grid-margin">
     <ion-row>
       <ion-col>
 
         <div class="account-product-container">
    
           <img class="img-account-product" [src]="imageUrl"/>
-      
+
         </div> 
 
       </ion-col>
     </ion-row>
+    <hr/>
+    <ion-row>
+      <ion-col size="2" class="ion-text-center" >
+        <ion-text > {{ 'accountproduct.serial' | translate }}  </ion-text> 
+      </ion-col>
+      <ion-col size="4" class="ion-text-center" >
+        <ion-text > {{ 'accountproduct.unit_name' | translate }}  </ion-text> 
+      </ion-col>
+      <ion-col size="3" class="ion-text-center" >
+        <ion-text > {{ 'accountproduct.default_price' | translate }}  </ion-text> 
+      </ion-col>
+      <ion-col size="3" class="ion-text-center">
+        <ion-text > {{ 'accountproduct.current_price' | translate }}  </ion-text> 
+      </ion-col>
+    </ion-row>
+    <hr />
     <ion-row>
       <ion-col>
         <form id="accountProductFormId" class="account-product-form" #accountProductForm="ngForm" (ngSubmit)="onSubmit()" >
           <ion-grid>
-            <ion-row >   
-                  <ion-col>
-                    <div class="ion-text-start">
-                      <ion-checkbox labelPlacement="end"  
-                        [(ngModel)]="product.has_first"
-                        #has_first="ngModel"
-                        name="has_first" 
-                      >{{'product.firstunit' | translate}}</ion-checkbox>
-                    </div>
-                  </ion-col>  
-        
-            </ion-row>
-          
-            <ion-row >
-              
-              <ion-col>
-                <div class="ion-text-start">
-                  <ion-input
-                    type="number"
-                    label-placement="floating" 
-                    label="{{'product.firstprice' | translate}}"
-                    [(ngModel)]="product.first_price"
-                    #first_price="ngModel"
-                    name="first_price"
-                    color="secondary"
-                    [disabled]="!has_first.value"
-                  ></ion-input>
-                </div>  
-              </ion-col>
-              
-              <ion-col>
-                <div class="ion-text-end">
-                  <ion-text>{{'product.firstunitname' | translate}}</ion-text>
-                  <ion-text> : </ion-text>
-                  <ion-text>{{AccountProduct?.first_unit}}</ion-text>
-                </div>  
-              </ion-col>  
-        
-            </ion-row>
-            
-            <ion-row >
-                  
-              <ion-col>
-                <div class="ion-text-start">
-                  <ion-checkbox labelPlacement="end"  
-                    [(ngModel)]="product.has_second"
-                    #has_second="ngModel"
-                    name="has_second"
-                  >{{'product.secondunit' | translate}}</ion-checkbox>
-                </div>
-              </ion-col>  
-        
-        </ion-row>
-        
-        <ion-row >
-          
-          <ion-col>
-            <div class="ion-text-start">
-              <ion-input
-                type="number"
-                label-placement="floating" 
-                label="{{'product.secondprice' | translate}}"
-                [(ngModel)]="product.second_price"
-                #second_price="ngModel"
-                name="second_price"
-                color="secondary"
-                [disabled]="!has_second.value"
-              ></ion-input>
-            </div>  
-          </ion-col> 
-
-          <ion-col>
-            <div class="ion-text-end">
-              <ion-text>{{'product.secondunitname' | translate}}</ion-text>
-              <ion-text> : </ion-text>
-              <ion-text>{{AccountProduct?.second_unit}}</ion-text>
-            </div>  
-          </ion-col>   
-        
-        </ion-row>
+            @for(product of accountProductList ; track product.uom_id;let idx=$index){
+              <ion-row >
+                <ion-col size="2" class="ion-text-center line-row" >
+                  <ion-text >{{idx+1}}</ion-text> 
+                </ion-col>
+                <ion-col size="4" class="ion-text-center line-row" >
+                  <ion-text > {{ product.uom_name }}  </ion-text> 
+                </ion-col>
+                <ion-col size="3" class="ion-text-center line-row">
+                  <ion-text > {{ product.price!.toFixed(2) }}  </ion-text> 
+                </ion-col>
+                <ion-col size="3" class="ion-text-center ion-no-padding" >
+                  <ion-input type="number" class="custom"  [(ngModel)]="accountProductList[idx].accountPrice" name="accountPrice-{{idx}}" > </ion-input> 
+                  <!-- <ion-text > {{ product.accountPrice!.toFixed(2) }}  </ion-text>  -->
+                </ion-col>
+              </ion-row>
+            }
         
           <ion-row>
             <ion-col >

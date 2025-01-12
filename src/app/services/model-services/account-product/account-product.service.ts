@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { APIService } from '../../API/api.service';
 import { Observable, delay, switchMap, timer } from 'rxjs';
-import { MessageResponse } from '../../interfaces/MessageResponse';
-import { IAccountProduct } from 'src/app/interfaces/DB_Models';
+import { MessagePageableResponse, MessageResponse } from '../../interfaces/MessageResponse';
+import { IAccountProduct, IAccountProductReq } from 'src/app/interfaces/DB_Models';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,16 @@ export class AccountProductService {
       .pipe(
         switchMap(() => {
           return this.http.get<MessageResponse>(`${URL}/get-account-products?accountId=${accountId}`)
+        })
+      );
+  }
+
+  getAccountProductsIds(accountId:string){
+    const URL = this.API.apiHost;
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessageResponse>(`${URL}/get-account-products-ids?accountId=${accountId}`)
         })
       );
   }
@@ -46,6 +56,15 @@ export class AccountProductService {
       );
   }
 
+  getProductsAccountPageable(accountId:string,pageNumber:number,pageSize:number){
+    const URL = this.API.apiHost;
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessagePageableResponse>(`${URL}/get-products-account-pageable?accountId=${accountId}&&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+        })
+      );
+  }
   
 
   getAccountProductsByProductName(accountId:string,productName:string){
@@ -65,14 +84,14 @@ export class AccountProductService {
     return timer(300)
       .pipe(
         switchMap(() => {
-          return this.http.get<MessageResponse>(`${URL}/get-products-account-like-name-pageable?accountId=${accountId}&name=${name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+          return this.http.get<MessagePageableResponse>(`${URL}/get-products-account-like-name-pageable?accountId=${accountId}&name=${name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
         })
       );
       
   }
 
 
-  updateAccountProduct(product:IAccountProduct):Observable<MessageResponse>{
+  updateAccountProduct(product:IAccountProductReq[]):Observable<MessageResponse>{
       
     const URL = this.API.apiHost;
     

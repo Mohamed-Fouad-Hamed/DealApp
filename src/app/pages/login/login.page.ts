@@ -35,7 +35,7 @@ export class LoginPage implements OnInit , OnDestroy{
 
   public isLoading : boolean = false ;
 
-  public error:string = '';
+  public error?:string ;
 
   hide = true;
 
@@ -56,7 +56,10 @@ export class LoginPage implements OnInit , OnDestroy{
 
 
 async  onSubmit() {
+
     this.submitted = true;
+
+    this.error = undefined;
 
     if (this.loginFrm.invalid) {
       return;
@@ -101,14 +104,16 @@ async  onSubmit() {
 
               this.router.navigate(['/home/main-page']);
           }
+          else if(res.status == 400){
+            this.error! = res.message;
+          }
           
-         }
-         ,error:(err)=>{ this.error = err.message }} 
+         }} 
         );
 
     }catch( e:any){
       this.error = e.message;
-      console.log(e)
+      console.log(this.error!);
     }finally{ 
       setInterval(()=>{this.isLoading=false;},2000);
     }

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule , IonicSlides , InfiniteScrollCustomEvent } from '@ionic/angular';
+import { IonicModule , IonicSlides , InfiniteScrollCustomEvent , LoadingController } from '@ionic/angular';
 import {  IonRouterLink } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,7 +9,7 @@ import { GroupService } from 'src/app/services/model-services/group-service/grou
 import { IGroupResponse } from 'src/app/interfaces/DB_Models';
 import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 import { IUserResponse } from 'src/app/services/interfaces/Auth-Interfaces';
-import { map, Subscription } from 'rxjs';
+import { finalize, map, Subscription } from 'rxjs';
 import { APIService } from 'src/app/services/API/api.service';
 import { MessagePageableResponse } from 'src/app/services/interfaces/MessageResponse';
 
@@ -50,7 +50,20 @@ export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
   @ViewChild('swiper')
   swiperRef: ElementRef | undefined;
 
-  constructor() { }
+  constructor( private loadingCtrl : LoadingController ) { }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      spinner: "lines-sharp",     
+      mode: "ios"
+    });
+
+    loading.present();
+  }
+
+  async hideLoading(){
+    await this.loadingCtrl.dismiss();
+   }
 
   ngOnDestroy(): void {
     if(this.userSubscription)
@@ -72,23 +85,34 @@ export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
 
   async ngOnInit() {
 
-   this.initiUser();
+    this.showLoading();
+
+    this.initiUser();
   
   }
 
   initiUser(){
 
-    this.authService.getUserAuth().subscribe((oUser)=>{
+    this.authService.getUserAuth()
+                    .pipe(finalize(()=>{
+                         setTimeout(()=>this.hideLoading(),1000);
+                    }))
+                    .subscribe({next:(oUser)=>{
       
-      this.observableUser = oUser;
+                    this.observableUser = oUser;
 
-      if(
-         this.observableUser!.account_type && 
-         this.observableUser!.account_type !== '' &&
-         this.observableUser!.account_type !== 'SYS_ADMINISTRATOR'
-        )
-          this.initiGroups(this.observableUser!.account_type);
-    });
+                    if(
+                      this.observableUser!.account_type && 
+                      this.observableUser!.account_type !== '' &&
+                      this.observableUser!.account_type !== 'SYS_ADMINISTRATOR'
+                      )
+                        this.initiGroups(this.observableUser!.account_type);
+
+                  },error:(err)=>{
+                    console.log(err);
+                    setTimeout(()=>this.hideLoading(),1000);
+                  }}
+                );
      
   }
 
@@ -98,7 +122,9 @@ export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
         .pipe(map((message:MessagePageableResponse)=>{
            this.countGroups = message.count ;
            const groups = message.list.map((group:any)=> { 
-              group.img = 'assets/test-imags/producttemplate.jpg'  // `${this.apiService.apiHost}${group.img}` ; 
+              const groupImage =  group.product_image !== undefined 
+               && group.img !== '' ? `${this.apiService.apiHost}${group.img}` : 'assets/images/no-pictures.png'; 
+              group.img = groupImage ; 
               return group;
             } );
 
@@ -118,7 +144,9 @@ export class MainPagePage implements OnInit ,AfterViewInit,OnDestroy {
     this.groupService.getPageableGroupsByAccountType( this.observableUser!.account_type , this.groupsCurrentPage ,this.groupsPageSize    ) .pipe(map((groups:any)=>{
            
       groups.map((group:any)=> { 
-          group.img =  '..\/src\/assets\/test-imags\/avatar.jpg' ;//  `${this.apiService.apiHost}${group.img}` ; 
+          const groupImage =  group.product_image !== undefined 
+            && group.img !== '' ? `${this.apiService.apiHost}${group.img}` : 'assets/images/no-pictures.png'; 
+          group.img = groupImage ; 
           return group;
         } );
 

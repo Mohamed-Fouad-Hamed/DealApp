@@ -80,6 +80,19 @@ export interface IAccountProduct{
     second_price : number;
 }
 
+export interface IAccountProductReq {
+    accountId : number;
+    productId : number;
+    uom_id : number;
+    uom_name ? : string;
+    base_cost? : number;
+    base_price? : number;
+    reduce_per? : number;
+    cost_price? : number;
+    price? : number;
+    accountPrice? : number;
+}
+
 export interface IAccountOfferReq{
 
           id : number ;
@@ -103,7 +116,7 @@ export interface IOfferDetailsReq{
      id : number;
      offer_id : number;
      product_id : number;
-     unit : string;
+     unit_id : number;
      max_quan : number;
      max_limit : number;
      percent_discount : number; 
@@ -136,10 +149,11 @@ export interface IAccountOfferRes{
 
 export interface IOfferDetailsRes{
     id : number;
-    offer_id:number;
+    offer_id : number;
     product_id : number;
-    product_name:string;
-    product_image:string;
+    product_name : string;
+    product_image : string;
+    unit_id? : number ;
     unit : string;
     max_quan : number;
     max_limit : number;
@@ -148,6 +162,24 @@ export interface IOfferDetailsRes{
     o_price : number;
 }
 
+export interface IProductOffer{
+    offer_id : number;
+    product_id : number;
+    product_name : string;
+    product_image : string;
+    details:IProductOfferDetails[];
+}
+
+export interface IProductOfferDetails{
+    id : number;
+    unit_id : number ;
+    unit : string;
+    max_quan : number;
+    max_limit : number;
+    percent_discount : number; 
+    price : number;
+    o_price : number;
+}
 //=== account products
 
 export interface IOrderProduct{
@@ -155,6 +187,7 @@ export interface IOrderProduct{
     product_id : number;
     product_name : string;
     product_image : string;
+    unit_id:number;
     unit : string;
     price : number;
     has_offer : boolean;

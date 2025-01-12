@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, EventEmitter, inject, input, OnDestroy, OnInit, Output, Signal, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, input, OnDestroy, OnInit, Output, Signal, ViewChild } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { IAccountOfferReq, IOfferDetailsReq, IOfferDetailsRes } from 'src/app/interfaces/DB_Models';
+import { IAccountOfferReq, IOfferDetailsReq, IOfferDetailsRes, IProductOffer } from 'src/app/interfaces/DB_Models';
 import { OfferService } from 'src/app/services/model-services/account-offer/offer.service';
 import { finalize, Subscription } from 'rxjs';
 import { APIService } from 'src/app/services/API/api.service';
@@ -20,15 +20,15 @@ export class OfferDetailsComponent  implements OnInit , OnDestroy{
 
   displayMode = input(0); // 0 means component view only
 
-  offerDetailsInput  = input.required<IOfferDetailsRes>(); // offer details inputs
+  offerDetailsInput  = input.required<IProductOffer>(); // offer details inputs
 
-  @Output() saveEventEmitter = new EventEmitter<IOfferDetailsRes>();
+  @Output() saveEventEmitter = new EventEmitter<IProductOffer>();
 
   @Output() cancelEventEmitter = new EventEmitter<void>();
 
   private offerDetailsService = inject(OfferService);
 
-  private api = inject(APIService);
+  private apiServer = inject(APIService);
 
   @ViewChild('accountOfferForm') public accountOfferFrm!: NgForm;
 
@@ -38,43 +38,21 @@ export class OfferDetailsComponent  implements OnInit , OnDestroy{
 
   error : string = '';
 
-  offerDetails : IOfferDetailsReq = {
-     id : 0 ,
-     offer_id : 0 ,
-     product_id : 0 ,
-     unit : '',
-     max_quan : 0,
-     max_limit : 0,
-     percent_discount : 0 ,
-     price : 0,
-     o_price : 0  
-  };
+  offerDetails : IOfferDetailsReq[] = [];
 
   private subscription? : Subscription;
   
   constructor() { 
-
-    effect(()=>{
-       if(this.offerDetailsInput()){
-          this.offerDetails.id =  this.offerDetailsInput().id;
-          this.offerDetails.offer_id =  this.offerDetailsInput().offer_id;
-          this.offerDetails.product_id = this.offerDetailsInput().product_id ;
-          this.offerDetails.unit = this.offerDetailsInput().unit ;
-          this.offerDetails.price = this.offerDetailsInput().price ;
-          this.offerDetails.max_quan = this.offerDetailsInput().max_quan;
-          this.offerDetails.max_limit = this.offerDetailsInput().max_limit;
-          this.offerDetails.percent_discount = this.offerDetailsInput().percent_discount;
-          this.offerDetails.o_price = this.offerDetailsInput().o_price;
-          this.productImage = this.api.apiHost + this.offerDetailsInput().product_image ;
-       }
-    });
   }
 
   ngOnDestroy(): void {
-   this.subscription?.unsubscribe();
+    if(this.subscription)
+       this.subscription?.unsubscribe();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {          
+    this.productImage = this.offerDetailsInput().product_image  && this.offerDetailsInput().product_image !== '' ? 
+                        `${this.apiServer}${this.offerDetailsInput().product_image}` : '../../../assets/images/no-image.jpg';  ;
   }
 
 
@@ -88,6 +66,20 @@ export class OfferDetailsComponent  implements OnInit , OnDestroy{
 
     try{
    
+      for(const product of this.offerDetailsInput().details){
+          const detail:IOfferDetailsReq ={
+            id: product.id,
+            offer_id: this.offerDetailsInput().offer_id,
+            product_id: this.offerDetailsInput().product_id,
+            unit_id: product.unit_id,
+            max_quan: product.max_quan,
+            max_limit: product.max_limit,
+            percent_discount: product.percent_discount,
+            price: product.price,
+            o_price: product.o_price
+          }
+          this.offerDetails.push(detail);
+      }
       
       this.subscription = this.offerDetailsService.updateOfferDetails(
             this.offerDetails
@@ -123,10 +115,19 @@ export class OfferDetailsComponent  implements OnInit , OnDestroy{
     this.cancelEventEmitter.emit();
   }
 
-  offerPriceFocusEevent($event:any){
-   const discountPrice = this.offerDetails.price * (this.offerDetails.percent_discount / 100);
-   const offerPrice = this.offerDetails.price - discountPrice;
-   this.offerDetails.o_price = +offerPrice.toFixed(2);
+  offerPriceFocusEevent($index:number){
+    try{
+   
+      let detail = this.offerDetailsInput().details[$index];
+      if(detail.percent_discount > 0){
+          const discountPrice = detail.price * (detail.percent_discount / 100);
+          const offerPrice = detail.price - discountPrice;
+          detail.o_price = +offerPrice.toFixed(2);
+      }
+
+    }catch(err:any){
+        console.log(err);
+    }  
   }
 
 }

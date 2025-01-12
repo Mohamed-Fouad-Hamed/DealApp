@@ -50,37 +50,17 @@
     border-bottom: 20px solid transparent;
   }
 
-.container-button-add{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: calc(100% - 20px);
-    height: 45px;
-    margin: 10px;
-    border: 2px solid var(--ion-color-primary);
-    border-radius: 5px;
-}
 
-.text-des-add{
-    height:30px;
-    width: calc(100% - 90px);
-    font-weight: 900;
-    font-size: 12px;
-    margin: auto 3px ;
-    text-align: center;
-   // border: 1px solid var(--ion-color-primary);
-}
-
-.button-add{
-     margin: 3px;
-     height:30px;
-     width: 75px;
-     max-width: 80px;
-     min-width: 55px;
+.accountProductsList{
+  height: 450px;
+  margin-left: 25px;
+  margin-right: 25px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 cdk-virtual-scroll-viewport {
   height: 100%;
   width: 100%;
 }
+

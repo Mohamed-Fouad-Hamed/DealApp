@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule, NgForm } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Subscription, finalize } from 'rxjs';
-import { IAccountProduct } from 'src/app/interfaces/DB_Models';
+import { IAccountProduct, IAccountProductReq } from 'src/app/interfaces/DB_Models';
 import { AccountProductService } from 'src/app/services/model-services/account-product/account-product.service';
 import { AccountProductDetail } from 'src/app/types/types';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,7 +15,7 @@ import { OfferDetailsComponent } from '../offer/offer-details/offer-details.comp
   templateUrl: './account-product.component.html',
   styleUrls: ['./account-product.component.scss'],
   standalone:true,
-  imports:[IonicModule, CommonModule, FormsModule,TranslateModule,OfferDetailsComponent]
+  imports:[IonicModule, CommonModule, FormsModule,ReactiveFormsModule,TranslateModule,OfferDetailsComponent]
 })
 export class AccountProductComponent  implements OnInit ,OnDestroy {
 
@@ -49,6 +49,8 @@ export class AccountProductComponent  implements OnInit ,OnDestroy {
     second_price:0,
   };
 
+  accountProductList : IAccountProductReq[] = [];
+
 constructor(
            private accountProductService: AccountProductService,
            private apiService:APIService,
@@ -58,13 +60,36 @@ constructor(
   ngOnInit() {
 
      if(this.AccountProduct){
-        this.product.accountId = +this.Account;
-        this.product.productId = this.AccountProduct.productId;
-        this.product.has_first = this.AccountProduct.has_first!;
-        this.product.first_price = this.AccountProduct.first_price!;
-        this.product.has_second = this.AccountProduct.has_second!;
-        this.product.second_price = this.AccountProduct.second_price!;
+
         this.imageUrl = `${this.AccountProduct.product_image}`;
+
+        this.AccountProduct.uomPriceList?.forEach((product)=>{
+             const _accProduct : IAccountProductReq ={
+               accountId: +this.Account,
+               productId: this.AccountProduct!.productId,
+               uom_id: product.uom_id,
+               uom_name: product.unit_name,
+               base_cost :  product.base_cost ,
+               base_price :  product.base_price ,
+               reduce_per :  product.reduce_per ,
+               cost_price :  product.base_price ,
+               price : product.price,
+               accountPrice : 0
+             };
+
+             this.accountProductList.push(_accProduct);
+
+        });
+
+        this.AccountProduct.uomAccountPriceList?.forEach((product)=>{
+             let _accountProduct = this.accountProductList.filter((i)=> i.uom_id === product.uom_id );
+             if(_accountProduct.length > 0){
+              _accountProduct[0].accountPrice = product.price ;
+             }
+        });
+
+        console.log(this.accountProductList);
+
      }
    
   }
@@ -75,19 +100,18 @@ constructor(
 
   async  onSubmit() {
 
-    if (this.accountProductFrm.invalid) {
+    const arrData =  this.accountProductList.filter(i => i.accountPrice !== 0);
+
+    if (this.accountProductFrm.invalid || arrData.length === 0 ) {
       return;
     }
   
     this.isLoading = true;
 
     try{
-   
-      this.product.accountId = +this.Account!;
-      this.product.productId = this.AccountProduct!.productId;
       
       this.subscription = this.accountProductService.updateAccountProduct(
-            this.product
+           arrData
         ).pipe( finalize(() => {
                 setInterval(
                   ()=>{

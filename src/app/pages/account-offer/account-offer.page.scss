@@ -29,3 +29,16 @@
 .camera-button{
     --background:#1a73b3;
 }
+
+.accountOfferList{
+  height: 450px;
+  margin-left: 25px;
+  margin-right: 25px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+cdk-virtual-scroll-viewport {
+  height: 100%;
+  width: 100%;
+}

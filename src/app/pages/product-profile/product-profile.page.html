@@ -1,3 +1,18 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button  [routerLink]="['/home/main-page']" >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title  class="ion-text-center">{{currentProduct.name}}</ion-title>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
+  </ion-toolbar>
+</ion-header>
 <ion-content [fullscreen]="true">
   <div class="product-container">
    

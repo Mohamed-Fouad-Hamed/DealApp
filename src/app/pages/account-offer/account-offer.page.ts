@@ -1,8 +1,8 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule , ModalController } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core/components';
+import { IonicModule , ModalController , LoadingController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent , OverlayEventDetail } from '@ionic/core/components';
 import { MultiSelectionSearchComponent } from 'src/app/modals/multi-selection-search/multi-selection-search.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -12,12 +12,15 @@ import { APIService } from 'src/app/services/API/api.service';
 import { AccountProductItem, Item } from 'src/app/types/types';
 import { AccountProductService } from 'src/app/services/model-services/account-product/account-product.service';
 import { OfferService } from 'src/app/services/model-services/account-offer/offer.service';
-import { IAccountOfferReq, IAccountOfferRes, IOfferDetailsRes } from 'src/app/interfaces/DB_Models';
+import { IAccountOfferReq, IAccountOfferRes, IOfferDetailsRes, IProductOffer, IProductOfferDetails } from 'src/app/interfaces/DB_Models';
 import {OfferComponent} from 'src/app/components/offer/offer.component';
 import { OfferDetailsComponent } from 'src/app/components/offer/offer-details/offer-details.component';
 import { SelectImageComponent } from 'src/app/modals/select-image/select-image.component';
 import { MessageResponse } from 'src/app/services/interfaces/MessageResponse';
 import { ProductService } from 'src/app/services/model-services/product-service/product.service';
+
+//scrolling
+import { ScrollingModule} from '@angular/cdk/scrolling';
 
 
 
@@ -26,7 +29,7 @@ import { ProductService } from 'src/app/services/model-services/product-service/
   templateUrl: './account-offer.page.html',
   styleUrls: ['./account-offer.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule , MultiSelectionSearchComponent,TranslateModule,RouterLink,OfferComponent,OfferDetailsComponent]
+  imports: [IonicModule, CommonModule, FormsModule , MultiSelectionSearchComponent,TranslateModule,RouterLink,OfferComponent,OfferDetailsComponent , ScrollingModule]
 })
 export class AccountOfferPage implements OnInit,OnDestroy {
  
@@ -117,9 +120,18 @@ export class AccountOfferPage implements OnInit,OnDestroy {
   step:number = 0 ;
 
   imageUrl:string = '';
+
   occasionUrl:string ='';
 
-  constructor() { }
+  productsCurrentPage : number = 0;
+  productsPageSize : number = 11;
+  productsCount : number = 0;
+
+  productsLoading : boolean = false;
+
+  searchTextValue : string = '';
+
+  constructor(  private loadingCtrl : LoadingController  ) { }
 
   ngOnInit() {
 
@@ -129,6 +141,19 @@ export class AccountOfferPage implements OnInit,OnDestroy {
 
   }
 
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      spinner: "lines-sharp",     
+      mode: "ios"
+    });
+
+    loading.present();
+  }
+
+  async hideLoading(){
+    await this.loadingCtrl.dismiss();
+   }
+
   initGetAccountId(){
     this.subscriptionRoute = this.route.paramMap.subscribe((params)=>{
       this.accountId! = params.get('accountId') || '' ;
@@ -137,7 +162,13 @@ export class AccountOfferPage implements OnInit,OnDestroy {
 
   initOfferRes(){
 
-    this.subscriptionOfferRes = this.offerService.getOfferByAccountId(this.accountId!).subscribe({
+    this.showLoading();
+
+    this.subscriptionOfferRes = this.offerService.getOfferByAccountId(this.accountId!)
+    .pipe(finalize(()=>{
+      this.hideLoading();
+    }))
+    .subscribe({
 
       next:(res:MessageResponse)=>{ 
         
@@ -226,14 +257,25 @@ export class AccountOfferPage implements OnInit,OnDestroy {
             
           }
          
-         this.products = this.offerRes.offerDetailsList.map((_product)=>{
-              const product:AccountProductItem = {
-                productId: _product.product_id,
-                product_name: _product.product_name  ,
-                product_image: _product.product_image 
-              };
-                return product;
-         })
+        //  this.products = this.offerRes.offerDetailsList.map((_product)=>{
+        //       const product:AccountProductItem = {
+        //         productId: _product.product_id,
+        //         product_name: _product.product_name  ,
+        //         product_image: _product.product_image 
+        //       };
+        //         return product;
+        //  })
+
+        this.products = Array.from(new Set( this.offerRes.offerDetailsList.map(obj => obj.product_id)))
+                             .map(id =>  this.offerRes.offerDetailsList.find(obj => obj.product_id === id))
+                             .map((_product)=>{
+                                    const product:AccountProductItem = {
+                                      productId: _product!.product_id,
+                                      product_name: _product!.product_name,
+                                      product_image: _product!.product_image 
+                                    };
+                                      return product;
+                         });
 
          this.filteredProducts = [...this.products];
 
@@ -242,7 +284,10 @@ export class AccountOfferPage implements OnInit,OnDestroy {
       }    
 
       }
-      , error:(err)=>{console.log('error :' , err)},
+      , error:(err)=>{
+        console.log('error :' , err);
+        this.hideLoading();
+      },
       complete:()=>{
         console.log('Complete ...')
       }
@@ -289,29 +334,56 @@ export class AccountOfferPage implements OnInit,OnDestroy {
  }
 
 searchValueEmit($value:any){
+
+  this.productsCurrentPage = 0 ;
+
+  this.productsLoading = true ;
+
   this.items = [] ;
   if($value === '') return;
-  this.subscriptionSearch = this.accountProductService.getAccountProductsByProductName(this.accountId!,$value).pipe(
-          map((products:any) => { 
-            const _items:Item[] = products.list.map((product:any)=>{
-            const isExists = this.productsArr!.includes(product.id);  
-            const _product:Item = {
-              id:product.id ,
-              name:product.name,
-              text: product.name + ' ' + product.descr ,
-              value: product.id,
-              des :product.descr,
-              icon :product.product_image,
-              exists:isExists
-            } ; 
-          return _product;
-      }); 
-          return _items;
-     }
-    )).subscribe((products) => {
-     this.items = products 
-     console.log('items : ' , this.items)
-    });
+
+    this.searchTextValue = $value;
+
+    this.showLoading();
+
+    this.subscriptionSearch = this.accountProductService.getPageableProductsAccountByNameLike(
+              this.accountId!,
+              this.searchTextValue ,
+              this.productsCurrentPage ,
+              this.productsPageSize
+            ).pipe(finalize(()=>{
+              this.productsLoading = false ;
+              setTimeout(()=> this.hideLoading(),1000);
+            }),
+            map((products:any) => { 
+              this.productsCount = products.count;
+              const _items:Item[] = products.list.map((product:any)=>{
+              const productImage =  product.product_image && product.product_image !== '' ? `${this.apiServer}${product.product_image}` : '../../assets/images/no-image.jpg';   
+              const isExists = this.productsArr!.includes(product.id);  
+              const _product:Item = {
+                id : product.id ,
+                name : product.name,
+                text : product.name ,
+                value : product.id,
+                des : product.descr,
+                icon : productImage,
+                exists : isExists
+              } ; 
+            return _product;
+        }); 
+            return _items;
+       }
+    )).subscribe(
+      { 
+        next:(products) => { this.items = products },
+        error:  err =>{
+          console.log(err);
+          this.productsLoading = false ;
+          setTimeout(()=> this.hideLoading(),1000);
+         }
+      }  
+    );
+
 }
 
 
@@ -327,13 +399,20 @@ onWillDismiss(event: Event) {
    const _itemsSelected = this.items.filter((item)=>{
       return  (<Array<string>> data).includes(item.value);
     }).map((_product:any)=>{ 
+
+      const productImage =  _product.product_image &&
+                            _product.product_image !== '' ?
+                            `${this.apiServer}${_product.product_image}` : '../../assets/images/no-image.jpg';  
+
       const product:AccountProductItem = {
-      productId: _product.value,
-      product_name: _product.text,
-      product_image: _product.icon,
-      notUpdate:true
-    };
+          productId: _product.value,
+          product_name: _product.text,
+          product_image: productImage,
+          notUpdate:true
+      };
+
       return product;
+
     });
 
     this.products = [...this.products,..._itemsSelected];
@@ -349,25 +428,29 @@ onWillDismiss(event: Event) {
 }
 
 viewDetail(product:AccountProductItem){
-
-  if(product.notUpdate!){
-
-        this.subscriptionAccountProduct = this.productService.getProduct(''+product.productId).pipe(
+  
+        this.subscriptionAccountProduct = this.productService.getProductOffer(this.accountId!, ''+product.productId).pipe(
           map((res:any) => { 
                 const _product = res.entity;
-                const _offerProduct:IOfferDetailsRes = {
-                  id : 0 ,
+                //const productImage =  product.product_image && product.product_image !== '' ? `${this.apiServer}${product.product_image}` : '../../assets/images/no-image.jpg';   
+                const _offerProduct:IProductOffer = {
                   offer_id : this.offerRes.id,
-                  product_id : _product.id ,
-                  product_name : _product.name ,
+                  product_id : _product.productId ,
+                  product_name : _product.productName ,
                   product_image  : _product.product_image,
-                  unit : _product.first_unit ,
-                  max_quan : 0,
-                  max_limit : 0,
-                  percent_discount : 0,
-                  price : _product.first_price,
-                  o_price : 0,
-                
+                  details : _product.details.map((detail:any)=>{
+                      const _detail : IProductOfferDetails = {
+                        id: detail.id,
+                        unit_id: detail.uomId,
+                        unit: detail.uomName,
+                        max_quan: detail.maxQuan,
+                        max_limit: detail.maxLimit,
+                        percent_discount: detail.discount,
+                        price: detail.price,
+                        o_price: detail.offerPrice
+                      }
+                      return _detail;
+                  })
                 }
               return _offerProduct;
           }) 
@@ -375,10 +458,7 @@ viewDetail(product:AccountProductItem){
            this.setCurrentOfferProduct(product);
          });
 
-  }
-  else
 
-    this.getOfferProduct(product.productId);
  
 }
 
@@ -393,7 +473,9 @@ getOfferProduct( productId:number  ){
    const source = from(this.offerRes.offerDetailsList);
    const subscribe = source.pipe(first((_product) => _product.product_id === productId));
    subscribe.subscribe((_product)=> {
-    this.setCurrentOfferProduct(_product)
+    
+    this.setCurrentOfferProduct(_product);
+
   } );
 }
 
@@ -411,10 +493,12 @@ offerProductSaved(offerProduct:any){
     this.offerRes.offerDetailsList.push(offerProduct);
   }
 
+  const productImage =  offerProduct.product_image !== undefined && offerProduct.product_image !== '' ? `${this.apiServer}${offerProduct.product_image}` : '../../assets/images/no-image.jpg';   
+ 
   const _product:AccountProductItem = {
     productId: offerProduct.product_id,
     product_name: offerProduct.product_name  ,
-    product_image: offerProduct.product_image 
+    product_image: productImage 
   };
 
   const idx = this.products.findIndex(
@@ -533,4 +617,70 @@ async openModalImage() {
   }
 }
 
+  loadMoreProducts(ev:any){
+
+    this.productsCurrentPage++;
+
+    this.productsLoading = true ;
+
+    this.subscriptionSearch = this.accountProductService.getPageableProductsAccountByNameLike(
+              this.accountId!,
+              this.searchTextValue ,
+              this.productsCurrentPage ,
+              this.productsPageSize
+            ).pipe(finalize(()=>{
+              this.productsLoading = false ;
+              setTimeout(()=>  (ev as InfiniteScrollCustomEvent).target.complete(),1000);
+            }),
+            map((products:any) => { 
+              this.productsCount = products.count;
+              const _items:Item[] = products.list.map((product:any)=>{
+              const productImage =  product.product_image  && product.product_image !== '' ? `${this.apiServer}${product.product_image}` : '../../assets/images/no-image.jpg';   
+              const isExists = this.productsArr!.includes(product.id);  
+              const _product:Item = {
+                id:product.id ,
+                name:product.name,
+                text: product.name ,
+                value: product.id,
+                des : product.descr,
+                icon : productImage,
+                exists : isExists
+              } ; 
+            return _product;
+        }); 
+            return _items;
+      }
+    )).subscribe(
+      { 
+        next:(products) => { this.items.push( ... products ); },
+        error:  err =>{
+          this.productsLoading = false ;
+          setTimeout(()=>  (ev as InfiniteScrollCustomEvent).target.complete(),1000);
+        }
+      }  
+    );
+  }
+
+    infiniteScrollEmit(ev:any){
+
+      if( this.productsLoading ) return;
+
+      if(this.searchTextValue === '')
+      {
+        (ev as InfiniteScrollCustomEvent).target.complete();
+      }
+        
+      const noMoreDataToFetch = (this.items!.length == this.productsCount);
+
+      if(noMoreDataToFetch){
+      // (ev as InfiniteScrollCustomEvent).target.complete();
+        (ev as InfiniteScrollCustomEvent).target.disabled = true ;
+      }
+      else{
+        setTimeout(() => {
+          this.loadMoreProducts(ev);
+        }, 1000);
+      }
+        
+    }
 }

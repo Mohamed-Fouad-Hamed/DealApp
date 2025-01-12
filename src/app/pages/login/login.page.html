@@ -1,9 +1,15 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button   [routerLink]="['/']" ></ion-back-button>
+      <ion-button  [routerLink]="['/']" >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>Log In</ion-title>
+    <ion-title>{{'register.logintitle' | translate}}</ion-title>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding" >
@@ -100,7 +106,23 @@
 
         <ion-row>
           <ion-col>
-            <ion-button [disabled]="!loginForm.valid" type="submit" color="secondary" expand="block" class="submit-button">{{'login.submit' | translate}}  @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}</ion-button>
+            <ion-button 
+               [disabled]="!loginForm.valid" 
+               type="submit" 
+               color="secondary" 
+               expand="block" 
+               class="submit-button">
+               {{'login.submit' | translate}}  @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+            </ion-button>
+
+                @if (error) {
+                  <ng-container [ngTemplateOutlet]="NotCredential"></ng-container>
+                }
+              
+        
+              <ng-template #NotCredential>
+                <ion-text class="error-text" color="danger">{{'login.notcredential' | translate}}</ion-text>
+              </ng-template>
           </ion-col>
         </ion-row>
         <ion-row>

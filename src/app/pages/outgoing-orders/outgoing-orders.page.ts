@@ -10,13 +10,13 @@ import { APIService } from 'src/app/services/API/api.service';
 import { OrderOperatingComponent } from 'src/app/components/order-operating/order-operating.component';
 import { entityToOrder } from 'src/app/interfaces/DB_Models';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-outgoing-orders',
   templateUrl: './outgoing-orders.page.html',
   styleUrls: ['./outgoing-orders.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule , OrderOperatingComponent , TranslateModule]
+  imports: [IonicModule, CommonModule, FormsModule , OrderOperatingComponent ,RouterLink, TranslateModule]
 })
 export class OutgoingOrdersPage implements  OnInit , OnDestroy{
 

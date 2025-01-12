@@ -10,12 +10,13 @@ import { Subscription, finalize, map } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { SelectImageComponent } from 'src/app/modals/select-image/select-image.component';
 import { AccountPaymentInputComponent } from 'src/app/components/account-payment-input/account-payment-input.component';
+import {   RouterLink } from '@angular/router';
 @Component({
   selector: 'app-account-profile',
   templateUrl: './account-profile.page.html',
   styleUrls: ['./account-profile.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,TranslateModule, AccountPaymentInputComponent]
+  imports: [IonicModule, CommonModule, FormsModule,TranslateModule, AccountPaymentInputComponent,RouterLink]
 })
 export class AccountProfilePage implements OnInit , OnDestroy{
 

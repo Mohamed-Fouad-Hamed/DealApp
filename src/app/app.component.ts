@@ -3,6 +3,10 @@ import { IonRouterOutlet } from '@ionic/angular/standalone';
 import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
 import { 
+  chevronBackCircleOutline,
+  chevronForwardCircleOutline,
+  chevronForwardOutline,
+  chevronBackOutline,
   create,
   homeOutline,
   cartOutline,
@@ -92,6 +96,10 @@ export class AppComponent implements OnInit , OnDestroy{
   constructor() {
 
     addIcons({
+      chevronBackCircleOutline,
+      chevronForwardCircleOutline,
+      chevronForwardOutline,
+      chevronBackOutline,
       create,
       homeOutline,
       cartOutline,

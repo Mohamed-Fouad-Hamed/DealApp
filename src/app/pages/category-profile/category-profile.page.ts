@@ -8,13 +8,13 @@ import { ICategoryResponse } from 'src/app/interfaces/DB_Models';
 import { Subscription, finalize } from 'rxjs';
 import { APIService } from 'src/app/services/API/api.service';
 import { SelectImageComponent } from 'src/app/modals/select-image/select-image.component';
-
+import {  RouterLink } from '@angular/router';
 @Component({
   selector: 'app-category-profile',
   templateUrl: './category-profile.page.html',
   styleUrls: ['./category-profile.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, RouterLink]
 })
 export class CategoryProfilePage implements OnInit ,OnDestroy {
 

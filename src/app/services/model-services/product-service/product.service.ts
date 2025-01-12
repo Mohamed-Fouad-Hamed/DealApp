@@ -56,6 +56,30 @@ export class ProductService {
           );
       }
 
+      getProductOffer(accountId:string,productId:string){
+
+        const URL = this.API.apiHost;
+
+        return timer(100)
+          .pipe(
+            switchMap(() => {
+              return this.http.get<MessageResponse>(`${URL}/get-product-offer?accountId=${accountId}&productId=${productId}`)
+            })
+          );
+      }
+
+      getAccoutProduct(accountId:string,productId:string){
+
+        const URL = this.API.apiHost;
+
+        return timer(100)
+          .pipe(
+            switchMap(() => {
+              return this.http.get<MessageResponse>(`${URL}/get-account-product?accountId=${accountId}&productId=${productId}`)
+            })
+          );
+      }
+
       getProductsByName(name:string){
 
         const URL = this.API.apiHost;

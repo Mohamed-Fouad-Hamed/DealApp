@@ -9,13 +9,14 @@ import { Subscription, finalize } from 'rxjs';
 import { APIService } from 'src/app/services/API/api.service';
 import { MessageResponse } from 'src/app/services/interfaces/MessageResponse';
 import { SelectImageComponent } from 'src/app/modals/select-image/select-image.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-product-profile',
   templateUrl: './product-profile.page.html',
   styleUrls: ['./product-profile.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule ,RouterLink]
 })
 export class ProductProfilePage implements OnInit {
 

@@ -2,7 +2,9 @@
   <ion-toolbar>
 
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-button  [routerLink]="['/home/main-page']" >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
 
     @if (accountProduct) {
@@ -25,9 +27,9 @@
 
   <div class="container-button-add">
     <div class="text-des-add">
-      {{'app.newitem' | translate}}
+     <p class="ion-text-center title-button-add-products" > {{'app.addNewProductsBase' | translate}} </p> 
     </div>
-    <ion-button class="button-add" [disabled]="accountProduct"  id="select-items" ><ion-icon name="create"></ion-icon></ion-button>
+    <ion-button class="button-add" [disabled]="accountProduct"  id="offer-select-items" ><ion-icon name="create"></ion-icon></ion-button>
   </div>
 
 
@@ -35,7 +37,7 @@
   
   @if (!accountProduct) {
 
-    <ion-searchbar #inputSearch [debounce]="1500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
+    <ion-searchbar #inputSearch [debounce]="3000" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
 
   }
 
@@ -58,7 +60,7 @@
   }
 
   <ng-template #accountProductsList >
-    <ion-content [scrollY]="false">
+    <ion-content [scrollY]="false" class="accountProductsList">
 
       <cdk-virtual-scroll-viewport itemSize="150" class="ion-content-scroll-host">
 
@@ -67,7 +69,7 @@
             <ion-avatar slot="start">
               <img [src]="product?.product_image" />
             </ion-avatar>
-            <ion-text>{{ product.product_name }} </ion-text>
+            <ion-text> {{ product.product_name }} </ion-text>
             @if(product?.notUpdate){
               <ion-text slot="end"  color="danger"><small>{{'accountproduct.productaddedtemporary' | translate}}</small></ion-text>
             }
@@ -90,7 +92,7 @@
 }
 </ion-content>
 
-<ion-modal trigger="select-items" #modal (willDismiss)="onWillDismiss($event)">
+<ion-modal trigger="offer-select-items" #modal (willDismiss)="onWillDismiss($event)">
  
   <ng-template>
     <app-multi-selection-search

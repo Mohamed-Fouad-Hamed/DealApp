@@ -62,7 +62,7 @@ export class OfferService {
 
   
 
-  updateOfferDetails(offerDetails:IOfferDetailsReq):Observable<MessageResponse>{
+  updateOfferDetails(offerDetails:IOfferDetailsReq[]):Observable<MessageResponse>{
       
     const URL = this.API.apiHost;
     

@@ -3,10 +3,14 @@
 }
 
 .account-product-container{
-  display:  flex;
-  justify-items: center;  
-  margin: 0 auto;
+    display:  flex;
+    justify-items: center;  
+    margin: 15px auto;
  }
+
+.grid-margin{
+  margin: 15px;
+}
 
 .img-account-product {
     width: 175px;
@@ -26,4 +30,20 @@
     margin: 5px auto;
   }
 
-  
+  .line-row{
+    margin-top: 10px;
+    padding-top: 0px;
+  }
+
+  .sin-border{
+    border: 1px solid blue;
+  }
+
+  ion-input.custom {
+    --height:20px;
+    --placeholder-opacity: 0.8;
+    --padding-bottom: 5px;
+    --padding-end: 5px;
+    --padding-start: 5px;
+    --padding-top: 0px;
+  }

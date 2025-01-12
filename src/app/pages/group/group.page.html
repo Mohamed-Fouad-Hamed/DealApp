@@ -1,9 +1,15 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button  [routerLink]="['/']" ></ion-back-button>
+      <ion-button  [routerLink]="['/home/main-page']" >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title> GROUPS </ion-title>
+    <ion-title  class="ion-text-center">{{'app_menu.group_menu' | translate}}</ion-title>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
   </ion-toolbar>
 </ion-header>
 <ion-content>

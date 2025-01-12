@@ -33,6 +33,28 @@ export interface Item {
      has_second?  : boolean;
      second_unit? : string;
      second_price? : number;
+     uomPriceList? : UomPrice[];
+     uomAccountPriceList? : UomAccountPrice[];
+  }
+
+  export interface UomPrice{
+        id: number;
+        uom_id: number;
+        unit_name: string;
+        base_cost : number;
+        base_price : number;
+        reduce_per : number;
+        cost_price : number;
+        price : number;
+  }
+
+  export interface UomAccountPrice {
+        uom_id: number;
+        base_cost : number;
+        base_price : number;
+        reduce_per : number;
+        cost_price : number;
+        price : number;
   }
 
   export interface QuantityIdx{

@@ -13,13 +13,14 @@ import { IAccountResponse, IUserResponse } from 'src/app/services/interfaces/Aut
 import { ProductCardComponent } from 'src/app/components/product-card/product-card.component';
 import { SupplierCardComponent } from 'src/app/components/supplier-card/supplier-card.component';
 import { OrderService } from 'src/app/services/model-services/order/order.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products-by-account',
   templateUrl: './products-by-account.page.html',
   styleUrls: ['./products-by-account.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, SupplierCardComponent, ProductCardComponent]
+  imports: [IonicModule, CommonModule, FormsModule, SupplierCardComponent, ProductCardComponent,RouterLink]
 })
 export class ProductsByAccountPage implements OnInit , OnDestroy {
 
@@ -140,6 +141,7 @@ export class ProductsByAccountPage implements OnInit , OnDestroy {
                           product_id : _product.product_id ,
                           product_name : _product.product_name ,
                           product_image : _product.product_image && _product.product_image.length > 0 ? `${this.apiService.apiHost}${_product.product_image}` : '' ,
+                          unit_id: _product.unit_id,
                           unit :_product.unit ,
                           price : _product.price ,
                           has_offer :_product.has_offer ,

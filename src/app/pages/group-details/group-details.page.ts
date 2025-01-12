@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MessagePageableResponse, MessageResponse } from 'src/app/services/interfaces/MessageResponse';
 import { APIService } from 'src/app/services/API/api.service';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { RouterLink } from '@angular/router';
 //scrolling
 import { ScrollingModule} from '@angular/cdk/scrolling';
 
@@ -19,7 +19,7 @@ import { ScrollingModule} from '@angular/cdk/scrolling';
   templateUrl: './group-details.page.html',
   styleUrls: ['./group-details.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, TranslateModule , ScrollingModule  ]
+  imports: [IonicModule, CommonModule, FormsModule, TranslateModule , ScrollingModule , RouterLink  ]
 })
 export class GroupDetailsPage implements OnInit ,OnDestroy{
 
@@ -106,7 +106,7 @@ export class GroupDetailsPage implements OnInit ,OnDestroy{
                                                     }), map((message:MessagePageableResponse)=>{
                                                       this.productsCount = message.count;
                                                       const products = message.list.map((product:IProductResponse)=>{
-                                                         product.product_image = product.product_image !== undefined && product.product_image !== '' ? `${this.apiService.apiHost}${product.product_image}` : '../../assets/images/no-image.jpg';
+                                                         product.product_image = product.product_image  && product.product_image !== '' ? `${this.apiService.apiHost}${product.product_image}` : '../../assets/images/no-image.jpg';
                                                          return product;
                                                       });
                                                       
@@ -155,7 +155,7 @@ export class GroupDetailsPage implements OnInit ,OnDestroy{
       }),map((message:MessagePageableResponse)=>{
         this.productsCount = message.count;
         const products = message.list.map((product:IProductResponse)=>{
-           product.product_image = product.product_image !== undefined && product.product_image !== '' ? `${this.apiService.apiHost}${product.product_image}` : '../../assets/images/no-image.jpg';
+           product.product_image = product.product_image  && product.product_image !== '' ? `${this.apiService.apiHost}${product.product_image}` : '../../assets/images/no-image.jpg';
            return product;
         });
 
@@ -186,7 +186,7 @@ export class GroupDetailsPage implements OnInit ,OnDestroy{
           (ev as InfiniteScrollCustomEvent).target.complete();
         }),map((message:MessageResponse)=>{
           const products = message.list.map((product:IProductResponse)=>{
-             product.product_image = product.product_image !== undefined && product.product_image !== '' ? `${this.apiService.apiHost}${product.product_image}` : '../../assets/images/no-image.jpg';
+             product.product_image = product.product_image  && product.product_image !== '' ? `${this.apiService.apiHost}${product.product_image}` : '../../assets/images/no-image.jpg';
              return product;
           });
           return products;
@@ -208,7 +208,7 @@ export class GroupDetailsPage implements OnInit ,OnDestroy{
           (ev as InfiniteScrollCustomEvent).target.complete();
         }),map((message:MessageResponse)=>{
           const products = message.list.map((product:IProductResponse)=>{
-            product.product_image = product.product_image !== undefined && product.product_image !== '' ? `${this.apiService.apiHost}${product.product_image}` : '../../assets/images/no-image.jpg';
+            product.product_image = product.product_image  && product.product_image !== '' ? `${this.apiService.apiHost}${product.product_image}` : '../../assets/images/no-image.jpg';
              return product;
           });
           this.productsLoading = false ;

@@ -1,9 +1,9 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { map, Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { IonicModule , LoadingController} from '@ionic/angular';
+import { finalize, map, Subscription } from 'rxjs';
+import { Router,RouterLink } from '@angular/router';
 import { GroupService } from 'src/app/services/model-services/group-service/group.service';
 import { AuthenticationService } from 'src/app/services/Auth-services/authentication.service';
 import { APIService } from 'src/app/services/API/api.service';
@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './list-groups.page.html',
   styleUrls: ['./list-groups.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule , TranslateModule]
+  imports: [IonicModule, CommonModule, FormsModule , TranslateModule , RouterLink]
 })
 
 export class ListGroupsPage implements OnInit,OnDestroy {
@@ -37,10 +37,20 @@ export class ListGroupsPage implements OnInit,OnDestroy {
   private groupsSubscription?:Subscription;
   private subscription? : Subscription;
   
-  constructor() { 
+  constructor( private loadingCtrl : LoadingController ) { }
 
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      spinner: "lines-sharp",     
+      mode: "ios"
+    });
+
+    loading.present();
   }
 
+  async hideLoading(){
+    await this.loadingCtrl.dismiss();
+   }
   async ngOnInit() {
 
     this.initiUser();
@@ -48,7 +58,7 @@ export class ListGroupsPage implements OnInit,OnDestroy {
    }
  
    initiUser(){
- 
+     this.showLoading();
      this.authService.getUserAuth().subscribe((oUser)=>{
        this.observableUser = oUser;
        this.initiGroups(this.observableUser!.account_type);
@@ -59,18 +69,25 @@ export class ListGroupsPage implements OnInit,OnDestroy {
    initiGroups(account_type:string){
  
      this.groupService.getGroupsByAccountType(account_type)
-         .pipe(map((res:IGroupResponse[])=>{
+         .pipe(finalize(()=>{
+          setTimeout(()=> this.hideLoading() ,1000);
+         }), map((res:IGroupResponse[])=>{
             const groups = res.map((group:any)=> { 
-               group.img = `${this.apiService.apiHost}${group.img}` ; 
+              const groupImage =  group.product_image !== undefined 
+              && group.img !== '' ? `${this.apiService.apiHost}${group.img}` : 'assets/images/no-pictures.png'; 
+               group.img = groupImage ; 
                return group;
              } );
  
              return groups;
            }))
-         .subscribe((groups)=>{
+         .subscribe({next:(groups)=>{
              this.groups! = groups;
  
-     });
+     },error:(err)=>{
+          console.log(err);
+          setTimeout(()=> this.hideLoading() ,1000);
+     }});
  
    }
 
@@ -81,6 +98,14 @@ export class ListGroupsPage implements OnInit,OnDestroy {
       this.groupsSubscription.unsubscribe();
     if(this.userSubscription)
       this.userSubscription.unsubscribe();
+  }
+
+  navigateTo(url:string){
+    this.router.navigate([url]);
+  }
+
+  groupClicked(event:any){
+     this.navigateTo(`/home/main-page/group-details/${event.id}`)
   }
 
 

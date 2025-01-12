@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-button  [routerLink]="['/home/main-page']" >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     @if(step===0){
       <ion-title class="ion-text-center"> {{'accountoffer.off_set_activate' | translate}} </ion-title>
@@ -13,15 +15,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content >
 
-  <ion-buttons>
-    <ion-button [disabled]="currentOfferDetails"  id="select-items" >{{'app.newitem' | translate}}</ion-button>
-  </ion-buttons>
+  <div class="container-button-add">
+    <div class="text-des-add">
+      <p class="ion-text-center title-button-add-products" > {{'app.addNewProductsOffer' | translate}} </p> 
+    </div>
+    <ion-button class="button-add" [disabled]="currentOfferDetails"  id="select-items" ><ion-icon name="create"></ion-icon></ion-button>
+  </div>
+
 
   @if (step===1 && !currentOfferDetails) {
 
-      <ion-searchbar #inputSearch [debounce]="1500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
+      <ion-searchbar #inputSearch [debounce]="3000" placeholder="{{ 'app.search' | translate }}"  (ionInput)="searchbarInputAccountProducts($event)"></ion-searchbar>
   }
 
   @if(step===0){
@@ -149,6 +155,7 @@
       (searchEmit)="searchValueEmit($event)"
       (selectionChange)="itemSelected($event)"
       (selectionCancel)="modal.dismiss()"
+      (infiniteScrollEmit)="infiniteScrollEmit($event)"
     ></app-multi-selection-search>
   </ng-template>
 
