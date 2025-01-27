@@ -130,6 +130,10 @@ export interface IAccountOfferRes{
 
     accountId : number;
 
+    accountName? : string;
+
+    accountImage? : string;
+
     off_name : string;
 
     o_date : Date;
@@ -182,6 +186,14 @@ export interface IProductOfferDetails{
 }
 //=== account products
 
+export interface IProductGroup{
+    account_id : number;
+    product_id : number;
+    product_name : string;
+    product_image : string;
+    details : IOrderProduct[] ;
+}
+
 export interface IOrderProduct{
     account_id : number;
     product_id : number;
@@ -233,6 +245,7 @@ export interface IOrderDetails{
     product_id : number;
     product_name:string;
     product_image:string;
+    unit_id : number ;
     unit : string;
     max_quan : number;
     max_limit : number;
@@ -299,7 +312,14 @@ export class Order  {
     }
 
     get productsCount():number{
-        return this.orderDetails.length;
+
+        const uniqueArray = this.orderDetails.filter((value, index, self) =>
+            index === self.findIndex((t) => (
+                t.product_id === value.product_id
+            ))
+        )
+
+        return  uniqueArray.length ; // this.orderDetails.length;
     }
 
     productsValue() : number {
@@ -353,6 +373,7 @@ export class OrderDetails {
     product_id: number = 0;
     product_name: string = '';
     product_image: string ='';
+    unit_id : number = 0 ;
     unit: string ='';
     max_quan: number = 0;
     max_limit: number = 0;
@@ -434,6 +455,7 @@ export interface IOrderDetailsReq{
     id : number;
     ord_id : number;
     product_id : number;
+    unit_id : number ;
     unit : string;
     max_quan : number;
     max_limit : number;
@@ -504,6 +526,7 @@ export interface IOrderOptionReq{
       orderDetails.product_id = _detail.product_id ;
       orderDetails.product_name = _detail.product_name ;
       orderDetails.product_image = _detail.product_image ;
+      orderDetails.unit_id = _detail.unit_id;
       orderDetails.unit = _detail.unit ;
       orderDetails.percent_discount = _detail.percent_discount ;
       orderDetails.max_quan = _detail.max_quan ;
@@ -555,6 +578,7 @@ export interface IOrderOptionReq{
                 id : detail.id,
                 ord_id: order.id,
                 product_id : detail.product_id ,
+                unit_id : detail.unit_id,
                 unit :  detail.unit ,
                 max_quan :  detail.max_quan ,
                 max_limit :  detail.max_limit ,

@@ -2,7 +2,7 @@
   <ion-card-content >
     <ion-grid >
       <ion-row   class="ion-justify-content-center" >
-        <ion-col size="12"> 
+        <ion-col size="10"> 
           <div class="row-center-img">
 
             @if (currentProduct!.product_image && currentProduct!.product_image.length > 0 ) {
@@ -13,7 +13,7 @@
               <img class="img-product" [alt]="currentProduct!.product_name" [src]="currentProduct!.product_image" />
             </ng-template>
            
-            @if (currentProduct!.percent_discount > 0 ) {
+            @if (currentUnit!.percent_discount > 0 ) {
               <ng-container [ngTemplateOutlet]="productDiscount"></ng-container>
             }
 
@@ -21,48 +21,70 @@
               <span class="product-discount">
                 {{percentage}}
              </span>
-            </ng-template>
+            </ng-template> 
 
           </div>
         </ion-col>
+        <ion-col class="center-hor-ver" size="auto">
+          <div class="prices-container">
+            <div>
+                @if(currentUnit!.has_offer){
+                  <ng-container [ngTemplateOutlet]="hasOfferPrice"></ng-container>
+                }
+                <ng-template #hasOfferPrice>
+                  <p class="ion-col-center price-ignore">  {{priceStr}} </p>
+                </ng-template> 
+              </div>
+              <div>
+                @if(currentUnit!.has_offer){
+                  <ng-container [ngTemplateOutlet]="hasOfferNativePrice"></ng-container>
+                }
+                @else
+                {
+                  <ng-container [ngTemplateOutlet]="hasNotOfferNativePrice"></ng-container>
+                }
+                <ng-template #hasOfferNativePrice >
+                  <p class="ion-col-center">   {{oPriceStr}} </p>
+                </ng-template>
+                <ng-template #hasNotOfferNativePrice >
+                  <p class="ion-col-center">   {{priceStr}} </p>
+                </ng-template> 
+              </div>  
+            </div>
+        </ion-col>
       </ion-row>
       <ion-row   class="ion-justify-content-center" >
-        <ion-col size="12"> 
-          <p class="ion-col-center">{{currentProduct!.product_name}}</p>
+        <ion-col size="auto"> 
+          <div class="ion-col-center product-name-style"> {{currentProduct!.product_name}} </div>
         </ion-col>
-      </ion-row>   
-      <ion-row   class="ion-justify-content-around" >
-        <ion-col size="5"> 
-          @if(currentProduct!.has_offer){
-            <ng-container [ngTemplateOutlet]="hasOfferPrice"></ng-container>
-          }
-          <ng-template #hasOfferPrice>
-            <p class="ion-col-center price-ignore">  {{priceStr}} </p>
-          </ng-template>
-        </ion-col>
-        <ion-col size="5"> 
-          @if(currentProduct!.has_offer){
-            <ng-container [ngTemplateOutlet]="hasOfferNativePrice"></ng-container>
-          }
-          @else
-          {
-            <ng-container [ngTemplateOutlet]="hasNotOfferNativePrice"></ng-container>
-          }
-          <ng-template #hasOfferNativePrice >
-            <p class="ion-col-center">   {{oPriceStr}} </p>
-          </ng-template>
-          <ng-template #hasNotOfferNativePrice >
-            <p class="ion-col-center">   {{priceStr}} </p>
-          </ng-template>
-        </ion-col>
+      </ion-row> 
+      <ion-row class="ion-justify-content-center" >
+        <ion-col  size="auto">
+          <ion-list>
+            <ion-item>
+              <ion-select
+                [interfaceOptions]="customProductSelectOptions"
+                interface="alert"
+                [value]="currentUnit!"
+                okText="{{'alert.ok' | translate}}"
+                cancelText="{{'alert.cancel' | translate}}"
+                (ionChange)="handleChange($event)"
+              >
+                @for (product of currentProduct!.details; track product.unit_id) {
+                  <ion-select-option [value]="product">{{ product.unit }}</ion-select-option>
+                }
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-col> 
       </ion-row>   
       <ion-row  >
         <ion-col > 
-        @if( this.currentProduct!.quan_req! === 0){
-          <ion-button color="primary" expand="block" fill="outline" (click)="newProduct()" > Add to card </ion-button>
-        }@else if( this.currentProduct!.quan_req! > 0){
-          <app-quantity-input [detail]="currentProduct!" (quantityChange)="updateProduct($event)"></app-quantity-input>
-        }
+            @if(currentUnit!.quan_req! === 0){
+              <ion-button  color="primary" expand="block" fill="outline" (click)="newProduct()" > {{'order.addToCard' | translate }}</ion-button>
+            }@else if( currentUnit!.quan_req! > 0){
+              <app-quantity-input [detail]="currentUnit!" (quantityChange)="updateProduct($event)"></app-quantity-input>
+            } 
         </ion-col>
       </ion-row>  
     </ion-grid>

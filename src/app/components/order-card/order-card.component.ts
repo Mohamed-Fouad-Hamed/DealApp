@@ -41,7 +41,9 @@ export class OrderCardComponent  implements OnInit ,OnDestroy{
       this.sellerSubscription!.unsubscribe();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+   
+  }
 
   deleteOrder(){
     this.deleteOrderEmitter.emit();

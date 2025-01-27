@@ -57,7 +57,7 @@ export class IncomingOrdersPage implements OnInit , OnDestroy{
 
    getIncomingOrders(){
     this.subscriptionIncomingOrders = 
-        this.orderService.getOrdersBySeller(this.accountId!)
+        this.orderService.getOrdersByBuyer(this.accountId!)
                          .pipe( map((__orders:any) => {
 
                            const ordersList = __orders.list.map((_order:any)=>{

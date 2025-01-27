@@ -1,9 +1,9 @@
 .q-i-container{
+    margin-top : 3px;
     border: 2px solid #3d88ea;
     border-radius: 5px;
     height: 37px;
-    //display: flex;
-    //flex-direction: row;
+    text-align: center;
 }
 
 .icon {
@@ -14,9 +14,12 @@
 }
 
 .text-quantity{
-    display: inline-block;
-    vertical-align: middle;
+    display: inline-block;  
+    vertical-align: top;
+    padding-top: 7px;  
+    text-align: center;
     height: 35px;
+    min-width: calc(100% - 50px);
     width: calc(100% - 50px);
 }
 

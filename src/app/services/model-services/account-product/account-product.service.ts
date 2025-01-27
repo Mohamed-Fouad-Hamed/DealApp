@@ -46,6 +46,16 @@ export class AccountProductService {
       );
   }
 
+  getProductsOfferAccount(accountId:string){
+    const URL = this.API.apiHost;
+    return timer(100)
+      .pipe(
+        switchMap(() => {
+          return this.http.get<MessageResponse>(`${URL}/get-products-offer-account?accountId=${accountId}`)
+        })
+      );
+  }
+
   getAccountProduct(accountId:string,productId:string){
     const URL = this.API.apiHost;
     return timer(100)

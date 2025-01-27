@@ -55,7 +55,7 @@ export const routes: Routes = [
         }
         ,
         {
-          path: 'products-by-account/:accountId',
+          path: 'products-by-account/:accountId/:selectedTab',
           children:[{
             path:'' ,
             loadComponent: () => import('../pages/products-by-account/products-by-account.page').then( m => m.ProductsByAccountPage),

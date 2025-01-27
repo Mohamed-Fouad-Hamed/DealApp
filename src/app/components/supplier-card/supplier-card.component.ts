@@ -19,6 +19,7 @@ export class SupplierCardComponent  implements OnInit {
 
   supplier = input.required<IAccountResponse>();
 
+
   public currentAccount?:IAccountResponse = {
     id : 0 ,
     account_type:'',
@@ -37,13 +38,14 @@ export class SupplierCardComponent  implements OnInit {
    currentDate = Date.now();
 
   constructor() {  
-    effect(()=>{
+     effect(()=>{
       this.currentAccount = this.supplier();
-    });
+     })
    }
    
   ngOnInit() {
-    
+    this.currentAccount = this.supplier();
+  
   }
 
   ratingChange(v:any){

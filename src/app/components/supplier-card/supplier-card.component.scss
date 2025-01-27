@@ -1,2 +1,86 @@
+.seller-logo{
+    width: 75%;
+    height: 75%;
+    max-height: 150px;
+    max-width: 125px;
+    margin: 5px;
+    box-sizing: border-box;
+    border: 1px rgb(161, 158, 158) solid;
+    border-radius: 5px;
+    overflow: hidden;
+    object-fit: cover;
+    z-index: 2;
+}
 
+// account as supplier styles
+.supplier-card-container {
+    background-color: #ffffff;
+    width: auto;
+    height: 130px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 2px solid rgb(5, 16, 111) ;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  }
+  
+  .supplier-card-header{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    height : 100%;
+    padding: 5px;
+  }
+  
+  .supplier-card-logo {
+    margin: 5px;
+    width: 25%;
+    height: 100%;
 
+  }
+  
+  .supplier-logo{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 3px white solid;
+    border-radius: 15%;
+    overflow: hidden;
+    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+    transform: translatey(0px);
+    object-fit: cover;
+    z-index: 2;
+  }
+  
+  .supplier-card-info {
+    display: flex;
+    justify-content : flex-start;
+    align-items:center;
+    width: 45%;
+    height: 100%;
+  }
+  
+  .supplier-card-info-rows {
+    display: flex;
+    flex-direction: column;
+    justify-content : center;
+    align-items:center;
+    width: 100%;
+  }
+  
+  .supplier-card-info-center-content {
+   margin: 10px  10px ;
+   width:100%;
+  }
+  
+  .supplier-card-options {
+    margin: 1px;
+    width: 30%;
+    height: 100%;
+    border: 1px solid black ;
+  }
+  

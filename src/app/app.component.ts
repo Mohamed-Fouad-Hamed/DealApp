@@ -40,6 +40,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 register();
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -93,9 +94,11 @@ export class AppComponent implements OnInit , OnDestroy{
 
   bMenus = basicMenus ;
 
+
   constructor() {
 
     addIcons({
+      "cart-svg":'assets/icon/cart.svg',
       chevronBackCircleOutline,
       chevronForwardCircleOutline,
       chevronForwardOutline,
@@ -118,6 +121,8 @@ export class AppComponent implements OnInit , OnDestroy{
       checkmarkCircleOutline,
       warningOutline
      });
+
+
 
     this.initApiService();
     

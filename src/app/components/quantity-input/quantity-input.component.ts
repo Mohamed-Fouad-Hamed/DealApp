@@ -30,6 +30,9 @@ export class QuantityInputComponent  implements OnInit,OnDestroy {
  subMesContent?:Subscription;
  mesContent?:string;
 
+ subNoZero?:Subscription;
+ noZeroMsg?:string;
+
   constructor(private alertController: AlertController,
                       private translate: TranslateService           
   ) {
@@ -44,18 +47,24 @@ export class QuantityInputComponent  implements OnInit,OnDestroy {
       this.mesContent! = text;
      });
 
+     this.subNoZero = this.translate.get('order.no_zero_input').subscribe((text)=>{
+      this.noZeroMsg! = text;
+     });
+
    }
 
 
 
   ngOnDestroy(): void {
 
-   if(this.subMesContent!)
+   if(this.subMesContent)
     this.subMesContent!.unsubscribe();
 
-   if(this.subMesHeader!)
+   if(this.subMesHeader)
     this.subMesHeader!.unsubscribe();
 
+   if(this.subNoZero)
+    this.subNoZero!.unsubscribe();
   }
 
   ngOnInit() {}
@@ -113,8 +122,10 @@ export class QuantityInputComponent  implements OnInit,OnDestroy {
               {
                   text: 'Ok',
                   handler: (alertData) => { 
-                    if(alertData.quanValue > this.maxQuan)
+                    if(this.maxQuan > 0 && alertData.quanValue > this.maxQuan)
                       this.presentAlert();
+                    else if(alertData.quanValue == 0)
+                      this.noZeroAlert();
                     else{
                       const quanAlert = alertData.quanValue ;
                       this.setQuantity(quanAlert);
@@ -137,4 +148,14 @@ export class QuantityInputComponent  implements OnInit,OnDestroy {
     await alert.present();
   }
 
+  async noZeroAlert( ) {
+    const alert = await this.alertController.create({
+      header: this.mesHeader!,
+      subHeader: '',
+      message: `${this.noZeroMsg}`,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
 }

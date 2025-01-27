@@ -68,7 +68,7 @@ export class SuppliersPagePage implements OnInit , OnDestroy{
                             .pipe(map((accounts:any)=>{
 
                                 const accountsArr = accounts.map((account:IAccountResponse)=>{
-                                    account.account_logo = `${this.apiService.apiHost}${account.account_logo}` ;
+                                     account.account_logo = this.apiService.getResourcePath(account.account_logo) ;
                                     return account;
                                 });
 
@@ -78,7 +78,7 @@ export class SuppliersPagePage implements OnInit , OnDestroy{
   }
 
   supplierClicked(accountId:number){
-    const url = `${'home\/products-by-account\/'+accountId}`;
+    const url = `${'home\/products-by-account\/'+accountId+'\/all'}`;
     this.router.navigateByUrl(url);
   }
 }

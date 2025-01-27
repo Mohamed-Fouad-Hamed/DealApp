@@ -11,10 +11,12 @@
           <ion-label>{{ 'app_menu.main' | translate }}</ion-label>
         </ion-tab-button>
     
-        <ion-tab-button tab="{{cartPage}}" (click)="this.titleHomePage='app_menu.shopping_cart'">
-          <ion-icon name="cart-outline"></ion-icon>
+        <ion-tab-button id="cart-btn" tab="{{cartPage}}" (click)="this.titleHomePage='app_menu.shopping_cart'">
+          <ion-icon  name="cart-svg"></ion-icon>
           <ion-label> {{ 'app_menu.shopping_cart' | translate }} </ion-label>
-          <ion-badge color="primary">22k</ion-badge>
+          @if(countOrders > 0 ){
+             <ion-badge color="primary" id="cart-badge" >{{ countOrders }}</ion-badge>
+          }
         </ion-tab-button>
     
         <ion-tab-button tab="{{suppliersPage}}" (click)="this.titleHomePage='app_menu.suppliers'">

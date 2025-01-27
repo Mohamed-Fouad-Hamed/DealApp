@@ -76,7 +76,7 @@
 
 
     
-      <ion-accordion-group>
+      <!-- <ion-accordion-group>
         @for(item of bMenus.basicMenus;track item.name ){
             <ion-accordion >
               <ion-item slot="header">
@@ -85,13 +85,13 @@
               <app-accordion [item]="item" slot="content"></app-accordion>
             </ion-accordion>
         }
-      </ion-accordion-group>
+      </ion-accordion-group> -->
 
         <ion-list>
           <ion-item detail="false"  (click)="logOut()" >
             <ion-label>
               <ion-text color="primary">
-                Log Out
+                {{'login.logout' | translate}}
               </ion-text>
             </ion-label>
           </ion-item>

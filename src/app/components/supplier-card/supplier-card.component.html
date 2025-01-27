@@ -2,7 +2,7 @@
 <div class="supplier-card-container">
   <div class="supplier-card-header">
     <div class="supplier-card-logo">
-         <img class="logo-supplier" [src]="currentAccount!.account_logo" />
+         <img class="seller-logo" [src]="currentAccount!.account_logo" />
     </div>
     <div class="supplier-card-info">
       <div class="supplier-card-info-rows">
@@ -11,14 +11,14 @@
         </ion-text>
         <ion-text class="supplier-card-info-center-content">
           <rating-view [rating]="4.6"></rating-view>
-          <rating-view [rating]="currentAccount!.rating"></rating-view>
-          <input-rating [rating]="rating" (ratingChange)="ratingChange($event)"></input-rating> 
+          <!-- <rating-view [rating]="currentAccount!.rating"></rating-view>
+          <input-rating [rating]="rating" (ratingChange)="ratingChange($event)"></input-rating>  -->
         </ion-text>
       </div>
     </div>
-    <div class="supplier-card-options">
+    <!-- <div class="supplier-card-options">
        option
-    </div>
+    </div> -->
 
   </div>
   

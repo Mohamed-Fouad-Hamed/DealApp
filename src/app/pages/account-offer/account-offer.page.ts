@@ -177,45 +177,49 @@ export class AccountOfferPage implements OnInit,OnDestroy {
       if(offer) {
     
         const  _accountOfferRes : IAccountOfferRes = {
+         
+          id: offer.id,
 
-            id : offer.id ,
-        
-            accountId : offer.accountId ,
-        
-            off_name : offer.off_name,
-        
-            o_date :  offer.o_date ,
-        
-            startAt :  offer.startAt ,
-        
-            endAt :  offer.endAt ,
+          accountId: offer.accountId,
 
-            o_image : offer.o_image,
+          accountName: offer.accountName,
 
-            occasion_image : offer.occasion_image ,
-        
-            is_active : offer._active ,
-            
-          offerDetailsList : offer.offerDetailsList.map((offerDetails:any)=>{ 
+          accountImage: offer.accountImage,
 
-              const offerDetailsRes : IOfferDetailsRes ={
-                  id : offerDetails.id,
-                  offer_id : offer.id ,
-                  product_id : offerDetails.product_id,
-                  product_name : offerDetails.product_name  ,
-                  product_image : offerDetails.product_image,
-                  unit : offerDetails.unit,
-                  max_quan : offerDetails.max_quan,
-                  max_limit : offerDetails.max_limit,
-                  percent_discount : offerDetails.percent_discount,
-                  price : offerDetails.price,
-                  o_price : offerDetails.o_price
-         }
+          off_name: offer.off_name,
 
-           return offerDetailsRes;
+          o_date: offer.o_date,
 
-        })
+          startAt: offer.startAt,
 
+          endAt: offer.endAt,
+
+          o_image: offer.o_image,
+
+          occasion_image: offer.occasion_image,
+
+          is_active: offer._active,
+
+          offerDetailsList: offer.offerDetailsList.map((offerDetails: any) => {
+
+            const offerDetailsRes: IOfferDetailsRes = {
+              id: offerDetails.id,
+              offer_id: offer.id,
+              product_id: offerDetails.product_id,
+              product_name: offerDetails.product_name,
+              product_image: offerDetails.product_image,
+              unit: offerDetails.unit,
+              max_quan: offerDetails.max_quan,
+              max_limit: offerDetails.max_limit,
+              percent_discount: offerDetails.percent_discount,
+              price: offerDetails.price,
+              o_price: offerDetails.o_price
+            };
+
+            return offerDetailsRes;
+
+          })
+         
         }
 
           this.offerRes = _accountOfferRes;

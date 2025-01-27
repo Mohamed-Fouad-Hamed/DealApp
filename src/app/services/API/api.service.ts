@@ -74,7 +74,7 @@ get headerJsonType() {
 }
 
 getResourcePath(resource:string){
-  return `${this.apiHost + resource}`
+  return resource && resource !=='' ? `${this.apiHost + resource}` : 'assets/images/no-image.jpg';
 }
 
 }

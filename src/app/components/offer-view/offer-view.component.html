@@ -1,0 +1,16 @@
+<ion-card>
+  <img class="image-header" alt="{{offer!.accountName}}"  src="{{offer!.o_image!}}" />
+  <ion-card-header>
+    <ion-card-title>{{offer!.accountName}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-end offer-endat"> {{'accountoffer.endat' | translate}} : {{endAt}} </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

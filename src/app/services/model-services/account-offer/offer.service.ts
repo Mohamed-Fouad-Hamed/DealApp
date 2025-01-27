@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { APIService } from '../../API/api.service';
 import { delay, Observable, switchMap, timer } from 'rxjs';
 import { MessageResponse } from '../../interfaces/MessageResponse';
-import { IAccountOfferReq, IOfferDetailsReq } from 'src/app/interfaces/DB_Models';
+import { IAccountOfferReq, IAccountOfferRes, IOfferDetailsReq } from 'src/app/interfaces/DB_Models';
 
 @Injectable({
   providedIn: 'root'
@@ -37,14 +37,14 @@ export class OfferService {
   }
 
   
-  getOffers(){
+  getOffersByType(accountType:string,accountId:number){
 
     const URL = this.API.apiHost;
 
     return timer(100)
       .pipe(
         switchMap(() => {
-          return this.http.get<MessageResponse>(`${URL}/offers`)
+          return this.http.get<MessageResponse>(`${URL}/offers-by-type?accountType=${accountType}&accountId=${accountId}`)
         })
       );
   }

@@ -5,7 +5,7 @@
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title  class="ion-text-center">{{ sellerAccount!.account_name }}</ion-title>
+    <ion-title  class="ion-text-center">{{ sellerAccount.account_name }}</ion-title>
     <span class="border-bottom-part-one"></span>
     <span class="border-bottom-part-two"></span>
     <span class="border-bottom-part-three"></span>
@@ -13,11 +13,42 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <app-supplier-card [supplier]="sellerAccount!" ></app-supplier-card>
+<ion-content >
+  <app-supplier-card [supplier]="sellerAccount" ></app-supplier-card>
+  <div class="header-group">
+    <ion-grid class="on-padding">
+      <ion-row>
+         <ion-col size="12">
+             <ion-segment [(ngModel)]="groupValue" scrollable >
+
+              <ion-segment-button value="all" (click)="selectAllButtonClicked()">
+                <ion-label>
+                  {{ 'app.select_all' | translate }}
+                </ion-label>
+               </ion-segment-button>
+  
+              <ion-segment-button value="offers" (click)="selectOffersButtonClicked()">
+                <ion-label>
+                  {{ 'app.select_offers' | translate }}
+                </ion-label>
+               </ion-segment-button>
+  
+              @for(category of categories ; track category.name){
+                 <ion-segment-button (click)="segmentButtonClicked(category)">
+                  <ion-label>
+                    {{category.name}}
+                  </ion-label>
+                 </ion-segment-button>
+              }
+             </ion-segment>
+         </ion-col> 
+      
+      </ion-row> 
+    </ion-grid>
+  </div>
   <ion-grid class="ion-padding">
     <ion-row>
-      @for(product of accountProducts ; track product.product_id){
+      @for( product of accountProducts ; track product.product_id){
        <ion-col size="6" >
          <app-product-card 
             [account]="sellerAccount!" 

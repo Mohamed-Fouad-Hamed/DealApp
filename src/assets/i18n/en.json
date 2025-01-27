@@ -8,8 +8,11 @@
 	"app.cancelDate":" Cancel ",
 	"app.show_more":" Show more ... ",
 	"app.select_all":" All ",
+	"app.select_offers":" Offers ",
 	"app.addNewProductsBase":"Add new products to your list",
 	"app.addNewProductsOffer":"Add from your products to offer list",
+	"alert.ok":"Ok",
+	"alert.cancel":"Cancel",
 
 	"app_menu.main":" Main ",
 	"app_menu.main_list":" Main menu ",
@@ -85,6 +88,7 @@
 	"login.forgetpassword":"Forget password",
 	"login.submit":"Login",
 	"login.notcredential":" Login or password not credential ",
+	"login.logout":"Log out ",
 	"forgot.loginnotfound":" Login name does not exist, please check it",
 	"forgot.createnewpassword":" Create new password " ,
 	"forgot.note":" Please provide an email address or phone number that you used when you signed up for your Evernote account.",
@@ -227,6 +231,8 @@
 	"order.receive_status":"The order was received",
 	"order.show_details":"Show details",
 	"order.show_status":"Show status",
+	"order.addToCard":"Add to card",
+	"order.no_zero_input":"Invalid Value",
 
 
 	"single_selection_searchbox.additem":" Add ",

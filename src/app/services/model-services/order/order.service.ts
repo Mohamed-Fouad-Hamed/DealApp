@@ -144,7 +144,7 @@ export class OrderService implements OnInit, OnDestroy{
     const _ord = new Order();
     _ord.seller_id = seller.id ;
     _ord.seller_name = seller.account_name ;
-    _ord.seller_logo = this.apiService.getResourcePath(seller.account_logo);
+    _ord.seller_logo = seller.account_logo;
     _ord.buyer_id =  this.currentUser!.account_id ;
     _ord.buyer_name = this.currentUser!.account_name ;
     _ord.currency = seller.currency!;
@@ -152,6 +152,7 @@ export class OrderService implements OnInit, OnDestroy{
     _ord.min_value = seller.min_value;
     _ord.delivery_period = seller.delivery_period;
     this.orders.push(_ord);
+    this.setOrdersBehaviorSubject(this.orders);
     return this.orders.length - 1;
   }
 
@@ -172,6 +173,7 @@ export class OrderService implements OnInit, OnDestroy{
       _ord_d.product_id  = detail.product_id ;
       _ord_d.product_name = detail.product_name ; 
       _ord_d.product_image = detail.product_image ;
+      _ord_d.unit_id = detail.unit_id ;
       _ord_d.unit = detail.unit ;
       _ord_d.max_quan = detail.max_quan ;
       _ord_d.max_limit = detail.max_limit ;

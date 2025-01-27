@@ -8,6 +8,7 @@
 	"app.cancelDate":" إلغاء ",
 	"app.show_more":" عرض المزيد ... ",
 	"app.select_all":" الكل ",
+	"app.select_offers":" العروض ",
 	"app.addNewProductsBase":"أصف منتجات جديدة إلى قائمتك",
 	"app.addNewProductsOffer":" أصف من منتجاتك إلى قائمة العرض",
 
@@ -26,6 +27,8 @@
 	"app_menu.group_details":" تفاصيل المجموعه ",
 	"app_menu.orders_incoming":" الطلبات الواردة ",
 	"app_menu.orders_outcoming":" الطلبات الصادرة ",
+	"alert.ok":"أوافق",
+	"alert.cancel":"إلغاء",
 
 	"lang.english":"إنجليزى",
 	"lang.arabic":"عربى",
@@ -82,6 +85,7 @@
 	"login.forgetpassword":" نسيت كلمة المرور ",
 	"login.submit":"تسجيل الدخول",
 	"login.notcredential":" تسجيل الدخول أو كلمة المرور ليست بيانات اعتماد ",
+	"login.logout":"تسجيل الخروج",
 	"forgot.loginnotfound":" إسم الدخول غير موجود يرجى التأكد منه ",
 	"forgot.createnewpassword":" إنشاء كلمة مرور جديدة" ,
 	"forgot.note":"يرجى تقديم عنوان البريد الإلكتروني أو رقم الهاتف الذي استخدمته عند التسجيل في حساب الصفقة الخاص بك.",
@@ -219,8 +223,8 @@
 	"order.receive_status":"الطلب تم إستلامة",
 	"order.show_details":" عرض التفاصيل",
 	"order.show_status":" عرض حالة الطلب",
-
-
+    "order.addToCard":"أضف إلى العربه",
+    "order.no_zero_input":"قيمة غير صحيحه",
 
 	"single_selection_searchbox.additem":" إضافة ",
 	"single_selection_searchbox.selectitem":" إختيار  ",
