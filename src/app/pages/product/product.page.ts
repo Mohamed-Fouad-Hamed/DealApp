@@ -54,19 +54,27 @@ export class ProductPage implements OnInit , OnDestroy {
   private observableUser? : IUserResponse;
 
   product:IProductRequest = {
-          id:0,
-          name:'',
-          descr:'',
-          has_first:false,
-          first_unit:'',
-          first_price:0,
-          unit_count:0,
-          has_second:false,
-          second_unit:'',
-          second_price:0,
-          category_id:0,
-          factory_id:0
-        };
+    id: 0,
+    name: '',
+    descr: '',
+    has_first: false,
+    first_unit: '',
+    first_price: 0,
+    unit_count: 0,
+    has_second: false,
+    second_unit: '',
+    second_price: 0,
+    category_id: 0,
+    factory_id: 0,
+    uom_group: 0,
+    uom_base: 0,
+    base_cost: 0,
+    base_price: 0,
+    accept: false,
+    reject: false,
+    uomPriceList: [],
+    uomBarcodeList: []
+  };
  
   productResponse:IProductResponse = {
           id:0,

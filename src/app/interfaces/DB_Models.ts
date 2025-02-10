@@ -62,9 +62,11 @@ export interface IProductRequest{
     base_price:number;
     accept:boolean;
     reject:boolean;
+    uomPriceList:IUomPriceRequest[];
+    uomBarcodeList:IUomBarcodeRequest[];
 }
 
-export interface IUomProductRequest {
+export interface IUomPriceRequest {
     id:number;
     productId:number;
     uomId:number;
@@ -76,7 +78,7 @@ export interface IUomProductRequest {
     price_auto:boolean;
 }
 
-export interface IBarcodeProductRequest {
+export interface IUomBarcodeRequest {
     id:number;
     productId:number;
     uomId:number;
