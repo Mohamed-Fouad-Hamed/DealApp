@@ -54,6 +54,7 @@ export class ProductPage implements OnInit , OnDestroy {
   private observableUser? : IUserResponse;
 
   product:IProductRequest = {
+          id:0,
           name:'',
           descr:'',
           has_first:false,

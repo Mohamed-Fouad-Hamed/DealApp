@@ -72,6 +72,7 @@ export class CartPagePage implements OnInit , OnDestroy{
 
   deleteOrder(idx:number){
      this.orders.splice(idx,1);
+     this.orderService.setOrdersBehaviorSubject(this.orders);
   }
 
   updateOrder(idx:number,order:Order){

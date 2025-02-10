@@ -44,6 +44,7 @@ export interface ICategoryResponse{
 }
 
 export interface IProductRequest{
+    id:number;
     name:string;
     descr:string;
     has_first:boolean;
@@ -55,6 +56,32 @@ export interface IProductRequest{
     second_price:number;
     category_id:number;
     factory_id?:number;
+    uom_group:number;
+    uom_base:number;
+    base_cost:number;
+    base_price:number;
+    accept:boolean;
+    reject:boolean;
+}
+
+export interface IUomProductRequest {
+    id:number;
+    productId:number;
+    uomId:number;
+    base_cost:number;
+    base_price:number;
+    reduce_per:number;
+    cost_price:number;
+    price:number;
+    price_auto:boolean;
+}
+
+export interface IBarcodeProductRequest {
+    id:number;
+    productId:number;
+    uomId:number;
+    uom_barcode:string;
+    freetext:string;
 }
 
 export interface IProductResponse{

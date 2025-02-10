@@ -50,6 +50,8 @@ export class GroupDetailsPage implements OnInit ,OnDestroy{
 
   selectAllCategories : boolean = true ;
 
+  groupValue : string = 'all';
+
   constructor( private loadingCtrl: LoadingController ) { }
 
   async showLoading() {

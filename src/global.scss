@@ -26,6 +26,23 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 
+ion-segment-button {
+  --indicator-color: var(--ion-color-primary);;
+}
+
+/* Material Design styles */
+ion-segment-button.md {
+  --color: #000;
+  --color-checked: var(--ion-color-primary);;
+  --indicator-height: 4px;
+}
+
+/* iOS styles */
+ion-segment-button.ios {
+  --color: var(--ion-color-primary);;
+  --color-checked: #fff;
+  --border-radius: 20px;
+}
 
 
 /*

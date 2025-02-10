@@ -121,7 +121,13 @@
               
         
               <ng-template #NotCredential>
-                <ion-text class="error-text" color="danger">{{'login.notcredential' | translate}}</ion-text>
+                
+                <ion-row>
+                  <ion-col>
+                    <ion-text class="error-text" color="danger">{{'login.notcredential' | translate}}</ion-text>
+                  </ion-col>
+                </ion-row>   
+
               </ng-template>
           </ion-col>
         </ion-row>

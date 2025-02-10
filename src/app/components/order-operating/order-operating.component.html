@@ -124,7 +124,7 @@
             <app-quantity-input [detail]="detail" (quantityChange)="quanChange($event)"></app-quantity-input>
           </ion-col>
           <ion-col offset="2" size="4" class="ion-no-padding"> 
-            <ion-button color="danger" fill="outline" (click)="deleteProduct(idx)"> {{'order.deleteproduct' | translate}} </ion-button> 
+            <ion-button   color="danger" fill="outline" (click)="deleteProduct(idx)"> {{'order.deleteproduct' | translate}} </ion-button> 
           </ion-col>
         </ion-row>
 
@@ -199,7 +199,7 @@
               <ion-row>
                 <ion-col>
                   <div class="ion-text-center">
-                    <ion-button color="success" fill="outline" (click)="updateOrder('order.updateCancel')" >
+                    <ion-button  size="small" class="button-option" color="success" fill="outline" (click)="updateOrder('order.updateCancel')" >
                       {{ 'order.updateCancel' | translate}} 
                     </ion-button> 
                   </div>
@@ -280,7 +280,7 @@
                 </ion-col>
                 <ion-col size="6">
                   <div class="ion-text-center">
-                    <ion-button color="success" fill="outline" (click)="updateOrder('order.updateReceive')" >
+                    <ion-button  size="small" class="button-option" color="success" fill="outline" (click)="updateOrder('order.updateReceive')" >
                       {{ 'order.updateReceive' | translate}} 
                     </ion-button>  
                   </div>  
@@ -319,14 +319,14 @@
                 </ion-col>  
                 <ion-col size="3">
                   <div class="ion-text-center">
-                    <ion-button color="success" fill="outline" (click)="updateOrder('order.updateAccepted')" >
+                    <ion-button  size="small" class="button-option" color="success" fill="outline" (click)="updateOrder('order.updateAccepted')" >
                       {{ 'order.updateAccepted' | translate}} 
                     </ion-button>
                   </div>    
                 </ion-col>
                 <ion-col size="3">
                   <div class="ion-text-center">
-                    <ion-button color="danger" fill="outline" (click)="updateOrder('order.updateReject')" >
+                    <ion-button  size="small" class="button-option" color="danger" fill="outline" (click)="updateOrder('order.updateReject')" >
                       {{ 'order.updateReject' | translate}} 
                     </ion-button> 
                   </div>   
@@ -387,7 +387,7 @@
                 </ion-col>  
                 <ion-col size="6">
                   <div class="ion-text-center">
-                    <ion-button color="success" fill="outline" (click)="updateOrder('order.updateOnRoad')" >
+                    <ion-button size="small" class="button-option"  color="success" fill="outline" (click)="updateOrder('order.updateOnRoad')" >
                       {{ 'order.updateOnRoad' | translate}} 
                     </ion-button>  
                   </div>  
