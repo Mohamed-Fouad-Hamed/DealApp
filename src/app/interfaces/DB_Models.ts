@@ -43,6 +43,22 @@ export interface ICategoryResponse{
     accountType:string;
 }
 
+export interface IUnitRequest{
+    id:number;
+    name:string;
+    uom_length:string;
+    uom_height:string;
+    uom_width:string;
+    uom_volumn:string;
+    uom_weight:string;
+}
+
+export interface IUnit{
+    id:number;
+    name:string;
+}
+
+
 export interface IProductRequest{
     id:number;
     name:string;

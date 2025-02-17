@@ -1,0 +1,80 @@
+<div class="product-barcode-container">
+  <ion-grid>
+
+    <ion-row>
+      <ion-col>
+        <ion-select label="{{'uom.name' | translate}}" 
+                label-placement="floating" 
+                fill="outline"
+                required
+                [(ngModel)]="uomBarcode!.uomId"
+                #uomId="ngModel"
+                color="secondary"
+                name="uomId">
+
+            @for(unit of units;track unit.id){
+              <ion-select-option [value]="unit.id" >{{ unit.name }}</ion-select-option>
+            }
+
+          </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'uom.barcode' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="uomBarcode!.uom_barcode"
+            #uom_barcode="ngModel"
+            color="secondary"
+            name="uom_barcode"
+            maxlength="20"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'uom.freetext' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="uomBarcode!.freetext"
+            #freetext="ngModel"
+            color="secondary"
+            name="freetext"
+            maxlength="25"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col >
+        <ion-button [disabled]="uomBarcode!.uomId===0"
+                    color="secondary" 
+                    expand="block"
+                    class="submit-button"
+                    (click)="submit()">
+
+                      {{ 'account.updatepaymentmethod' | translate  }}
+                    
+            @if(isLoading) { <ion-spinner class="spinner-button"> </ion-spinner> }
+        </ion-button>
+      </ion-col>
+
+      <ion-col >
+        <ion-button 
+                    (click)="cancel()"
+                    color="danger" 
+                    expand="block"
+                    translate="app.cancel"
+                    class="submit-button">
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</div>

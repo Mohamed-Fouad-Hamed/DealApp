@@ -1,0 +1,136 @@
+<div class="product-price-container">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-select label="{{'uom.name' | translate}}" 
+                label-placement="floating" 
+                fill="outline"
+                required
+                [(ngModel)]="uomBarcode!.uomId"
+                #uomId="ngModel"
+                color="secondary"
+                name="uomId">
+
+            @for(unit of units;track unit.id){
+              <ion-select-option [value]="unit.id" >{{ unit.name }}</ion-select-option>
+            }
+
+          </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'uom.base_cost' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="uomPrice!.base_cost"
+            #base_cost="ngModel"
+            color="secondary"
+            name="base_cost"
+            type="number"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'uom.base_price' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="uomPrice!.base_price"
+            #base_price="ngModel"
+            color="secondary"
+            name="base_price"
+            type="number"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'uom.reduce_per' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="uomPrice!.reduce_per"
+            #reduce_per="ngModel"
+            color="secondary"
+            name="reduce_per"
+            type="number"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'uom.cost_price' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="uomPrice!.cost_price"
+            #cost_price="ngModel"
+            color="secondary"
+            name="cost_price"
+            type="number"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+   
+    <ion-row>
+      <ion-col>
+        <ion-input label="{{'uom.price' | translate}}" 
+            label-placement="floating" 
+            fill="outline"
+            [(ngModel)]="uomPrice!.price"
+            #price="ngModel"
+            color="secondary"
+            name="price"
+            type="number"
+            >
+          </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row >
+      <ion-col>
+        <div class="ion-text-start">
+          <ion-checkbox labelPlacement="end"  
+           [(ngModel)]="uomPrice!.price_auto"
+          #price_auto="ngModel"
+          name="price_auto" 
+           >{{'uom.price_auto' | translate}}</ion-checkbox>
+        </div>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col >
+        <ion-button [disabled]="uomPrice!.uomId===0"
+                    color="secondary" 
+                    expand="block"
+                    class="submit-button"
+                    (click)="submit()">
+
+                      {{ 'account.updatepaymentmethod' | translate  }}
+
+            @if(isLoading) { <ion-spinner class="spinner-button"> </ion-spinner> }
+        </ion-button>
+      </ion-col>
+
+      <ion-col >
+        <ion-button 
+                    (click)="cancel()"
+                    color="danger" 
+                    expand="block"
+                    translate="app.cancel"
+                    class="submit-button">
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</div>
