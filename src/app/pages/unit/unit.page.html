@@ -1,0 +1,195 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button  [routerLink]="['/home/main-page']" >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title  class="ion-text-center">{{'app_menu.units_menu' | translate}}</ion-title>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form id="groupFormId" class="center-content" #unitFrm="ngForm" (ngSubmit)="onSubmit()" >
+<!--
+    @if( this.error ){
+      <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
+    }
+  
+    <ng-template #errorTemplate>
+      <ion-text>{{ error }}</ion-text>
+    </ng-template>
+  -->
+
+  <ion-row >
+        
+    <ion-col>
+      <div  id="unit-search-items" class="text-search"><ion-icon name="search-outline"></ion-icon>{{ 'app.search' | translate }} ... </div>
+    </ion-col>  
+
+  </ion-row>
+
+    <ion-row >
+        
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'uom.name' | translate}}"
+              label="{{'uom.name' | translate}}"
+              counter="true"
+              maxlength="50"
+              [(ngModel)]="unitRequest.name"
+              #name="ngModel"
+              name="name"
+              required
+              color="secondary"
+            >
+          </ion-input>
+
+          @if (name!.invalid && (name!.touched || name!.dirty)) {
+
+            @if (name!.errors?.['required']) {
+              <ng-container [ngTemplateOutlet]="nameTemplateRequired"></ng-container>
+            }
+            
+          }
+    
+          <ng-template #nameTemplateRequired>
+            <ion-text class="error-text" color="danger"><small>{{'group.namereq' | translate}}</small></ion-text>
+          </ng-template>
+
+        </ion-col>  
+
+      </ion-row>
+
+
+      <ion-row >
+        
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'uom.length' | translate}}"
+              label="{{'uom.length' | translate}}"
+              counter="true"
+              maxlength="50"
+              [(ngModel)]="unitRequest.uom_length"
+              #uom_length="ngModel"
+              name="uom_length"
+              color="secondary"
+            >
+          </ion-input>
+
+        </ion-col>  
+
+      </ion-row>
+
+      <ion-row >
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'uom.height' | translate}}"
+              label="{{'uom.height' | translate}}"
+              counter="true"
+              maxlength="50"
+              [(ngModel)]="unitRequest.uom_height"
+              #uom_height="ngModel"
+              name="uom_height"
+              color="secondary"
+            >
+          </ion-input>
+        </ion-col>  
+      </ion-row>
+
+      <ion-row >
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'uom.width' | translate}}"
+              label="{{'uom.width' | translate}}"
+              counter="true"
+              maxlength="50"
+              [(ngModel)]="unitRequest.uom_width"
+              #uom_width="ngModel"
+              name="uom_width"
+              color="secondary"
+            >
+          </ion-input>
+        </ion-col>  
+      </ion-row>
+
+      <ion-row >
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'uom.volume' | translate}}"
+              label="{{'uom.volume' | translate}}"
+              counter="true"
+              maxlength="50"
+              [(ngModel)]="unitRequest.uom_volume"
+              #uom_volume="ngModel"
+              name="uom_volume"
+              color="secondary"
+            >
+          </ion-input>
+        </ion-col>  
+      </ion-row>
+
+      <ion-row >
+        <ion-col>
+            <ion-input
+              label-placement="floating" 
+              placeholder="{{'uom.weight' | translate}}"
+              label="{{'uom.weight' | translate}}"
+              counter="true"
+              maxlength="50"
+              [(ngModel)]="unitRequest.uom_weight"
+              #uom_weight="ngModel"
+              name="uom_weight"
+              color="secondary"
+            >
+          </ion-input>
+        </ion-col>  
+      </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="!unitFrm.valid"
+                    type="submit" 
+                    color="secondary" 
+                    expand="block"
+                    translate="group.buttonsubmit"
+                    class="submit-button">
+             @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+
+  </form>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    message="{{'group.toastsave' | translate}}"
+    [duration]="3000"
+    (didDismiss)="setOpenToast(false)"
+  ></ion-toast>
+</ion-content>
+
+
+<ion-modal trigger="unit-search-items" #modal (willDismiss)="onWillDismiss($event)" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" >
+ 
+  <ng-template>
+    <app-single-selection-search
+      class="ion-page"
+      title="{{ 'single_selection_searchbox.selectitem' | translate }}"
+      [items]="items"
+      (searchEmit)="searchValueEmit($event)"
+      (selectionChange)="itemSelected($event)"
+      (selectionCancel)="modal.dismiss()"
+      (infiniteScrollEmit)="infiniteScrollEmit($event)"
+    ></app-single-selection-search>
+  </ng-template>
+
+</ion-modal>

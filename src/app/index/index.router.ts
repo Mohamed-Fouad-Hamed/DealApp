@@ -49,6 +49,17 @@ export const routes: Routes = [
           path: 'product',
           loadComponent: () => import('../pages/product/product.page').then( m => m.ProductPage),
           canActivate: [authGuard]
+        }
+        ,
+        {
+          path: 'unit',
+          loadComponent: () => import('../pages/unit/unit.page').then((m) => m.UnitPage),
+          canActivate: [authGuard]
+        },
+        {
+          path: 'uom-group',
+          loadComponent: () => import('../pages/uom-group/uom-group.page').then( m => m.UomGroupPage),
+          canActivate: [authGuard]
         },
         {
           path: 'group',

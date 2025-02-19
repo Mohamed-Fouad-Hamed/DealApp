@@ -15,7 +15,8 @@ export const routes: Routes = [
               canActivate: [authGuard]
             }]
            
-        },
+        }
+         ,
         {
           path: 'main-page/list-groups',
           children:[{

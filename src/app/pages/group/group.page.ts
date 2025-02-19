@@ -15,7 +15,7 @@ import { AsyncCategoryNameIsUniqueDirective } from 'src/app/validations/directiv
   templateUrl: './group.page.html',
   styleUrls: ['./group.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,TranslateModule,RouterLink,RouterLink,AsyncCategoryNameIsUniqueDirective]
+  imports: [IonicModule, CommonModule, FormsModule,TranslateModule,RouterLink,AsyncCategoryNameIsUniqueDirective]
 })
 export class GroupPage implements OnInit {
 

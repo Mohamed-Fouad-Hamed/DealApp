@@ -17,6 +17,20 @@
               </ion-text>
             </ion-label>
           </ion-item>
+          <ion-item detail="false" (click)="navigateToUrl(unitSetUrl!)">
+            <ion-label>
+              <ion-text color="primary">
+                {{'app_menu.units_menu' | translate}}
+              </ion-text>
+            </ion-label>
+          </ion-item>
+          <ion-item detail="false" (click)="navigateToUrl(uomGroupSetUrl!)">
+            <ion-label>
+              <ion-text color="primary">
+                {{'app_menu.uom_group_menu' | translate}}
+              </ion-text>
+            </ion-label>
+          </ion-item>
           <ion-item detail="false" (click)="navigateToUrl(groupSetUrl!)">
             <ion-label>
               <ion-text color="primary">

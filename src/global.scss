@@ -96,6 +96,17 @@ ion-accordion {
     --color: white;
   }
 
+  .text-search {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1.5px solid rgb(66, 66, 73);
+    border-radius: 5px;
+    background-color: rgb(220, 227, 230);
+    color: rgb(66, 66, 73);
+    font-size: large;
+  }
+  
   .border-bottom-part-one{
     position:absolute;
     left:0;

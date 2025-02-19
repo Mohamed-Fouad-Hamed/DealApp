@@ -3,6 +3,7 @@ import { IonRouterOutlet } from '@ionic/angular/standalone';
 import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
 import { 
+  searchOutline,
   chevronBackCircleOutline,
   chevronForwardCircleOutline,
   chevronForwardOutline,
@@ -63,6 +64,8 @@ export class AppComponent implements OnInit , OnDestroy{
   authenticate:boolean=false;
 
   currentAccountUrl? : string ;
+  unitSetUrl?: string;
+  uomGroupSetUrl?:string;
   groupSetUrl? : string ;
   categorySetUrl? : string ;
   productSetUrl? : string ;
@@ -99,6 +102,7 @@ export class AppComponent implements OnInit , OnDestroy{
 
     addIcons({
       "cart-svg":'assets/icon/cart.svg',
+      searchOutline,
       chevronBackCircleOutline,
       chevronForwardCircleOutline,
       chevronForwardOutline,
@@ -157,6 +161,8 @@ export class AppComponent implements OnInit , OnDestroy{
        this.groupSetUrl! =  `${'group'}`;
        this.productSetUrl! =  `${'product'}`;
        this.categorySetUrl! =  `${'category'}`;
+       this.unitSetUrl! =  `${'unit'}`;
+       this.uomGroupSetUrl! = `${'uom-group'}`;
        }
     );
      console.log(" initi APP ...")

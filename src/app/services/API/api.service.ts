@@ -50,11 +50,11 @@ async initApiService(){
    
    if (isMobilAndroid) {
       
-    this.host = '192.168.1.3:8080' ;
+    this.host = '192.168.1.10:8080' ;
 
   } else {
 
-    this.host='192.168.1.3:8080';
+    this.host='192.168.1.10:8080';
 
   }
 

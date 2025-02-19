@@ -49,7 +49,7 @@ export interface IUnitRequest{
     uom_length:string;
     uom_height:string;
     uom_width:string;
-    uom_volumn:string;
+    uom_volume:string;
     uom_weight:string;
 }
 

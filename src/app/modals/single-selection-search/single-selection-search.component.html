@@ -19,18 +19,30 @@
 
 <ion-content color="light" class="ion-padding">
 
-  <ion-list id="modal-list"  >
-    <ion-radio-group [compareWith]="compareWith" (ionChange)="selectItem($event)">
-      <ion-item  class="ion-border" *ngFor="let item of items ; trackBy: trackItems" [disabled]="item?.exists">
-        <ion-avatar slot="start">
-          <img [src]="apiServer + item?.icon" />
-        </ion-avatar>
-        <ion-radio [value]="item">{{ item?.name }}</ion-radio>
-        @if(item?.exists){
-           <ion-text  color="danger"><small>{{'accountproduct.addnotallow' | translate}}</small></ion-text>
-        }
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
+  @if (items && items.length > 0) {
+    <ng-container [ngTemplateOutlet]="searchItemsList"></ng-container>
+  }
+
+  <ng-template #searchItemsList>
+
+      <cdk-virtual-scroll-viewport itemSize="150" class="ion-content-scroll-host">
+          <ion-list id="modal-list"  >
+            <ion-radio-group [compareWith]="compareWith" (ionChange)="selectItem($event)">
+              <ion-item  class="ion-border" *ngFor="let item of items ; trackBy: trackItems" [disabled]="item?.exists">
+                <ion-avatar slot="start">
+                  <img [src]="item?.icon" />
+                </ion-avatar>
+                <ion-radio [value]="item">{{ item?.name }}</ion-radio>
+                @if(item?.exists){
+                  <ion-text  color="danger"><small>{{'accountproduct.addnotallow' | translate}}</small></ion-text>
+                }
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+          <ion-infinite-scroll  (ionInfinite)="onIonInfinite($event)" threshold="100px">
+            <ion-infinite-scroll-content loadingText="{{'app.show_more' | translate}}" loadingSpinner="lines-sharp"></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+        </cdk-virtual-scroll-viewport>
+    </ng-template>
 
 </ion-content>
