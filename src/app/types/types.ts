@@ -8,6 +8,11 @@ export interface Item {
     exists?:boolean;
   }
 
+  export interface AbstractItem {
+    id:number;
+    name:string;
+  }
+
   export interface SingleItem{
     id:string ;
     name:string;

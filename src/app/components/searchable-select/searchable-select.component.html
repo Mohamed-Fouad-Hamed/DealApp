@@ -1,0 +1,71 @@
+<!-- <div class="searchable-select minimal" *ngIf="selected.length; else placeholder" (click)="open()">
+  <span *ngFor="let item of selected; let last = last">
+    {{ leaf(item) }} {{ last ? "" : ", "}}
+  </span>
+</div> -->
+  <div class="select-container"  *ngIf="selected.length; else placeholder" >
+  <div class="select-box">
+    <span *ngFor="let item of selected; let last = last">
+     @if(data.length && data.length > 0 ){
+       {{ leaf(item) }} {{ last ? "" : ", "}} 
+     }  
+    </span>
+  </div>
+  <div class="dropdown-arrow" (click)="open()"></div>  
+</div>
+
+<ng-template #placeholder>
+  <div class="select-container">
+    <div class="select-box select-empty-text">
+      @if(!placeholder){
+         {{ placeholder }}
+      }
+    </div>
+    <div class="dropdown-arrow" (click)="open()"></div>  
+  </div>
+</ng-template>
+
+<ion-modal [isOpen]="isOpen" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation">
+  <ion-header>
+    <ng-template>
+      <ion-toolbar color="light">
+       
+        <ion-buttons slot="start" *ngIf="multiple">
+          <ion-button  (click)="select()">{{'single_selection_searchbox.confirm' | translate}}</ion-button>
+        </ion-buttons>
+
+        <ion-title class="ion-text-center">{{title}}</ion-title>
+  
+        <ion-buttons slot="end">
+          <ion-button (click)="cancel()">{{ 'single_selection_searchbox.cancel' | translate }}</ion-button>
+        </ion-buttons>
+
+      </ion-toolbar>
+      <ion-toolbar color="light">
+        <ion-searchbar #inputSearch [debounce]="500" placeholder="{{ 'app.search' | translate }}"  (ionInput)="filter($event)"></ion-searchbar>
+      </ion-toolbar>
+      <ion-content  color="light" class="ion-padding">
+        @if (filtered && filtered.length > 0) {
+          <ng-container [ngTemplateOutlet]="searchableItemsList"></ng-container>
+        }
+      
+        <ng-template #searchableItemsList>
+
+            <ion-list id="modal-list" [inset]="true">
+                <ion-item *ngFor="let item of filtered">
+                  <ion-checkbox 
+                              [(ngModel)]="item.selected" 
+                              (ionChange)="itemSelected()">
+                              {{ leaf(item) }}
+                  </ion-checkbox> 
+                </ion-item>
+            </ion-list>    
+         
+        </ng-template> 
+
+      </ion-content> 
+
+    </ng-template>
+
+  </ion-header>
+</ion-modal>

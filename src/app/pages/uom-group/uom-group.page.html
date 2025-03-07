@@ -1,13 +1,244 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>uom-group</ion-title>
+    <ion-buttons slot="start">
+      <ion-button  [routerLink]="['/home/main-page']" >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title  class="ion-text-center">{{'app_menu.uom_group_menu' | translate}}</ion-title>
+    <span class="border-bottom-part-one"></span>
+    <span class="border-bottom-part-two"></span>
+    <span class="border-bottom-part-three"></span>
+    <span class="border-bottom-part-four"></span>
   </ion-toolbar>
 </ion-header>
+<ion-content>
+  <form id="uomgroupFormId" class="center-content" #UomGroupFrm="ngForm" (ngSubmit)="onSubmit()" >
+<!--
+    @if( this.error ){
+      <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
+    }
+  
+    <ng-template #errorTemplate>
+      <ion-text>{{ error }}</ion-text>
+    </ng-template>
+  -->
+ <ion-grid>
+      <ion-row >   
+        <ion-col>
+         <div class="header-container">
+            <div  class="first-item" ><ion-button color="light" (click)="addUomGroup()"><ion-icon name="bag-add-outline"></ion-icon></ion-button></div>
+            <div  id="uomgroups-search-items" class="text-search"><ion-icon name="search-outline"></ion-icon>{{ 'app.search' | translate }} ... </div>
+         </div>
+        </ion-col>  
+      </ion-row>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">uom-group</ion-title>
-    </ion-toolbar>
-  </ion-header>
+        <ion-row >
+            
+            <ion-col>
+                <ion-input
+                  label-placement="floating" 
+                  placeholder="{{'uomgroup.name' | translate}}"
+                  label="{{'uomgroup.name' | translate}}"
+                  counter="true"
+                  maxlength="50"
+                  [(ngModel)]="uomGroupRequest.name"
+                  #name="ngModel"
+                  name="name"
+                  required
+                  color="secondary"
+                >
+              </ion-input>
+
+              @if (name!.invalid && (name!.touched || name!.dirty)) {
+
+                @if (name!.errors?.['required']) {
+                  <ng-container [ngTemplateOutlet]="nameTemplateRequired"></ng-container>
+                }
+                
+              }
+        
+              <ng-template #nameTemplateRequired>
+                <ion-text class="error-text" color="danger"><small>{{'group.namereq' | translate}}</small></ion-text>
+              </ng-template>
+
+            </ion-col>  
+
+          </ion-row>
+
+          
+          <ion-row >
+            
+            <ion-col>
+                <ion-input
+                  label-placement="floating" 
+                  placeholder="{{'uomgroup.des' | translate}}"
+                  label="{{'uomgroup.des' | translate}}"
+                  counter="true"
+                  maxlength="50"
+                  [(ngModel)]="uomGroupRequest.descr"
+                  #descr="ngModel"
+                  name="descr"
+                  color="secondary"
+                >
+              </ion-input>
+
+            </ion-col>  
+
+          </ion-row>
+
+          <hr/>
+            <ion-row>
+              <ion-col size="2" class="ion-text-center" >
+                <ion-text > {{ 'accountproduct.serial' | translate }}  </ion-text> 
+              </ion-col>
+              <ion-col size="3" class="ion-text-center" >
+                <ion-text > {{ 'uomgroup.altuom' | translate }}  </ion-text> 
+              </ion-col>
+              <ion-col size="2" class="ion-text-center" >
+                <ion-text > {{ 'uomgroup.altqty' | translate }}  </ion-text> 
+              </ion-col>
+              <ion-col size="3" class="ion-text-center">
+                <ion-text > {{ 'uomgroup.baseuom' | translate }}  </ion-text> 
+              </ion-col>
+              <ion-col size="2" class="ion-text-center" >
+                <ion-text > {{ 'uomgroup.baseqty' | translate }}  </ion-text> 
+              </ion-col>
+            </ion-row>
+          <hr />
+
+          <ion-row>
+
+              <ion-grid>
+                @for(uc of uomGroupRequest.uomConverterReqList ; track uc.id;let idx=$index){
+                  <ion-row >
+                    <ion-col size="2" class="ion-text-center line-row" >
+                      <ion-text >{{idx+1}}</ion-text> 
+                    </ion-col>
+                    <ion-col size="3" class="ion-text-center line-row" >
+                      <app-searchable-select
+                          title="Alternative Units"
+                          [data]="units"
+                          itemTextField="name"
+                          itemValueField="id"
+                          [multiple]="false"
+                          [(value)]="uc.alt_uom"
+                      ></app-searchable-select>
+                      <!-- <ion-list>
+                        <ion-item>
+                          <ion-select
+                            [interfaceOptions]="customProductSelectOptions"
+                            interface="alert"
+                            okText="{{'alert.ok' | translate}}"
+                            cancelText="{{'alert.cancel' | translate}}"
+                            [(ngModel)]="uc.alt_uom"
+                            #alt_uom="ngModel"
+                            name="alt_uom-{{idx}}"
+                            color="secondary"
+                          >
+                            @for (unit of units; track unit.id) {
+                              <ion-select-option [value]="unit.id">{{ unit.name }}</ion-select-option>
+                            }
+                          </ion-select>
+                        </ion-item>
+                      </ion-list>  -->
+                    </ion-col>
+                    <ion-col size="2" class="ion-text-center line-row">
+                            <ion-input
+                            label-placement="floating" 
+                            [(ngModel)]="uc.alt_qty"
+                            #alt_qty="ngModel"
+                            name="alt_qty-{{idx}}"
+                            color="secondary"
+                            type="number"
+                          ></ion-input> 
+                    </ion-col>
+                    <ion-col size="3" class="ion-text-center line-row" >
+                      <app-searchable-select
+                          title="Base Units"
+                          [data]="units"
+                          itemTextField="name"
+                          itemValueField="id"
+                          [multiple]="false"
+                          [(value)]="uc.base_uom"
+                      ></app-searchable-select>
+                      <!-- <ion-list>
+                        <ion-item>
+                          <ion-select
+                            [interfaceOptions]="customProductSelectOptions"
+                            interface="alert"
+                            okText="{{'alert.ok' | translate}}"
+                            cancelText="{{'alert.cancel' | translate}}"
+                            [(ngModel)]="uc.base_uom"
+                            #base_uom="ngModel"
+                            name="base_uom-{{idx}}"
+                            color="secondary"
+                          >
+                            @for (unit of units; track unit.id) {
+                              <ion-select-option [value]="unit.id">{{ unit.name }}</ion-select-option>
+                            }
+                          </ion-select>
+                        </ion-item>
+                      </ion-list>  -->
+                    </ion-col>
+                    <ion-col size="2" class="ion-text-center line-row">
+                            <ion-input
+                            label-placement="floating" 
+                            [(ngModel)]="uc.base_qty"
+                            #base_qty="ngModel"
+                            name="base_qty-{{idx}}"
+                            color="secondary"
+                            type="number"
+                          ></ion-input> 
+                    </ion-col>
+                  </ion-row>
+                }
+            
+              <ion-row>
+                <ion-col >
+                  <ion-button color="light" (click)="addUC()"> + {{'uomgroup.addNewUC' | translate}}</ion-button>
+                </ion-col>
+              </ion-row>
+
+            </ion-grid>
+
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-button [disabled]="!UomGroupFrm.valid"
+                          type="submit" 
+                          color="secondary" 
+                          expand="block"
+                          translate="uomgroup.update"
+                          class="submit-button">
+                   @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+              </ion-button>
+            </ion-col>
+          </ion-row>
+    </ion-grid>
+  </form>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    message="{{'group.toastsave' | translate}}"
+    [duration]="3000"
+    (didDismiss)="setOpenToast(false)"
+  ></ion-toast>
 </ion-content>
+
+
+<ion-modal trigger="uomgroups-search-items" #modal (willDismiss)="onWillDismiss($event)" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" >
+ 
+  <ng-template>
+    <app-single-selection-search
+      class="ion-page"
+      title="{{ 'single_selection_searchbox.selectitem' | translate }}"
+      [items]="items"
+      (searchEmit)="searchValueEmit($event)"
+      (selectionChange)="itemSelected($event)"
+      (selectionCancel)="modal.dismiss()"
+      (infiniteScrollEmit)="infiniteScrollEmit($event)"
+    ></app-single-selection-search>
+  </ng-template>
+
+</ion-modal>

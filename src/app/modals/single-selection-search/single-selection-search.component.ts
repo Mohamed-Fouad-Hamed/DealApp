@@ -37,9 +37,13 @@ export class SingleSelectionSearchComponent  implements OnInit,AfterViewInit {
  constructor(private api:APIService){}
 
   ngAfterViewInit(): void {
+     this.focusInput();
+  }
+
+  focusInput(){
     setTimeout(() => {
       this.input.setFocus();
-    }, 500);
+    }, 1000);
   }
  
   ngOnInit() {
@@ -64,7 +68,7 @@ export class SingleSelectionSearchComponent  implements OnInit,AfterViewInit {
 
   searchbarInput(ev:any) {
     this.searchValue = ev.target.value ;
-    this.searchEmit.emit(this.searchValue);
+    this.searchEmit.emit(this.searchValue);   
   }
 
   compareWith(o1:any, o2:any) {

@@ -118,6 +118,16 @@
 	"uom.price":"السعر",
 	"uom.price_auto":"تلقائى",
 	"uom.button_submit":"تحديث و حدة القياس",
+	"uomgroup.update":"تحديث مجموعات وحدات القياس",
+	"uomgroup.name":"إسم مجموعة القياس",
+	"uomgroup.des":" الوصف ",
+	"uomgroup.altuom":"الوحدة البديلة",
+	"uomgroup.altqty":"الكمية البديلة",
+	"uomgroup.baseuom":"الوحدة الأساسية",
+	"uomgroup.baseqty":"الكمية الأساسية",
+	"uomgroup.addNewUG":"إضافة مجموعه",
+	"uomgroup.addNewUC":"إضافة وحدة",
+	
 	"product.name":" إسم الصنف",
 	"product.placeholername":"إكتب إسم الصنف ",
 	"product.namereq":"إسم الصنف مطلوب ",
@@ -131,7 +141,23 @@
 	"product.secondunitname":"إسم الوحدة الثانية",
 	"product.secondprice":"سعر الوحدة الثانية",
 	"product.image":"صورة الصنف",
+	"product.accept":" قبول",
+	"product.reject":" رفض",
+	"product.factory":" المصنع",	
 	"product.category":" الفئة",
+	"product.uomgroup":" مجموعه الوحدات",
+	"product.uombase":" الوحدة الأساسية",
+	"product.basecost":" تكلفة الوحدة",
+	"product.baseprice":" سعر الوحدة",
+	"product.uomreduce":"نسبة",
+	"product.costprice":"تكلفة البيع",
+	"product.price":"سعر البيع",
+	"product.uomauto":"تلقائى",
+	"product.barcode":"باركود",
+	"product.freetext":"نص الكود",
+	"product.baseunit":"الوحدة الأساسية",
+	"product.uompricelist":"أسعار الوحدات",
+	"product.uombarcodeList":"باركود الوحدات",
 	"product.registerproduct":" تسجيل الصنف ",
 	"product.toastsave":"تم تسجيل الصنف بنجاح ... فى إنتظار التوثيق",
 
@@ -245,6 +271,7 @@
 
 	"single_selection_searchbox.additem":" إضافة ",
 	"single_selection_searchbox.selectitem":" إختيار  ",
-	"single_selection_searchbox.cancel":"إلغاء"
+	"single_selection_searchbox.cancel":"إلغاء",
+	"single_selection_searchbox.confirm":" تأكيد "
 
 }

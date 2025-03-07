@@ -56,6 +56,18 @@ export class ProductService {
           );
       }
 
+      getProductFDto(id:string){
+
+        const URL = this.API.apiHost;
+
+        return timer(100)
+          .pipe(
+            switchMap(() => {
+              return this.http.get<MessageResponse>(`${URL}/get-product-f?id=${id}`)
+            })
+          );
+      }
+
       getProductOffer(accountId:string,productId:string){
 
         const URL = this.API.apiHost;
@@ -226,7 +238,7 @@ getPageableProductsByNameLikePageable(name:string,pageNumber:number,pageSize:num
   return timer(300)
     .pipe(
       switchMap(() => {
-        return this.http.get<MessageResponse>(`${URL}/get-products-like-name-pageable?name=${name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+        return this.http.get<MessagePageableResponse>(`${URL}/get-products-like-name-pageable?name=${name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
       })
     ); 
 }

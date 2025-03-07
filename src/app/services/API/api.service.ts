@@ -48,15 +48,15 @@ async initApiService(){
 
    const isMobilAndroid = await this.platformService.isPlatform(platforms);
    
-   if (isMobilAndroid) {
-      
-    this.host = '192.168.1.10:8080' ;
+    if (isMobilAndroid) {
+        
+      this.host = 'localhost:8080' ;
 
-  } else {
+    } else {
 
-    this.host='192.168.1.10:8080';
+      this.host='localhost:8080';
 
-  }
+    }
 
  }
 

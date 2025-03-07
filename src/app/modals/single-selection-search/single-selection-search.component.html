@@ -2,7 +2,7 @@
   <ion-toolbar>
 
     <ion-buttons slot="start">
-      <ion-button [disabled]="!selectedItem" (click)="confirmChanges()">{{'single_selection_searchbox.additem' | translate}}</ion-button>
+      <ion-button [disabled]="!selectedItem" (click)="confirmChanges()">{{ 'single_selection_searchbox.confirm' | translate}}</ion-button>
     </ion-buttons>
 
     <ion-title class="ion-text-center">{{ 'single_selection_searchbox.selectitem' | translate }}</ion-title>

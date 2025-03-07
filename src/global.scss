@@ -26,20 +26,31 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 
+
+ion-checkbox {
+  --size: 20px;
+  --checkbox-background-checked: #6815ec;
+}
+
+ion-checkbox::part(container) {
+  border-radius: 6px;
+  border: 2px solid #6815ec;
+}
+
 ion-segment-button {
-  --indicator-color: var(--ion-color-primary);;
+  --indicator-color: var(--ion-color-primary);
 }
 
 /* Material Design styles */
 ion-segment-button.md {
   --color: #000;
-  --color-checked: var(--ion-color-primary);;
+  --color-checked: var(--ion-color-primary);
   --indicator-height: 4px;
 }
 
 /* iOS styles */
 ion-segment-button.ios {
-  --color: var(--ion-color-primary);;
+  --color: var(--ion-color-primary);
   --color-checked: #fff;
   --border-radius: 20px;
 }
@@ -105,6 +116,19 @@ ion-accordion {
     background-color: rgb(220, 227, 230);
     color: rgb(66, 66, 73);
     font-size: large;
+    width:100%;
+  }
+
+  .button-add {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1.5px solid rgb(66, 66, 73);
+    border-radius: 5px;
+    background-color: rgb(220, 227, 230);
+    color: rgb(66, 66, 73);
+    font-size: smaller;
+    text-overflow: none;
   }
   
   .border-bottom-part-one{

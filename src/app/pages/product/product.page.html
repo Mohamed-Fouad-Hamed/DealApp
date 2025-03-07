@@ -14,21 +14,21 @@
 
 </ion-header>
 <ion-content>
-  <form id="productFormId" class="center-content" #productForm="ngForm" (ngSubmit)="onSubmit()" >
-<!--
-    @if( this.error ){
-      <ng-container [ngTemplateOutlet]="errorTemplate"></ng-container>
-    }
-  
-    <ng-template #errorTemplate>
-      <ion-text>{{ error }}</ion-text>
-    </ng-template>
-  -->
 
+  <form id="productFormId" class="center-content" #productForm="ngForm" (ngSubmit)="onSubmit()" >
+
+    <ion-grid>
+      <ion-row >   
+        <ion-col>
+        <div class="header-container">
+            <div  class="first-item" ><ion-button color="light" (click)="addNewProduct()"><ion-icon name="bag-add-outline"></ion-icon></ion-button></div>
+            <div  id="products-search-items" class="text-search"><ion-icon name="search-outline"></ion-icon>{{ 'app.search' | translate }} ... </div>
+        </div>
+        </ion-col>  
+      </ion-row>
 
       <ion-row >
-        
-        <ion-col>
+        <ion-col size="6">
             <ion-input
               label-placement="floating" 
               placeholder="{{'product.placeholername' | translate}}"
@@ -70,169 +70,378 @@
           </ng-template>
 
         </ion-col>  
-
-      </ion-row>
-    
-      <ion-row >
-        
-        <ion-col>
-            <ion-input
-              label-placement="floating" 
-              placeholder="{{'product.descr' | translate}}"
-              label="{{'product.descr' | translate}}"
-              counter="true"
-              maxlength="50"
-              [(ngModel)]="product.descr"
-              #descr="ngModel"
-              name="descr"
-              required
-              color="secondary"
-            ></ion-input>
+  
+        <ion-col size="6">
+          <ion-input
+            label-placement="floating" 
+            placeholder="{{'product.descr' | translate}}"
+            label="{{'product.descr' | translate}}"
+            counter="true"
+            maxlength="50"
+            [(ngModel)]="product.descr"
+            #descr="ngModel"
+            name="descr"
+            color="secondary"
+          ></ion-input>
         </ion-col>  
 
       </ion-row>
 
-
       <ion-row >
-            
-            <ion-col>
-              <div class="ion-text-start">
-                <ion-checkbox labelPlacement="end"  
-                  [(ngModel)]="product.has_first"
-                  #has_first="ngModel"
-                  name="has_first" 
-                 >{{'product.firstunit' | translate}}</ion-checkbox>
-              </div>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label slot="start">{{ 'product.factory' | translate }}</ion-label>
+                  <app-searchable-select
+                      class="select-whole-width"
+                      title="{{ 'product.factory' | translate }}"
+                      [data]="aItems"
+                      itemTextField="name"
+                      itemValueField="id"
+                      [multiple]="false"
+                      [(value)]="product.factory_id"
+                  ></app-searchable-select>
+              </ion-item>
             </ion-col>  
 
+            <ion-col size="6">
+              <ion-item>
+                <ion-label slot="start" >{{ 'product.category' | translate }}</ion-label>
+                  <app-searchable-select
+                      class="select-whole-width"
+                      title="{{ 'product.category' | translate }}"
+                      [data]="mItems"
+                      itemTextField="name"
+                      itemValueField="id"
+                      [multiple]="false"
+                      [(value)]="product.category_id"
+                  ></app-searchable-select>
+              </ion-item>
+            </ion-col>  
       </ion-row>
 
       <ion-row >
-        
-        <ion-col>
-            <ion-input
-              label-placement="floating" 
-              label="{{'product.firstunitname' | translate}}"
-              counter="true"
-              maxlength="30"
-              [(ngModel)]="product.first_unit"
-              #first_unit="ngModel"
-              name="first_unit"
-              color="secondary"
-            ></ion-input>
-        </ion-col>  
-
-      </ion-row>
-
-      <ion-row >
-        
-        <ion-col>
-            <ion-input
-              label-placement="floating" 
-              label="{{'product.firstprice' | translate}}"
-              [(ngModel)]="product.first_price"
-              #first_price="ngModel"
-              name="first_price"
-              color="secondary"
-              type="number"
-            ></ion-input>
-        </ion-col>  
-
-      </ion-row>
-
-      <ion-row >
-        
-        <ion-col>
-            <ion-input
-              label-placement="floating" 
-              label="{{'product.unitcount' | translate}}"
-              [(ngModel)]="product.unit_count"
-              #unit_count="ngModel"
-              name="unit_count"
-              color="secondary"
-              type="number"
-            ></ion-input>
-        </ion-col>  
-
-      </ion-row>
-      
-      <ion-row >
-            
-        <ion-col>
+        <ion-col size="6">
           <div class="ion-text-start">
             <ion-checkbox labelPlacement="end"  
-              [(ngModel)]="product.has_second"
-              #has_second="ngModel"
-              name="has_second" 
-             >{{'product.secondunit' | translate}}</ion-checkbox>
+              [(ngModel)]="product.accept"
+              #accept="ngModel"
+              name="accept" 
+             >{{'product.accept' | translate}}</ion-checkbox>
           </div>
         </ion-col>  
-
+        <ion-col size="6">
+          <div class="ion-text-start">
+            <ion-checkbox labelPlacement="end"  
+              [(ngModel)]="product.reject"
+              #reject="ngModel"
+              name="reject" 
+             >{{'product.reject' | translate}}</ion-checkbox>
+          </div>
+        </ion-col> 
       </ion-row>
 
-  <ion-row >
-    
-    <ion-col>
-        <ion-input
-          label-placement="floating" 
-          label="{{'product.secondunitname' | translate}}"
-          counter="true"
-          maxlength="30"
-          [(ngModel)]="product.second_unit"
-          #second_unit="ngModel"
-          name="second_unit"
-          color="secondary"
-        ></ion-input>
-    </ion-col>  
+      <ion-row>
+        <ion-col>
+          <div class="product-child-data">
+            
+            <ion-card >
 
-  </ion-row>
+              <ion-card-header>
+                {{'product.baseunit' | translate}}
+              </ion-card-header>
 
-  <ion-row >
-    
-    <ion-col>
-        <ion-input
-          label-placement="floating" 
-          label="{{'product.secondprice' | translate}}"
-          [(ngModel)]="product.second_price"
-          #second_price="ngModel"
-          name="second_price"
-          color="secondary"
-          type="number"
-        ></ion-input>
-    </ion-col>  
+              <ion-card-content>
+               
+                <ion-row >
+                  <ion-col >
+                    <ion-item>
+                      <ion-label slot="start">{{ 'uomgroup.name' | translate }}</ion-label>
+                        <app-searchable-select
+                            class="select-whole-width"
+                            title="{{ 'uomgroup.name' | translate }}"
+                            [data]="uomGroups"
+                            itemTextField="name"
+                            itemValueField="id"
+                            [multiple]="false"
+                            (selectedChanged)="uomGroupsSelectChanged($event)"
+                            [(value)]="product.uom_group"
+                        ></app-searchable-select>
+                    </ion-item>
+                  </ion-col>  
+      
+                </ion-row>
+                <ion-row>
+                  <ion-col >
+                    <ion-item>
+                      <ion-label slot="start">{{ 'uomgroup.baseuom' | translate }}</ion-label>
+                        <app-searchable-select
+                            class="select-whole-width"
+                            title="{{ 'uomgroup.baseuom' | translate }}"
+                            [data]="uomConverters"
+                            itemTextField="name"
+                            itemValueField="id"
+                            [multiple]="false"
+                            [(value)]="product.uom_base"
+                        ></app-searchable-select>
+                    </ion-item>
+                  </ion-col>  
+               </ion-row>   
+               
+               <ion-row>
+                  <ion-col  class="ion-text-center line-row" >
+                    <ion-item>
+                    
+                      <ion-input
+                        label="{{ 'uom.base_cost' | translate }}"
+                        label-placement="floating" 
+                        [(ngModel)]="product.base_cost"
+                        #base_cost="ngModel"
+                        name="base_cost"
+                        color="secondary"
+                        type="number"
+                      ></ion-input> 
+                    </ion-item>
+                  </ion-col>
+               </ion-row>
+               <ion-row>
+                  <ion-col  class="ion-text-center line-row">
+                    <ion-item>
+                      <ion-input
+                        label="{{ 'uom.base_price' | translate }}"
+                        label-placement="floating" 
+                        [(ngModel)]="product.base_price"
+                        #base_price="ngModel"
+                        name="base_price"
+                        color="secondary"
+                        type="number"
+                      ></ion-input> 
+                    </ion-item>
+                  </ion-col>
+               </ion-row>
 
-  </ion-row>
+              </ion-card-content>
+              
+            </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
 
-  <ion-row>
-        
-    <ion-col>
-      <ion-label expand="full" (click)="openPopOver($event)">{{categoryName!.name}}</ion-label>
-    </ion-col>
+      <ion-row>
+        <ion-col>
+          <div class="product-child-data">
+            
+            <ion-card >
 
-  </ion-row>
+              <ion-card-header>
+                {{'product.uompricelist' | translate}}
+              </ion-card-header>
 
-  <ion-row>
-        
-    <ion-col>
-      <ion-label expand="full" (click)="openPopOverAccounts($event)">{{accountName!.name}}</ion-label>
-    </ion-col>
+              <ion-card-content>
+                <ion-grid>
+                  <hr/>
+                      <ion-row>
+                        <ion-col size="2" class="ion-text-center" >
+                          <ion-text > {{ 'uom.name' | translate }}  </ion-text> 
+                        </ion-col>
+                        <ion-col size="2" class="ion-text-center" >
+                          <ion-text > {{ 'uom.base_cost' | translate }}  </ion-text> 
+                        </ion-col>
+                        <ion-col size="2" class="ion-text-center" >
+                          <ion-text > {{ 'uom.base_price' | translate }}  </ion-text> 
+                        </ion-col>
+                        <ion-col size="1" class="ion-text-center">
+                          <ion-text > {{ 'uom.reduce_per' | translate }}  </ion-text> 
+                        </ion-col>
+                        <ion-col size="2" class="ion-text-center" >
+                          <ion-text > {{ 'uom.cost_price' | translate }}  </ion-text> 
+                        </ion-col>
+                        <ion-col size="2" class="ion-text-center" >
+                          <ion-text > {{ 'uom.price' | translate }}  </ion-text> 
+                        </ion-col>
+                        <ion-col size="1" class="ion-text-center" >
+                          <ion-text > {{ 'uom.price_auto' | translate }}  </ion-text> 
+                        </ion-col>
+                      </ion-row>
+                    <hr />
+                          @for(uprice of product.uomPriceList ; track uprice.id;let idx=$index){
+                            <ion-row >
+                              <ion-col size="2" class="ion-text-center line-row" >
+                                  <app-searchable-select
+                                      title="{{ 'uom.name' | translate}}"
+                                      [data]="units"
+                                      itemTextField="name"
+                                      itemValueField="id"
+                                      [multiple]="false"
+                                      [(value)]="uprice.uomId"
+                                  ></app-searchable-select> 
+                              </ion-col>
+                              <ion-col size="2" class="ion-text-center line-row" >
+                                  <ion-input
+                                    label-placement="floating" 
+                                    [(ngModel)]="uprice.base_cost"
+                                    #base_cost="ngModel"
+                                    name="base_cost{{idx}}"
+                                    color="secondary"
+                                    type="number"
+                                  ></ion-input> 
+                              </ion-col>
+                              <ion-col size="2" class="ion-text-center line-row">
+                                  <ion-input
+                                    label-placement="floating" 
+                                    [(ngModel)]="uprice.base_price"
+                                    #base_price="ngModel"
+                                    name="base_price{{idx}}"
+                                    color="secondary"
+                                    type="number"
+                                  ></ion-input> 
+                              </ion-col>
+                              <ion-col size="1" class="ion-text-center line-row" >
+                                  <ion-input
+                                    label-placement="floating" 
+                                    [(ngModel)]="uprice.reduce_per"
+                                    #reduce_per="ngModel"
+                                    name="reduce_per{{idx}}"
+                                    color="secondary"
+                                    type="number"
+                                  ></ion-input> 
+                              </ion-col>
+                              <ion-col size="2" class="ion-text-center line-row">
+                                  <ion-input
+                                    label-placement="floating" 
+                                    [(ngModel)]="uprice.cost_price"
+                                    #cost_price="ngModel"
+                                    name="cost_price{{idx}}"
+                                    color="secondary"
+                                    type="number"
+                                  ></ion-input> 
+                              </ion-col>
+                              <ion-col size="2" class="ion-text-center line-row">
+                                <ion-input
+                                  label-placement="floating" 
+                                  [(ngModel)]="uprice.price"
+                                  #price="ngModel"
+                                  name="price{{idx}}"
+                                  color="secondary"
+                                  type="number"
+                                ></ion-input> 
+                              </ion-col>
+                              <ion-col size="1" class="ion-text-center line-row">
+                                <ion-checkbox 
+                                  class="auto-check"
+                                  labelPlacement="floating"  
+                                  [(ngModel)]="uprice.price_auto"
+                                  #price_auto="ngModel"
+                                  name="price_auto{{idx}}" 
+                                ></ion-checkbox>
+                              </ion-col>
+                            </ion-row>
+                          }
+                      
+                        <ion-row>
+                          <ion-col>
+                            <ion-button color="light" (click)="addUPrice()"> + {{'uomgroup.addNewUC' | translate}}</ion-button>
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid>
 
-  </ion-row>
+              </ion-card-content>
+              
+            </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="product-child-data">
+            
+            <ion-card >
 
-    <ion-row>
-      <ion-col>
-        <ion-button [disabled]="!productForm.valid"
-                    type="submit" 
-                    color="secondary" 
-                    expand="block"
-                    translate="product.registerproduct"
-                    class="submit-button">
-             @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
-        </ion-button>
-      </ion-col>
-    </ion-row>
+              <ion-card-header>
+                {{'product.uombarcodeList' | translate}}
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-grid>
+                  <hr/>
+                      <ion-row>
+                        <ion-col size="2" class="ion-text-center" >
+                          <ion-text > {{ 'uom.name' | translate }}  </ion-text> 
+                        </ion-col>
+                        <ion-col size="5" class="ion-text-center" >
+                          <ion-text > {{ 'uom.barcode' | translate }}  </ion-text> 
+                        </ion-col>
+                        <ion-col size="5" class="ion-text-center" >
+                          <ion-text > {{ 'uom.freetext' | translate }}  </ion-text> 
+                        </ion-col>
+                      </ion-row>
+                     <hr/>
+                          @for(ubarcode of product.uomBarcodeList ; track ubarcode.id;let idx=$index){
+                            <ion-row >
+                              <ion-col size="2" class="ion-text-center line-row" >
+                                  <app-searchable-select
+                                      title="{{ 'uom.name' | translate}}"
+                                      [data]="units"
+                                      itemTextField="name"
+                                      itemValueField="id"
+                                      [multiple]="false"
+                                      [(value)]="ubarcode.uomId"
+                                  ></app-searchable-select> 
+                              </ion-col>
+                              <ion-col size="5" class="ion-text-center line-row" >
+                                  <ion-input
+                                    label-placement="floating" 
+                                    [(ngModel)]="ubarcode.uom_barcode"
+                                    #uom_barcode="ngModel"
+                                    name="uom_barcode{{idx}}"
+                                    color="secondary"
+                                    type="text"
+                                  ></ion-input> 
+                              </ion-col>
+                              <ion-col size="5" class="ion-text-center line-row">
+                                  <ion-input
+                                    label-placement="floating" 
+                                    [(ngModel)]="ubarcode.freetext"
+                                    #freetext="ngModel"
+                                    name="freetext{{idx}}"
+                                    color="secondary"
+                                    type="text"
+                                  ></ion-input> 
+                              </ion-col>
+                            </ion-row>
+                          }
+                      
+                        <ion-row>
+                          <ion-col>
+                            <ion-button color="light" (click)="addUBarcode()"> + {{'uomgroup.addNewUC' | translate}}</ion-button>
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid>
+
+              </ion-card-content>
+              
+            </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button [disabled]="!productForm.valid"
+                      type="submit" 
+                      color="secondary" 
+                      expand="block"
+                      translate="product.registerproduct"
+                      class="submit-button">
+              @if(isLoading) {<ion-spinner class="spinner-button"></ion-spinner>}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
   </form>
 
+ 
   <ion-toast
     [isOpen]="isToastOpen"
     message="{{'product.toastsave' | translate}}"
@@ -240,4 +449,26 @@
     (didDismiss)="setOpenToast(false)"
   ></ion-toast>
 
+ 
+
 </ion-content>
+
+
+<ion-modal trigger="products-search-items" #modal 
+           (willDismiss)="onWillDismiss($event)" 
+           [enterAnimation]="enterAnimation" 
+           [leaveAnimation]="leaveAnimation"    >
+ 
+  <ng-template>
+    <app-single-selection-search
+      class="ion-page"
+      title="{{ 'single_selection_searchbox.selectitem' | translate }}"
+      [items]="items"
+      (searchEmit)="searchValueEmit($event)"
+      (selectionChange)="itemSelected($event)"
+      (selectionCancel)="modal.dismiss()"
+      (infiniteScrollEmit)="infiniteScrollEmit($event)"
+    ></app-single-selection-search>
+  </ng-template>
+
+</ion-modal>

@@ -121,6 +121,15 @@
 	"uom.price":"Price",
 	"uom.price_auto":"Auto",
 	"uom.button_submit":"Update UOM",
+	"uomgroup.update":"Update Uom Groups",
+	"uomgroup.name":"Uom Group Name",
+	"uomgroup.des":" Description ",
+	"uomgroup.altuom":"Alt. Unit",
+	"uomgroup.altqty":"Alt. Qty",
+	"uomgroup.baseuom":"Base Unit",
+	"uomgroup.baseqty":"Base Qty",
+	"uomgroup.addNewUG":"Add Uom Group",
+	"uomgroup.addNewUC":"Add Unit",
 	"_comment":" Product screen ",
 	"product.name":" Product name",
 	"product.placeholername":" Enter product name",
@@ -135,8 +144,24 @@
 	"product.secondunitname":"Second unit name",
 	"product.secondprice":"Second price",
 	"product.image":"Product image",
+	"product.accept":" Accept",
+	"product.reject":" Reject",
+	"product.factory":" Factory",
 	"product.category":" Category",
-	"product.registerproduct":" Register Product ",
+	"product.uomgroup":"Uom group",
+	"product.uombase":"Uom base",
+	"product.basecost":"Base cost",
+	"product.baseprice":"Base price",
+	"product.uomreduce":"Percent",
+	"product.costprice":"Cost Sale",
+	"product.price":"Price sale",
+	"product.uomauto":"Auto",
+	"product.barcode":"Barcode",
+	"product.freetext":"Text barcode",
+	"product.baseunit":"Base unit",
+	"product.uompricelist":"Uom prices",
+	"product.uombarcodeList":"Uom barcodes",
+	"product.registerproduct":" Register product ",
 	"product.toastsave":"The product has been registered successfully... awaiting as documentation",
 
 	"group.menuname":"List Categories",
@@ -254,7 +279,8 @@
 
 	"single_selection_searchbox.additem":" Add ",
 	"single_selection_searchbox.selectitem":" Selection  ",
-	"single_selection_searchbox.cancel":" Cancel "
+	"single_selection_searchbox.cancel":" Cancel ",
+	"single_selection_searchbox.confirm":" Confirm "
 
 
 }

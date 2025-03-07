@@ -58,6 +58,32 @@ export interface IUnit{
     name:string;
 }
 
+export interface IUomGroupItemDto{
+    id:number;
+    name:string;
+    uomConverterItemDtoList:IUomConverterItemDto[];
+}
+
+export interface IUomConverterItemDto{
+    id:number;
+    name:string;
+}
+
+export interface IUomGroupRequest{
+    id:number;
+    name:string;
+    descr:string;
+    uomConverterReqList:IUomConverterRequest[];
+}
+
+export interface IUomConverterRequest{
+    id:number;
+    uom_group:number;
+    alt_uom:number;
+    alt_qty:number;
+    base_uom:number;
+    base_qty:number;
+}
 
 export interface IProductRequest{
     id:number;
@@ -66,12 +92,13 @@ export interface IProductRequest{
     has_first:boolean;
     first_unit:string;
     first_price:number;
-    unit_count:number;
+    unit_count_first:number;
     has_second:boolean;
     second_unit:string;
     second_price:number;
+    unit_count_second:number;
     category_id:number;
-    factory_id?:number;
+    factory_id:number;
     uom_group:number;
     uom_base:number;
     base_cost:number;
